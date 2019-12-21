@@ -28,7 +28,10 @@ export default {
         email: this.email,
         username: this.username,
         password: this.password
-      });
+      }).then(()=>{
+        alert('가입되었습니다!');
+        this.$router.push({name: 'login'});
+      })
     }
   }
 };

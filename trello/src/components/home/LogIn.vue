@@ -1,9 +1,31 @@
 <template>
-  <div class="login">login</div>
+  <div class="login">
+    <label for="email">Email</label>
+    <input type="text" id="email" v-model="email"/>
+    <label for="password">Password</label>
+    <input type="text" id="password" v-model="password"/>
+    <button @click="login()">Login</button>
+  </div>
 </template>
 
 <script>
-export default {};
+export default {
+  name:"login",
+  data(){
+    return {
+      email: "",
+      password: "",
+    }
+  },
+  methods: {
+    login(){
+      this.$store.dispatch('login',{
+        email: this.email,
+        password: this.password,
+      })
+    }
+  }
+};
 </script>
 
 <style>
