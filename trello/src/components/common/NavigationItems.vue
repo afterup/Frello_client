@@ -1,9 +1,10 @@
 <template>
-  <ul class="header__navigation">
+  <ul class="header__navigation" v-if="!isAuthenticated">
     <router-link class="header__navigation__login" :to="{name: 'login'}">Log In</router-link>
     <router-link class="header__navigation__signup" :to="{name:'signup'}">Sign Up</router-link>
   </ul>
-  <!-- <div>
+  <div v-else>
+        <button @click="logout()">Logout</button>
         <div class="header__user">
           <div class="header__user__button">A</div>
           <div class="header__user__content">
@@ -15,11 +16,25 @@
             </ul>
           </div>
         </div>
-  </div>-->
+  </div>
 </template>
 
 <script>
-export default {};
+import { mapGetters } from 'vuex';
+
+export default {
+  computed:{
+    ...mapGetters(['isAuthenticated'])
+  },
+  methods: {
+    logout(){
+      this.$store.dispatch('LOGOUT')
+          .then(()=>{
+            this.$router.push({name:'home'});
+          });
+    }
+  }
+};
 </script>
 
 <style lang="scss">

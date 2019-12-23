@@ -15,16 +15,28 @@ export default new Vuex.Store({
       photo: "",
       created_at: ""
     },
-    isAuthenticated: null,
+    isAuthenticated: false,
     error: null
+  },  
+  getters: {
+    isAuthenticated(state){
+      return state.isAuthenticated;
+    },
+    currentUser(state){
+      return state.user;
+    },
+    error(state){
+      return state.error;
+    }
   },
   mutations: {
     SET_USER_DATA(state, user){
-      state.isAuthenticated = true;
+      state.isAuthenticated = !state.isAuthenticated;
       state.user = user;
-      ApiService.setHeader(user.idToken);
-      JwtService.saveToken(user.idToken);
-      localStorage.setItem('expiresIn',user.expiresIn);
+    },
+    SET_TOKEN(state,token){
+      ApiService.setHeader(token);
+      // JwtService.saveToken(token);
     },
     SET_ERROR(state,error){
       state.error = error;
@@ -39,41 +51,20 @@ export default new Vuex.Store({
         return user;
       }catch(error){
         commit('SET_ERROR',error.response.data.error);
-        return error;
+        return error.response.data;
       }
-    },
-    storeUser({commit, state}, user){
-      axios.post("/users.json",user)
-        .then(res => {
-          console.log(res);
-        })
-        .catch(err => console.log(err));
     },
     login({commit, state},user){
       console.log(user);
-      axios.post('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key='+process.env.VUE_APP_API_KEY,
-      user)
-        .then(({data})=> {
-          axios.get('/users.json'+'?auth='+data.idToken)
-            .then(({data})=>{
-              commit('SET_USER_DATA', data);
+      axios.post('/login', user)
+           .then(({data})=> {
+              commit('SET_USER_DATA', data.user);
+              commit('SET_TOKEN', data.token);
             })
-            .catch(err=>{
-              console.log(err);
-            })
-        })
-    }
-
-  },
-  getters: {
-    isAuthenticated({state}){
-      return state.isAuthenticated;
     },
-    currentUser(state){
-      return state.user;
-    },
-    error(state){
-      return state.error;
+    LOGOUT({commit}){
+      commit('SET_USER_DATA',null);
+      commit('SET_TOKEN',null);
     }
   },
   modules: {}

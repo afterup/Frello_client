@@ -35,7 +35,7 @@ export default {
         username: this.username,
         password: this.password
       }).then(result=>{
-        if(result.response){ //error handler
+        if(result.error){ //error handler
           return;
         }
         alert('가입되었습니다!');

@@ -20,7 +20,7 @@
 <script>
 export default {
   components: {
-    NavigationItems: () => import("@/components/home/NavigationItems.vue")
+    NavigationItems: () => import("@/components/common/NavigationItems.vue")
   }
 };
 </script>
@@ -86,7 +86,6 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 1px solid white;
     border-radius: 25px;
     background-color: #dfe1e6;
     color: black;
