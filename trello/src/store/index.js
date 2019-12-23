@@ -25,22 +25,22 @@ export default new Vuex.Store({
       ApiService.setHeader(user.idToken);
       JwtService.saveToken(user.idToken);
       localStorage.setItem('expiresIn',user.expiresIn);
+    },
+    SET_ERROR(state,error){
+      state.error = error;
     }
   },
   actions: {
-    async signup({ commit, dispatch }, authData) {
-      const { data } = await axios.post("https://identitytoolkit.googleapis.com/v1/accounts:signUp?key="+process.env.VUE_APP_API_KEY,
+    async signup({ commit }, authData) {
+      try{
+        const user = await axios.post("/signup",
           authData
         )
-        console.log(data);
-        const currentDate = new Date().getTime();
-        dispatch('storeUser', {
-            localId: authData.localId,
-            email: authData.email,
-            username: authData.username,
-            photo: "",
-            created_at: currentDate
-        });
+        return user;
+      }catch(error){
+        commit('SET_ERROR',error.response.data.error);
+        return error;
+      }
     },
     storeUser({commit, state}, user){
       axios.post("/users.json",user)
@@ -71,6 +71,9 @@ export default new Vuex.Store({
     },
     currentUser(state){
       return state.user;
+    },
+    error(state){
+      return state.error;
     }
   },
   modules: {}
