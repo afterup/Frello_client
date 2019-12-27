@@ -4,6 +4,8 @@ import axios from 'axios';
 import JwtService from '@/common/jwt.service.js';
 import { ApiService } from '../common/api.service';
 
+import board from './board.module.js';
+
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -64,5 +66,7 @@ export default new Vuex.Store({
 			commit('SET_TOKEN', null);
 		},
 	},
-	modules: {},
+	modules: {
+		board,
+	},
 });
