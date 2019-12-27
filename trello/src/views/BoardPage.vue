@@ -8,14 +8,23 @@
 				Favorited Boards
 			</h3>
 			<div class="boards__favorited__cards">
-				<div class="boards__favorited__cards__item">
+				<Card v-for="board in boards" :key="board.id" :boardId="board.id">
 					<div class="boards__favorited__cards__item__title">
-						Project Trello
+						{{ board.title }}
 					</div>
-				</div>
-				<div class="boards__favorited__cards__add">
+				</Card>
+
+				<div
+					class="boards__favorited__cards__add"
+					@click="showCreateModal = true"
+				>
 					Create new board
 				</div>
+
+				<Modal v-if="showCreateModal" @close="showCreateModal = false">
+					<h2 slot="header">Create new board</h2>
+					<Post slot="body" />
+				</Modal>
 			</div>
 		</div>
 		<div class="boards__personal">
@@ -25,22 +34,30 @@
 				</i>
 				Personal Boards
 			</h3>
-			<div class="boards__personal__cards">
-				<div class="boards__personal__cards__item">
-					<div class="boards__personal__cards__item__title">
-						Project Trello
-					</div>
-				</div>
-				<div class="boards__personal__cards__add">
-					Create new board
-				</div>
-			</div>
 		</div>
 	</BaseContainer>
 </template>
 
 <script>
-export default {};
+import { mapGetters } from 'vuex';
+
+export default {
+	data() {
+		return {
+			showCreateModal: false,
+		};
+	},
+	components: {
+		Card: () => import('@/components/board/Card.vue'),
+		Post: () => import('@/components/board/Post.vue'),
+	},
+	created() {
+		this.$store.dispatch('FETCH_BOARDS');
+	},
+	computed: {
+		...mapGetters(['boards']),
+	},
+};
 </script>
 
 <style lang="scss" scoped>

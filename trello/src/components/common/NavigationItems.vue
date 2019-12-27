@@ -1,12 +1,16 @@
 <template>
 	<div v-if="!isAuthenticated">
 		<ul class="header__navigation">
-			<router-link class="header__navigation__login" :to="{ name: 'login' }"
-				>Log In</router-link
+			<BaseBtn @click="showModal = true" class="header__navigation__login"
+				>Login</BaseBtn
 			>
 			<router-link class="header__navigation__signup" :to="{ name: 'signup' }"
 				>Sign Up</router-link
 			>
+			<Modal v-if="showModal" @close="showModal = false">
+				<h3 slot="header">Login</h3>
+				<div slot="body"><Login /></div>
+			</Modal>
 		</ul>
 	</div>
 	<div v-else>
@@ -29,6 +33,14 @@
 import { mapGetters } from 'vuex';
 
 export default {
+	data() {
+		return {
+			showModal: false,
+		};
+	},
+	components: {
+		Login: () => import('@/components/home/Login.vue'),
+	},
 	computed: {
 		...mapGetters(['isAuthenticated']),
 	},
@@ -56,7 +68,9 @@ export default {
 
 	&__login {
 		text-decoration-line: none;
+		list-style: none;
 		margin-right: 20px;
+		padding: 5px;
 		color: white;
 
 		&:hover {

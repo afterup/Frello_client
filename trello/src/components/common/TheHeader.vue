@@ -1,8 +1,8 @@
 <template>
 	<header class="header">
 		<div class="header__home">
-			<BaseBtn :onClick="navigateHome">
-				<i class="material-icons header__home__icon">home</i>
+			<BaseBtn @click="navigateHome" class="header__home__button">
+				<i class="material-icons header__home__button__icon">home</i>
 			</BaseBtn>
 			<BaseInput :width="180" :height="30" />
 		</div>

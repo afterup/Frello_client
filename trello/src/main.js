@@ -9,6 +9,7 @@ Vue.config.productionTip = false;
 Vue.component('BaseContainer', () => import('@/components/ui/BaseContainer'));
 Vue.component('BaseBtn', () => import('@/components/ui/BaseBtn'));
 Vue.component('BaseInput', () => import('@/components/ui/BaseInput'));
+Vue.component('Modal', () => import('@/components/ui/Modal'));
 
 ApiService.init();
 
