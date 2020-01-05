@@ -9,7 +9,7 @@
 		<input type="password" id="password" v-model="password" />
 		<br />
 		<div class="error" v-if="this.error">{{ this.error }}</div>
-		<button @click="onSubmit">SignIn</button>
+		<button @click="register">SignIn</button>
 	</div>
 </template>
 
@@ -28,8 +28,7 @@ export default {
 		...mapGetters(['error']),
 	},
 	methods: {
-		onSubmit() {
-			console.log(this.email, this.username, this.password);
+		register() {
 			this.$store
 				.dispatch('signup', {
 					email: this.email,
@@ -37,12 +36,12 @@ export default {
 					password: this.password,
 				})
 				.then(result => {
-					if (result.error) {
-						//error handler
-						return;
-					}
-					alert('가입되었습니다!');
-					this.$router.push({ name: 'login' });
+					console.log(result);
+					alert('가입되었습니다.');
+					this.$router.push({ name: 'home' });
+				})
+				.catch(error => {
+					console.log(error);
 				});
 		},
 	},

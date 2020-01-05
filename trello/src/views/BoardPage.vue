@@ -52,7 +52,7 @@ export default {
 		Post: () => import('@/components/board/Post.vue'),
 	},
 	created() {
-		this.$store.dispatch('FETCH_BOARDS');
+		this.$store.dispatch('FETCH_BOARDS', this.$route.params.username);
 	},
 	computed: {
 		...mapGetters(['boards']),

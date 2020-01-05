@@ -2,6 +2,7 @@ import { ApiService } from '@/common/api.service.js';
 
 const state = {
 	boards: {},
+	error: null,
 };
 
 const getters = {
@@ -11,21 +12,21 @@ const getters = {
 };
 
 const actions = {
-	async FETCH_BOARDS({ commit }) {
+	async FETCH_BOARDS({ commit }, username) {
 		try {
-			const { data } = await ApiService.get('board');
+			const { data } = await ApiService.get(`/boards/${username}`);
 			commit('SET_BOARDS', data);
 			console.log(data);
 		} catch (err) {
-			console.log(err);
+			console.log(err.response.data);
 		}
 	},
 	async PUBLISH_BOARD({ commit }, board) {
 		try {
-			const { data } = await ApiService.post('board', board);
+			const { data } = await ApiService.post('/board', { board: board });
 			console.log(data);
 		} catch (err) {
-			console.log(err);
+			console.log(err.response.data);
 		}
 	},
 };

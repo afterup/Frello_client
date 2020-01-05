@@ -3,11 +3,10 @@ import JwtService from '@/common/jwt.service.js';
 
 const state = {
 	user: {
-		id: '',
+		user_id: '',
 		email: '',
 		username: '',
-		photo: '',
-		created_at: '',
+		createdAt: '',
 	},
 	isAuthenticated: false,
 	error: null,
@@ -28,20 +27,23 @@ const getters = {
 const actions = {
 	async signup({ commit }, authData) {
 		try {
-			const user = await ApiService.post('/signup', authData);
-			return user;
+			const { data } = await ApiService.post('/signup', { user: authData });
+			console.log(data.user);
+			commit('SET_USER_DATA', data.user);
+			commit('SET_TOKEN', data.token);
+			commit('SET_ERROR', null);
 		} catch (error) {
-			const response = error.response;
-			console.log(response);
-			commit('SET_ERROR', error.data);
-			return error;
+			commit('SET_ERROR', error.response.data.error);
+			throw new Error(error);
 		}
 	},
 	async login({ commit }, user) {
 		console.log(user);
-		const { data } = await axios.post('/login', user);
+		const { data } = await ApiService.post('/login', { user: user });
 		commit('SET_USER_DATA', data.user);
 		commit('SET_TOKEN', data.token);
+		commit('SET_ERROR', null);
+
 		return data.user;
 	},
 	LOGOUT({ commit }) {

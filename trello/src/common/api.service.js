@@ -17,14 +17,10 @@ export const ApiService = {
 	},
 
 	get(resource) {
-		return Vue.axios.get(`${resource}`).catch(error => {
-			throw new Error(`[RWV] ApiService ${error}`);
-		});
+		return Vue.axios.get(`${resource}`);
 	},
 
-	post(resource, params) {
-		return Vue.axios.get(`${resource}`, params).catch(error => {
-			throw new Error(`[RWV] ApiService ${error}`);
-		});
+	post(resource, payload) {
+		return Vue.axios.post(`${resource}`, payload);
 	},
 };
