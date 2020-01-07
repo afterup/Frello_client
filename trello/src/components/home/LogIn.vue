@@ -27,7 +27,7 @@ export default {
 				.then(user => {
 					console.log(user);
 					this.$router.push({
-						name: 'board',
+						name: 'boards',
 						params: { username: user.username },
 					});
 				});

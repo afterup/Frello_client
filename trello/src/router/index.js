@@ -29,6 +29,11 @@ const routes = [
 	},
 	{
 		path: '/:username',
+		name: 'boards',
+		component: () => import('@/views/BoardsPage.vue'),
+	},
+	{
+		path: '/board/:id',
 		name: 'board',
 		component: () => import('@/views/BoardPage.vue'),
 	},

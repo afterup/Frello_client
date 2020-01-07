@@ -1,41 +1,93 @@
 <template>
-	<BaseContainer>
-		<div class="boards__favorited">
-			<h3 class="boards__favorited__title">
+	<div class="container">
+		<div class="board">
+			<!-- boards=> board로 변경-->
+			<div class="board__title">
+				Project Trello
+			</div>
+			<div class="board__favorite">
 				<i class="material-icons">
-					star_border
+					star
 				</i>
-				Favorited Boards
-			</h3>
-			<div class="boards__favorited__cards">
-				<Card v-for="board in boards" :key="board.id" :boardId="board.id">
-					<div class="boards__favorited__cards__item__title">
-						{{ board.title }}
-					</div>
-				</Card>
-
-				<div
-					class="boards__favorited__cards__add"
-					@click="showCreateModal = true"
-				>
-					Create new board
-				</div>
-
-				<Modal v-if="showCreateModal" @close="showCreateModal = false">
-					<h2 slot="header">Create new board</h2>
-					<Post slot="body" />
-				</Modal>
 			</div>
 		</div>
-		<div class="boards__personal">
-			<h3 class="boards__personal__title">
-				<i class="material-icons">
-					person
-				</i>
-				Personal Boards
-			</h3>
+		<div class="list-container">
+			<div class="list">
+				<div class="list__title">
+					Test One
+				</div>
+				<div class="list__items">
+					<div class="list__items__item">
+						<div class="list__items__item__title">
+							one
+						</div>
+					</div>
+					<div class="list__items__item">
+						<div class="list__items__item__title">
+							one
+						</div>
+					</div>
+					<div class="list__items__item">
+						<div class="list__items__item__title">
+							one
+						</div>
+					</div>
+
+					<div class="list__items__add">
+						<i class="material-icons">
+							add
+						</i>
+						<div class="list__items__add__text">Add another card</div>
+					</div>
+				</div>
+			</div>
+			<div class="list-container">
+				<div class="list">
+					<div class="list__title">
+						Test One
+					</div>
+					<div class="list__items">
+						<div class="list__items__item">
+							<div class="list__items__item__title">
+								one
+							</div>
+						</div>
+						<div class="list__items__item">
+							<div class="list__items__item__title">
+								one
+							</div>
+						</div>
+						<div class="list__items__item">
+							<div class="list__items__item__title">
+								one
+							</div>
+						</div>
+
+						<div class="list__items__add">
+							<i class="material-icons">
+								add
+							</i>
+							<div class="list__items__add__text">Add another card</div>
+						</div>
+					</div>
+				</div>
+				<input
+					type="text"
+					v-if="showListInput"
+					v-model="listTitle"
+					@keyup.enter="addList"
+				/>
+				<div class="add-list">
+					<i class="material-icons">
+						add
+					</i>
+					<div class="add-list__text" @click="showListInput = true">
+						Add another list
+					</div>
+				</div>
+			</div>
 		</div>
-	</BaseContainer>
+	</div>
 </template>
 
 <script>
@@ -44,80 +96,207 @@ import { mapGetters } from 'vuex';
 export default {
 	data() {
 		return {
-			showCreateModal: false,
+			showListInput: false,
+			listTitle: null,
 		};
 	},
-	components: {
-		Card: () => import('@/components/board/Card.vue'),
-		Post: () => import('@/components/board/Post.vue'),
-	},
 	created() {
-		this.$store.dispatch('FETCH_BOARDS', this.$route.params.username);
+		this.$store.dispatch('FETCH_BOARD', this.$route.params.id);
 	},
 	computed: {
-		...mapGetters(['boards']),
+		...mapGetters(['board']),
+	},
+	methods: {
+		addList() {
+			this.$store
+				.dispatch('PUBLISH_LIST', {
+					title: this.listTitle,
+					board_id: this.$route.params.id,
+					position: 1,
+				})
+				.then(() => {
+					this.showListInput = false;
+					// this.$store.dispatch('FETCH_BOARD', this.$route.params.id);
+				});
+		},
 	},
 };
 </script>
 
 <style lang="scss" scoped>
-.boards {
-	width: 80%;
-	height: 80%;
-	margin: 3rem 20rem auto;
+.container {
+	max-width: 120rem;
+	margin: 0 6rem auto;
+	background-color: #ffffff;
+
+	min-height: 50rem;
 }
 
-.boards__favorited__title {
-	font-size: 1.6rem;
+.board {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	margin-bottom: 10px;
+	height: 50px;
+}
+
+.board__title {
+	font-size: 1.7rem;
+	font-weight: bold;
+	margin-right: 10px;
+}
+
+.board__favorite {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 25px;
+	height: 25px;
+	border: none;
+	background-color: rgba(187, 187, 187, 0.74);
+	border-radius: 2px;
+}
+
+.board__favorite:hover {
+	cursor: pointer;
+	background-color: rgba(167, 167, 167, 0.74);
+}
+
+.board__favorite i {
+	font-size: 15px;
+}
+
+.list-container {
+	display: flex;
+}
+
+.list {
+	display: flex;
+	flex-direction: column;
+	padding: 10px;
+	margin-right: 10px;
+	width: 275px;
+	background-color: #ebecf0;
+	border-radius: 2px;
+}
+
+.list__title {
+	font-size: 1.4rem;
 	font-weight: bold;
 	margin-bottom: 10px;
 }
 
-.boards__favorited__cards {
+.list__items__item {
 	display: flex;
-	flex-wrap: wrap;
-}
-
-.boards__favorited__cards__item {
-	background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjesyYHll5qRS8pG5RgeqCKefljavp0lu5VkAMSEsHfd-gzHfcNg&s');
-	background-position: center;
-	border-radius: 3px;
-	width: 190px;
-	height: 95px;
-	margin: 4.5px 9px;
-	position: relative;
-}
-
-.boards__favorited__cards__item:hover {
-	cursor: pointer;
-}
-
-.boards__favorited__cards__item__title {
-	position: absolute;
-	color: white;
-	font-size: 1.6rem;
-	font-weight: bold;
-	margin: 10px 0 0 5px;
-}
-
-.boards__favorited__cards__add {
-	display: flex;
-	justify-content: center;
 	align-items: center;
-	border-radius: 3px;
-	background-color: #f0f2f5;
-	width: 190px;
-	height: 95px;
-	margin: 4.5px 9px;
-	font-size: 1.6rem;
+	background-color: white;
+	width: 250px;
+	height: 30px;
+	margin-bottom: 8px;
+	border-radius: 2px;
+	box-shadow: 0px 1.3px rgb(182, 182, 182);
 }
 
-.boards__favorited__cards__add:hover {
+.list__items__item:hover {
+	background-color: rgb(240, 240, 240);
 	cursor: pointer;
-	background-color: #e6e8eb;
 }
 
-.boards__personal {
+.list__items__item__title {
+	margin-left: 8px;
+	font-size: 1.4rem;
+}
+
+.list__items__add {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	margin-top: 10px;
+	width: 250px;
+	height: 30px;
+	border-radius: 3px;
+}
+
+.list__items__add:hover {
+	background-color: rgb(218, 218, 218);
+	cursor: pointer;
+}
+
+.list__items__add__text {
+	color: gray;
+	font-size: 1.3rem;
+}
+
+.list__items__add i {
+	color: gray;
+	font-size: 18px;
+}
+
+.add-list {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	background-color: rgba(187, 187, 187, 0.74);
+	border-radius: 2px;
+	width: 250px;
+	height: 30px;
+}
+
+.add-list i {
+	color: gray;
+	font-size: 18px;
+}
+
+.add-list__text {
+	color: gray;
+	font-size: 1.3rem;
+}
+
+.card {
+	width: 760px;
+	height: 600px;
+	background-color: #ebecf0;
+	border-radius: 2px;
+}
+
+.card__header {
+	display: flex;
+}
+
+.card__header__title {
+	font-size: 1.8rem;
+	font-weight: bold;
+}
+
+.card__header__title__description {
+	color: gray;
+	font-size: 1.3rem;
+}
+
+.card__description {
+	display: flex;
+	flex-direction: row;
 	margin-top: 20px;
+}
+
+.card__description__body {
+	display: flex;
+	flex-direction: column;
+	font-size: 1.8rem;
+	font-weight: bold;
+}
+
+.card__description__body__input {
+	border: none;
+	border-radius: 2px;
+	background-color: white;
+	height: 100px;
+	width: 700px;
+}
+
+.card__description__body__button {
+	margin-top: 10px;
+	width: 50px;
+	height: 30px;
 }
 </style>
