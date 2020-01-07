@@ -22,7 +22,11 @@ export default {
 	},
 	methods: {
 		onSubmit() {
-			this.$store.dispatch('PUBLISH_BOARD', { title: this.title });
+			this.$store
+				.dispatch('PUBLISH_BOARD', { title: this.title })
+				.then(data => {
+					this.$store.dispatch('FETCH_BOARDS', this.$route.params.username);
+				});
 		},
 	},
 };
