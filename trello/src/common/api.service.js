@@ -8,6 +8,7 @@ export const ApiService = {
 	init() {
 		Vue.use(VueAxios, axios);
 		Vue.axios.defaults.baseURL = API_URL;
+		Vue.axios.defaults.headers.common['Authorization'] = JwtService.getToken();
 	},
 
 	setHeader() {
