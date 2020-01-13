@@ -1,6 +1,6 @@
 <template>
 	<div class="modal">
-		<div class="modal__wrapper">
+		<div class="modal__wrapper" @click.self="closeModal">
 			<div class="modal__container">
 				<div class="modal__header">
 					<slot name="header">
@@ -16,7 +16,7 @@
 
 				<div class="modal__footer">
 					<slot name="footer">
-						<button class="modal-close-button" @click="$emit('close')">
+						<button class="modal-close-button" @click="closeModal">
 							CLOSE
 						</button>
 					</slot>
@@ -26,7 +26,19 @@
 	</div>
 </template>
 <script>
-export default {};
+export default {
+	props: {
+		title: {
+			type: String,
+			require: false,
+		},
+	},
+	methods: {
+		closeModal() {
+			this.$emit('close');
+		},
+	},
+};
 </script>
 
 <style lang="scss">

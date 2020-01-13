@@ -15,14 +15,14 @@
 					@clickCard="toBoard(board.board_id)"
 				></Card>
 
-				<div
-					class="boards__favorited__cards__add"
-					@click="showCreateModal = true"
-				>
+				<div class="boards__favorited__cards__add" @click="handleModal">
 					Create new board
 				</div>
 
-				<Modal v-if="showCreateModal" @close="showCreateModal = false">
+				<Modal
+					v-if="showCreateBoardModal"
+					@close="showCreateBoardModal = false"
+				>
 					<h2 slot="header">Create new board</h2>
 					<Post slot="body" />
 				</Modal>
@@ -45,15 +45,15 @@ import { mapGetters } from 'vuex';
 export default {
 	data() {
 		return {
-			showCreateModal: false,
+			showCreateBoardModal: false,
 		};
 	},
 	components: {
-		Card: () => import('@/components/board/Card.vue'),
-		Post: () => import('@/components/board/Post.vue'),
+		Card: () => import('@/components/boards/Card.vue'),
+		Post: () => import('@/components/boards/Post.vue'),
 	},
-	created() {
-		this.$store.dispatch('FETCH_BOARDS', this.$route.params.username);
+	mounted() {
+		this.$store.dispatch('FETCH_BOARDS');
 	},
 	computed: {
 		...mapGetters(['boards']),
@@ -61,6 +61,9 @@ export default {
 	methods: {
 		toBoard(id) {
 			this.$router.push({ name: 'board', params: { id: id } });
+		},
+		handleModal() {
+			this.showCreateBoardModal = !this.showCreateBoardModal;
 		},
 	},
 };
