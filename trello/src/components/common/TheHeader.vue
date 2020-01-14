@@ -4,7 +4,6 @@
 			<BaseBtn @click="navigateHome" class="header__home__button">
 				<i class="material-icons header__home__button__icon">home</i>
 			</BaseBtn>
-			<BaseInput :width="180" :height="30" />
 		</div>
 		<div class="header__logo">
 			<svg width="200" height="40">
