@@ -1,8 +1,10 @@
+import Vue from 'vue';
 import { ApiService } from '@/common/api.service.js';
 
 const state = {
-	boards: {},
-	board: null,
+	boards: [],
+	favorites: [],
+	board: {},
 	error: null,
 };
 
@@ -13,23 +15,24 @@ const getters = {
 	board(state) {
 		return state.board;
 	},
+	favorites(state) {
+		return state.favorites;
+	},
 };
 
 const actions = {
-	async FETCH_BOARDS({ commit }, username) {
+	async FETCH_BOARDS({ commit }) {
 		try {
-			const { data } = await ApiService.get(`/boards/${username}`);
-			commit('SET_BOARDS', data);
-			console.log(data);
+			const { data } = await ApiService.get(`/board`);
+			commit('SET_BOARDS', data.boards);
 		} catch (err) {
-			console.log(err.response.data);
+			console.log(err.response);
 		}
 	},
 	async FETCH_BOARD({ commit }, id) {
 		try {
 			const { data } = await ApiService.get(`/board/${id}`);
-			console.log(data);
-			commit('SET_BOARD', data);
+			commit('SET_BOARD', data.board);
 		} catch (err) {
 			console.log(err);
 		}
