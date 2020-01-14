@@ -24,4 +24,12 @@ export const ApiService = {
 	post(resource, payload) {
 		return Vue.axios.post(`${resource}`, payload);
 	},
+
+	delete(resource) {
+		return Vue.axios.delete(`${resource}`);
+	},
+
+	put(resource, payload) {
+		return Vue.axios.put(`${resource}`, payload);
+	},
 };
