@@ -120,11 +120,8 @@ const mutations = {
 		state.board.Lists.push(list);
 	},
 	ADD_CARD(state, card) {
-		state.board.Lists.find((list, idx) => {
-			if (list.list_id === card.list_id) {
-				list.Cards.push(card);
-			}
-		});
+		const list = state.board.Lists.find(list => list.list_id === card.list_id);
+		if (list) list.Cards.push(card);
 	},
 	CHANGE_BOARD(state, board) {
 		if (board.title) {
@@ -144,11 +141,10 @@ const mutations = {
 		}
 	},
 	DELETE_COLUMN_LIST(state, id) {
-		state.board.Lists.find((list, idx) => {
-			if (list.list_id === id) {
-				delete state.board.Lists[idx];
-			}
-		});
+		const index = state.board.Lists.findIndex(
+			(list, idx) => list.list_id === id,
+		);
+		state.board.Lists.splice(index, 1);
 	},
 };
 
