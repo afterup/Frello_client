@@ -1,22 +1,42 @@
 <template>
 	<div class="home">
-		<Banner>
-			<h1>HOME PAGE</h1>
-		</Banner>
-		<HomeAbout />
-		<HomeContent />
-		<Footer />
+		<div class="banner"></div>
+		<div class="home-about"></div>
+		<div class="home-content"></div>
+		<footer class="footer">
+			<div class="footer__text">©Reference to trello</div>
+		</footer>
 	</div>
 </template>
 
 <script>
 export default {
 	name: 'home',
-	components: {
-		Banner: () => import('@/components/home/Banner.vue'),
-		HomeAbout: () => import('@/components/home/HomeAbout.vue'),
-		HomeContent: () => import('@/components/home/HomeContent.vue'),
-		Footer: () => import('@/components/common/TheFooter.vue'),
-	},
 };
 </script>
+
+<style lang="scss" scoped>
+.banner {
+	background-color: $color-primary-light;
+	height: 50rem;
+}
+
+.home-about {
+	height: 70rem;
+}
+
+.home-content {
+	background-color: $color-grey-light-2;
+	height: 30rem;
+}
+footer {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 5rem;
+
+	&__text {
+		font-size: 1.3rem;
+	}
+}
+</style>
