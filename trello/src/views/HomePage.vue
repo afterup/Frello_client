@@ -1,8 +1,8 @@
 <template>
 	<div class="home">
-		<div class="banner"></div>
-		<div class="home-about"></div>
-		<div class="home-content"></div>
+		<div class="home__banner"></div>
+		<div class="home__about"></div>
+		<div class="home__content"></div>
 		<footer class="footer">
 			<div class="footer__text">©Reference to trello</div>
 		</footer>
@@ -16,20 +16,22 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.banner {
-	background-color: $color-primary-light;
-	height: 50rem;
-}
+.home {
+	&__banner {
+		background-color: $color-primary-light;
+		height: 50rem;
+	}
 
-.home-about {
-	height: 70rem;
-}
+	&__about {
+		height: 70rem;
+	}
 
-.home-content {
-	background-color: $color-grey-light-2;
-	height: 30rem;
+	&__content {
+		background-color: $color-grey-light-2;
+		height: 30rem;
+	}
 }
-footer {
+.footer {
 	display: flex;
 	justify-content: center;
 	align-items: center;
