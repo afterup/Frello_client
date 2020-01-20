@@ -1,5 +1,5 @@
 <template>
-	<div class="container">
+	<div class="container" :class="board.background">
 		<BoardMeta :board="board" :currentUser="currentUser" />
 		<Columns :lists="board.Lists" />
 	</div>
@@ -33,9 +33,27 @@ export default {
 .container {
 	max-width: 120rem;
 	margin: 0 6rem auto;
-	background-color: #ffffff;
 
 	min-height: 50rem;
+}
+
+.blue {
+	background-color: $background-blue;
+}
+.red {
+	background-color: $background-red;
+}
+.orange {
+	background-color: $background-orange;
+}
+.yellow {
+	background-color: $background-yellow;
+}
+.green {
+	background-color: $background-green;
+}
+.purple {
+	background-color: $background-purple;
 }
 
 .card {

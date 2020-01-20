@@ -51,7 +51,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
 .colors {
 	display: flex;
 	flex-direction: row;
@@ -66,22 +66,21 @@ export default {
 }
 
 .blue {
-	background-color: #339af0;
+	background-color: $background-blue;
 }
-
 .red {
-	background-color: #f03e3e;
+	background-color: $background-red;
 }
 .orange {
-	background-color: #ff922b;
+	background-color: $background-orange;
 }
 .yellow {
-	background-color: #ffe066;
+	background-color: $background-yellow;
 }
 .green {
-	background-color: #51cf66;
+	background-color: $background-green;
 }
 .purple {
-	background-color: #cc5de8;
+	background-color: $background-purple;
 }
 </style>
