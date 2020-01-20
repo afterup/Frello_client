@@ -1,15 +1,22 @@
 <template>
 	<div class="signup">
-		<h2>Sign Up</h2>
-		<label for="email">Email</label>
-		<input type="text" id="email" v-model="email" />
-		<label for="username">Username</label>
-		<input type="text" id="username" v-model="username" />
-		<label for="password">Password</label>
-		<input type="password" id="password" v-model="password" />
-		<br />
-		<div class="error" v-if="this.error">{{ this.error }}</div>
-		<button @click="register">SignIn</button>
+		<form class="signup__field" @submit.prevent>
+			<BaseInput v-model="email" :type="'text'" :placeholder="'Enter email'" />
+			<BaseInput
+				v-model="username"
+				:type="'text'"
+				:placeholder="'Enter username'"
+			/>
+			<BaseInput
+				v-model="password"
+				:type="'password'"
+				:placeholder="'Enter password'"
+				@enter="register"
+			/>
+			<br />
+			<div class="error" v-if="this.error">{{ this.error }}</div>
+			<BaseBtn @click="register" class="signup__button">Sign Up</BaseBtn>
+		</form>
 	</div>
 </template>
 
@@ -50,11 +57,9 @@ export default {
 
 <style lang="scss">
 .signup {
-	display: flex;
-	flex-wrap: wrap;
-	flex-direction: column;
-	justify-content: center;
-	width: 400px;
+	&__button {
+		width: 100%;
+	}
 }
 
 .error {

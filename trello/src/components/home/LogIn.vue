@@ -1,10 +1,17 @@
 <template>
 	<div class="login">
-		<label for="email">Email</label>
-		<input type="text" id="email" v-model="email" />
-		<label for="password">Password</label>
-		<input type="text" id="password" v-model="password" />
-		<button @click="login()">Login</button>
+		<form class="login__field" @submit.prevent>
+			<BaseInput v-model="email" :type="'text'" :placeholder="'Enter email'" />
+			<BaseInput
+				v-model="password"
+				:type="'password'"
+				:placeholder="'Enter password'"
+				@enter="login"
+			/>
+			<BaseBtn class="login__button" @click="login" :width="'100%'"
+				>Login</BaseBtn
+			>
+		</form>
 	</div>
 </template>
 
@@ -18,22 +25,33 @@ export default {
 		};
 	},
 	methods: {
-		login() {
-			this.$store
-				.dispatch('login', {
-					email: this.email,
-					password: this.password,
-				})
-				.then(user => {
-					console.log(user);
-					this.$router.push({
-						name: 'boards',
-						params: { username: user.username },
-					});
-				});
+		async login() {
+			const user = await this.$store.dispatch('login', {
+				email: this.email,
+				password: this.password,
+			});
+			this.$router.push({
+				name: 'boards',
+				params: { username: user.username },
+			});
 		},
 	},
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.login {
+	&__field {
+		margin: 3rem 0;
+	}
+
+	&__button {
+		background-color: $color-green-dark;
+		width: 100%;
+
+		&:hover {
+			background-color: $color-green-light;
+		}
+	}
+}
+</style>

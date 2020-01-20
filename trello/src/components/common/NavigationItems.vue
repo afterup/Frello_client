@@ -1,18 +1,25 @@
 <template>
 	<div class="navigation" v-if="!isAuthenticated">
-		<BaseBtn class="navigation__login" @click="showModal = true">Login</BaseBtn>
-		<BaseBtn class="navigation__signup" @click="$router.push('signup')"
+		<BaseBtn class="navigation__login" @click="handleLoginModal">Login</BaseBtn>
+		<Modal v-if="showLoginModal" @close="handleLoginModal">
+			<h3 slot="header">Log in to Trello</h3>
+			<div slot="body"><Login /></div>
+		</Modal>
+
+		<BaseBtn class="navigation__signup" @click="handleSignupModal"
 			>Sign Up</BaseBtn
 		>
-		<Modal v-if="showModal" @close="showModal = false">
-			<h3 slot="header">Login</h3>
-			<div slot="body"><Login /></div>
+		<Modal v-if="showSignupModal" @close="handleSignupModal">
+			<h3 slot="header">Sign up to trello</h3>
+			<div slot="body"><SignUp /></div>
 		</Modal>
 	</div>
 	<div class="user" v-else>
-		<div class="user__button" @click="handleUserContent">
-			{{ currentUser.username.substring(0, 1).toUpperCase() }}
-		</div>
+		<BaseIcon
+			:username="currentUser.username"
+			@click="handleUserContent"
+			:size="30"
+		/>
 		<div class="user__content" v-if="userContent">
 			<ul>
 				<li>
@@ -24,7 +31,16 @@
 					</span>
 				</li>
 				<hr />
-				<li>My Page</li>
+				<li
+					@click="
+						$router.push({
+							name: 'mypage',
+							params: { username: currentUser.username },
+						})
+					"
+				>
+					My Page
+				</li>
 				<li>Setting</li>
 				<li @click="logout">Log Out</li>
 			</ul>
@@ -36,7 +52,8 @@
 export default {
 	data() {
 		return {
-			showModal: false,
+			showLoginModal: false,
+			showSignupModal: false,
 			userContent: false,
 		};
 	},
@@ -52,22 +69,23 @@ export default {
 	},
 	components: {
 		Login: () => import('@/components/home/Login.vue'),
+		SignUp: () => import('@/components/home/SignUp.vue'),
 	},
 	methods: {
 		logout() {
 			this.$store.dispatch('LOGOUT').then(() => {
 				this.$router.push({ name: 'home' });
-				this.userClick();
+				this.handleUserContent();
 			});
-		},
-		openModal() {
-			this.modal = true;
-		},
-		closeModal() {
-			this.modal = false;
 		},
 		handleUserContent() {
 			this.userContent = !this.userContent;
+		},
+		handleLoginModal() {
+			this.showLoginModal = !this.showLoginModal;
+		},
+		handleSignupModal() {
+			this.showSignupModal = !this.showSignupModal;
 		},
 	},
 };
@@ -99,24 +117,8 @@ export default {
 		color: $color-primary;
 	}
 }
+
 .user {
-	&__button {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		border-radius: 25px;
-		background-color: #dfe1e6;
-		color: black;
-		height: 30px;
-		width: 30px;
-		font-size: 1.6rem;
-		font-weight: bolder;
-
-		&:hover {
-			cursor: pointer;
-		}
-	}
-
 	&__content {
 		position: absolute;
 		top: 45px;

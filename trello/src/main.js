@@ -8,10 +8,16 @@ Vue.config.productionTip = false;
 
 Vue.component('BaseContainer', () => import('@/components/ui/BaseContainer'));
 Vue.component('BaseBtn', () => import('@/components/ui/BaseBtn'));
+Vue.component('BaseIcon', () => import('@/components/ui/BaseIcon'));
+Vue.component('BaseInput', () => import('@/components/ui/BaseInput'));
 Vue.component('BaseTitleInput', () => import('@/components/ui/BaseTitleInput'));
 Vue.component('Modal', () => import('@/components/ui/Modal'));
 
 ApiService.init();
+
+router.beforeEach((to, from, next) => {
+	next();
+});
 
 new Vue({
 	router,

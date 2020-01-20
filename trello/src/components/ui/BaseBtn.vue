@@ -1,10 +1,5 @@
 <template>
-	<button
-		class="base-button"
-		:class="`${type}`"
-		:disabled="disabled"
-		@click="$emit('click')"
-	>
+	<button class="base-button" :disabled="disabled" @click="$emit('click')">
 		<span v-if="badge" class="base-button__badge">
 			<slot name="badge"></slot>
 		</span>
@@ -25,10 +20,6 @@ export default {
 			type: Boolean,
 			default: false,
 		},
-		type: {
-			type: String,
-			default: 'button',
-		},
 	},
 };
 </script>
@@ -36,8 +27,7 @@ export default {
 <style lang="scss" scoped>
 .base-button {
 	display: flex;
-	justify-items: center;
-	align-items: center;
+	justify-content: center;
 	padding: 0.35rem;
 	margin-right: 0.4rem;
 	border-radius: 3px;
