@@ -1,15 +1,13 @@
 <template>
 	<header class="header">
 		<div class="header__home">
-			<BaseBtn
-				class="header__home__button"
-				@click="$router.push({ name: 'home' })"
-			>
+			<BaseBtn class="header__home__button" @click="toHome">
 				<i class="material-icons">home</i>
 			</BaseBtn>
 			<BaseBtn
 				class="header__home__button"
 				v-if="isAuthenticated"
+				@click="toBoards"
 				:badge="true"
 			>
 				<i class="material-icons" slot="badge">developer_board</i>
@@ -21,6 +19,8 @@
 				href="@/assets/image/trello-logo-white.svg"
 				width="90"
 				height="40"
+				class="logo"
+				@click="toHome"
 			/>
 		</svg>
 		<NavigationItems
@@ -40,6 +40,17 @@ export default {
 	computed: {
 		...mapGetters(['isAuthenticated', 'currentUser']),
 	},
+	methods: {
+		toHome() {
+			this.$router.push({ name: 'home' });
+		},
+		toBoards() {
+			this.$router.push({
+				name: 'boards',
+				params: { username: currentUser.username },
+			});
+		},
+	},
 };
 </script>
 
@@ -57,5 +68,9 @@ export default {
 		display: flex;
 		align-items: center;
 	}
+}
+
+.logo:hover {
+	cursor: pointer;
 }
 </style>
