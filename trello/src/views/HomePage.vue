@@ -6,12 +6,26 @@
 		<footer class="footer">
 			<div class="footer__text">©Reference to trello</div>
 		</footer>
+		<Modal v-if="showModal" @close="closeModal">
+			<router-view></router-view>
+		</Modal>
 	</div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
 	name: 'home',
+	computed: {
+		...mapGetters(['showModal']),
+	},
+	methods: {
+		closeModal() {
+			this.$store.commit('CLOSE_MODAL');
+			this.$router.push({ name: 'home' });
+		},
+	},
 };
 </script>
 

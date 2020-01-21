@@ -1,5 +1,6 @@
 <template>
 	<div class="signup">
+		<h3 class="signup__title">Sign up to Trello</h3>
 		<form class="signup__field" @submit.prevent>
 			<BaseInput v-model="email" :type="'text'" :placeholder="'Enter email'" />
 			<BaseInput
@@ -57,8 +58,16 @@ export default {
 
 <style lang="scss">
 .signup {
+	&__title {
+		text-align: center;
+		font-size: 1.5rem;
+		margin: 4rem;
+		color: $color-grey-dark-1;
+	}
+
 	&__button {
 		width: 100%;
+		margin-bottom: 3rem;
 	}
 }
 

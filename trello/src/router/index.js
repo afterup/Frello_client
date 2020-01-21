@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+import store from '@/store/index.js';
 
 Vue.use(VueRouter);
 
@@ -11,24 +12,31 @@ VueRouter.prototype.push = function push(location, onResolve, onReject) {
 	return originalPush.call(this, location).catch(err => err);
 };
 
+const checkModal = () => (to, from, next) => {
+	store.commit('OPEN_MODAL');
+	next();
+};
+
 const routes = [
 	{
 		path: '/',
 		name: 'home',
 		component: () => import('@/views/HomePage.vue'),
+		children: [
+			{
+				path: 'login',
+				component: () => import('@/components/home/Login.vue'),
+				beforeEnter: checkModal(),
+			},
+			{
+				path: 'signup',
+				component: () => import('@/components/home/Signup.vue'),
+				beforeEnter: checkModal(),
+			},
+		],
 	},
 	{
-		path: '/login',
-		name: 'login',
-		component: () => import('@/components/home/Login.vue'),
-	},
-	{
-		path: '/signup',
-		name: 'signup',
-		component: () => import('@/components/home/SignUp.vue'),
-	},
-	{
-		path: '/:username',
+		path: '/:username/boards',
 		name: 'boards',
 		component: () => import('@/views/BoardsPage.vue'),
 	},
@@ -36,6 +44,11 @@ const routes = [
 		path: '/board/:id',
 		name: 'board',
 		component: () => import('@/views/BoardPage.vue'),
+	},
+	{
+		path: '/:username',
+		name: 'mypage',
+		component: () => import('@/views/MyPage.vue'),
 	},
 ];
 

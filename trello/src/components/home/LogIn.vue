@@ -1,5 +1,6 @@
 <template>
 	<div class="login">
+		<h3 class="login__title">Log in to Trello</h3>
 		<form class="login__field" @submit.prevent>
 			<BaseInput v-model="email" :type="'text'" :placeholder="'Enter email'" />
 			<BaseInput
@@ -8,6 +9,7 @@
 				:placeholder="'Enter password'"
 				@enter="login"
 			/>
+			<br />
 			<BaseBtn class="login__button" @click="login" :width="'100%'"
 				>Login</BaseBtn
 			>
@@ -43,6 +45,13 @@ export default {
 .login {
 	&__field {
 		margin: 3rem 0;
+	}
+
+	&__title {
+		text-align: center;
+		font-size: 1.5rem;
+		margin-top: 4rem;
+		color: $color-grey-dark-1;
 	}
 
 	&__button {

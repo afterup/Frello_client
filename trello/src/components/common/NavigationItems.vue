@@ -1,18 +1,11 @@
 <template>
 	<div class="navigation" v-if="!isAuthenticated">
-		<BaseBtn class="navigation__login" @click="handleLoginModal">Login</BaseBtn>
-		<Modal v-if="showLoginModal" @close="handleLoginModal">
-			<h3 slot="header">Log in to Trello</h3>
-			<div slot="body"><Login /></div>
-		</Modal>
-
-		<BaseBtn class="navigation__signup" @click="handleSignupModal"
-			>Sign Up</BaseBtn
-		>
-		<Modal v-if="showSignupModal" @close="handleSignupModal">
-			<h3 slot="header">Sign up to trello</h3>
-			<div slot="body"><SignUp /></div>
-		</Modal>
+		<router-link :to="'login'" tag="div">
+			<BaseBtn class="navigation__login" @click="openModal">Login</BaseBtn>
+		</router-link>
+		<router-link :to="'signup'" tag="div">
+			<BaseBtn class="navigation__signup" @click="openModal">Sign Up</BaseBtn>
+		</router-link>
 	</div>
 	<div class="user" v-else>
 		<BaseIcon
@@ -49,11 +42,11 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
 	data() {
 		return {
-			showLoginModal: false,
-			showSignupModal: false,
 			userContent: false,
 		};
 	},
@@ -67,9 +60,8 @@ export default {
 			required: false,
 		},
 	},
-	components: {
-		Login: () => import('@/components/home/Login.vue'),
-		SignUp: () => import('@/components/home/SignUp.vue'),
+	computed: {
+		...mapGetters(['showModal']),
 	},
 	methods: {
 		logout() {
@@ -81,11 +73,8 @@ export default {
 		handleUserContent() {
 			this.userContent = !this.userContent;
 		},
-		handleLoginModal() {
-			this.showLoginModal = !this.showLoginModal;
-		},
-		handleSignupModal() {
-			this.showSignupModal = !this.showSignupModal;
+		openModal() {
+			this.$store.commit('OPEN_MODAL');
 		},
 	},
 };
