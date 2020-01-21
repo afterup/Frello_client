@@ -64,23 +64,4 @@ export default {
 	height: 25px;
 	margin-right: 5px;
 }
-
-.blue {
-	background-color: $background-blue;
-}
-.red {
-	background-color: $background-red;
-}
-.orange {
-	background-color: $background-orange;
-}
-.yellow {
-	background-color: $background-yellow;
-}
-.green {
-	background-color: $background-green;
-}
-.purple {
-	background-color: $background-purple;
-}
 </style>

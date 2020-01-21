@@ -1,6 +1,6 @@
 <template>
-	<div class="boards__favorited__cards__item" @click="clickEvent">
-		<div class="boards__favorited__cards__item__title">
+	<div class="card" @click="clickEvent" :class="board.background">
+		<div class="card__title">
 			{{ board.title }}
 		</div>
 	</div>
@@ -23,8 +23,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.boards__favorited__cards__item {
-	background-color: $color-second;
+@import '@/lib/styles/_boardPalette';
+.card {
 	background-position: center;
 	border-radius: 3px;
 	width: 190px;
