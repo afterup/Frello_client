@@ -114,6 +114,7 @@ export default {
 		right: 10px;
 		width: 180px;
 		height: 120px;
+		z-index: 2;
 		background-color: #fff;
 
 		ul {

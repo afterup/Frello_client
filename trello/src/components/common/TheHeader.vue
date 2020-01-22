@@ -47,7 +47,7 @@ export default {
 		toBoards() {
 			this.$router.push({
 				name: 'boards',
-				params: { username: currentUser.username },
+				params: { username: this.currentUser.username },
 			});
 		},
 	},

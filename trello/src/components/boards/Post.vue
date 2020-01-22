@@ -1,20 +1,29 @@
 <template>
-	<div class="board-post">
-		<label for="title">title</label>
-		<input type="text" id="title" v-model="title" />
-		<br />
-		<div class="error" v-if="this.error">{{ this.error }}</div>
-		<div class="colors">
+	<div class="post">
+		<div class="post__field">
+			<div>
+				<BaseInput
+					class="post__field__button"
+					v-model="title"
+					:type="'text'"
+					:placeholder="'Add board title'"
+				/>
+				<BaseBtn @click="onSubmit">Create Board</BaseBtn>
+			</div>
+			<div class="error" v-if="this.error">{{ this.error }}</div>
+			<div class="post__field__close" @click="$emit('close')">
+				<i class="material-icons">close</i>
+			</div>
+		</div>
+		<div class="post__colors">
 			<div
-				class="color"
+				class="post__colors__item"
 				:class="color"
 				v-for="(color, i) in colors"
 				:key="i"
 				@click="chooseBackground(color)"
 			></div>
 		</div>
-
-		<button @click="onSubmit">Create</button>
 	</div>
 </template>
 
@@ -45,23 +54,58 @@ export default {
 				});
 		},
 		chooseBackground(color) {
-			this.color = color;
+			this.background = color;
 		},
 	},
 };
 </script>
 
 <style lang="scss" scoped>
-.colors {
+@import '@/lib/styles/_boardPalette';
+
+.post {
 	display: flex;
-	flex-direction: row;
 	justify-content: center;
 	align-items: center;
-}
+	margin: 12rem auto;
 
-.color {
-	width: 25px;
-	height: 25px;
-	margin-right: 5px;
+	&__field {
+		display: flex;
+		align-content: space-between;
+		padding: 1.5rem 1.3rem;
+		border-radius: 2px;
+		background-color: aliceblue;
+
+		&__button {
+		}
+
+		&__close {
+			margin-left: 3rem;
+
+			&:hover {
+				cursor: pointer;
+			}
+		}
+	}
+
+	&__colors {
+		display: flex;
+		flex-wrap: wrap;
+		flex-direction: row;
+		justify-content: center;
+		width: 10rem;
+
+		&__item {
+			width: 25px;
+			height: 25px;
+			margin-right: 5px;
+			margin-bottom: 1rem;
+			border-radius: 3px;
+
+			&:hover {
+				cursor: pointer;
+			}
+		}
+	}
 }
 </style>
