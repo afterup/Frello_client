@@ -15,12 +15,10 @@ const getters = {
 	board(state) {
 		return state.board;
 	},
-	favorites(state) {
-		return state.favorites;
-	},
 };
 
 const actions = {
+	/* BOARD */
 	async FETCH_BOARDS({ commit }) {
 		try {
 			const { data } = await ApiService.get(`/board`);
@@ -100,6 +98,35 @@ const actions = {
 			console.log(err);
 		}
 	},
+	async MOVE_LIST({ commit, state }, { element, oldIndex, newIndex }) {
+		try {
+			console.log(element);
+			let bothList = {};
+
+			if (state.board.Lists[newIndex - 1]) {
+				bothList['leftListPosition'] = state.board.Lists[newIndex - 1].position;
+			}
+
+			if (state.board.Lists[newIndex + 1]) {
+				bothList['rightListPosition'] =
+					state.board.Lists[newIndex + 1].position;
+			}
+
+			const { data } = await ApiService.put(`/list/${element.list_id}`, {
+				list: {
+					bothList,
+				},
+			});
+			commit('MOVE_SAVE_LIST', {
+				list: data.list,
+				idx: newIndex,
+			});
+			console.log(data);
+		} catch (error) {
+			console.log(error);
+		}
+	},
+	/* CARD */
 	async PUBLISH_CARD({ commit }, card) {
 		const { data } = await ApiService.post('/card', { card: card });
 		console.log(data);
@@ -137,6 +164,9 @@ const mutations = {
 				}
 			});
 		}
+	},
+	MOVE_SAVE_LIST(state, payload) {
+		state.board.Lists[payload.idx] = payload.list;
 	},
 	DELETE_COLUMN_LIST(state, id) {
 		const index = state.board.Lists.findIndex(
