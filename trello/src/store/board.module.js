@@ -119,7 +119,8 @@ const actions = {
 			});
 			commit('MOVE_SAVE_LIST', {
 				list: data.list,
-				idx: newIndex,
+				oldIndex,
+				newIndex,
 			});
 			console.log(data);
 		} catch (error) {
@@ -165,8 +166,9 @@ const mutations = {
 			});
 		}
 	},
-	MOVE_SAVE_LIST(state, payload) {
-		state.board.Lists[payload.idx] = payload.list;
+	MOVE_SAVE_LIST(state, { list, oldIndex, newIndex }) {
+		// console.log(state.board.Lists[newIndex]);
+		state.board.Lists[newIndex].position = list.position;
 	},
 	DELETE_COLUMN_LIST(state, id) {
 		const index = state.board.Lists.findIndex(
