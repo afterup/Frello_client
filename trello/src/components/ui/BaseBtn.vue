@@ -28,6 +28,7 @@ export default {
 .base-button {
 	display: flex;
 	justify-content: center;
+	align-items: center;
 	padding: 0.35rem;
 	margin-right: 0.4rem;
 	border-radius: 3px;

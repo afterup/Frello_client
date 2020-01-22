@@ -1,19 +1,34 @@
 <template>
-	<div class="container">
-		<slot></slot>
+	<div class="base-wrap">
+		<div class="base-container" :class="type">
+			<slot></slot>
+		</div>
 	</div>
 </template>
 
 <script>
-export default {};
+export default {
+	props: {
+		type: {
+			type: String,
+			required: false,
+		},
+	},
+};
 </script>
 
-<style>
-.container {
-	max-width: 120rem;
-	margin: 0 6rem auto;
-	background-color: #ffffff;
+<style lang="scss" scoped>
+.base-wrap {
+	height: 100vh;
+	// background-color: blue;
+}
 
-	min-height: 50rem;
+.base-container {
+	max-width: 120rem;
+	margin: auto;
+	background-color: #ffffff;
+}
+.board {
+	height: 89vh;
 }
 </style>
