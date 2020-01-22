@@ -1,41 +1,34 @@
 <template>
 	<BaseContainer>
-		<div class="boards__favorited">
-			<h3 class="boards__favorited__title">
-				<i class="material-icons">
-					star_border
-				</i>
-				Favorited Boards
+		<Panel>
+			<h3 slot="title">
+				<i class="material-icons">star_border</i>
+				Starred Boards
 			</h3>
-			<div class="boards__favorited__cards">
-				<Card
-					v-for="board in boards"
-					:key="board.board_id"
-					:board="board"
-					@clickCard="toBoard(board.board_id)"
-				></Card>
-
-				<div class="boards__favorited__cards__add" @click="handleModal">
-					Create new board
-				</div>
-
-				<Modal
-					v-if="showCreateBoardModal"
-					@close="showCreateBoardModal = false"
-				>
-					<h2 slot="header">Create new board</h2>
-					<Post slot="body" />
-				</Modal>
-			</div>
-		</div>
-		<div class="boards__personal">
-			<h3 class="boards__personal__title">
-				<i class="material-icons">
-					person
-				</i>
+			<Card
+				slot="card"
+				v-for="favorite in favorites"
+				:key="favorite.board_id"
+				:board="favorite"
+				@clickCard="toBoard(favorite.board_id)"
+			></Card>
+		</Panel>
+		<Panel :type="'personal'">
+			<h3 slot="title">
+				<i class="material-icons">person</i>
 				Personal Boards
 			</h3>
-		</div>
+			<Card
+				slot="card"
+				v-for="board in boards"
+				:key="board.board_id"
+				:board="board"
+				@clickCard="toBoard(board.board_id)"
+			></Card>
+		</Panel>
+		<Modal v-if="showModal" :type="'general'" @close="closeModal">
+			<Post @close="closeModal" />
+		</Modal>
 	</BaseContainer>
 </template>
 
@@ -43,68 +36,33 @@
 import { mapGetters } from 'vuex';
 
 export default {
-	data() {
-		return {
-			showCreateBoardModal: false,
-		};
-	},
 	components: {
+		Panel: () => import('@/components/boards/Panel.vue'),
 		Card: () => import('@/components/boards/Card.vue'),
 		Post: () => import('@/components/boards/Post.vue'),
 	},
-	mounted() {
+	created() {
 		this.$store.dispatch('FETCH_BOARDS');
 	},
 	computed: {
-		...mapGetters(['boards']),
+		...mapGetters(['boards', 'showModal']),
+		favorites() {
+			let favorites = [];
+			this.boards.find(board => {
+				if (board.favorite) favorites.push(board);
+			});
+			return favorites;
+		},
 	},
 	methods: {
 		toBoard(id) {
 			this.$router.push({ name: 'board', params: { id: id } });
 		},
-		handleModal() {
-			this.showCreateBoardModal = !this.showCreateBoardModal;
+		closeModal() {
+			this.$store.commit('CLOSE_MODAL');
 		},
 	},
 };
 </script>
 
-<style lang="scss" scoped>
-.boards {
-	width: 80%;
-	height: 80%;
-	margin: 3rem 20rem auto;
-}
-
-.boards__favorited__title {
-	font-size: 1.6rem;
-	font-weight: bold;
-	margin-bottom: 10px;
-}
-
-.boards__favorited__cards {
-	display: flex;
-	flex-wrap: wrap;
-}
-
-.boards__favorited__cards__add {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	border-radius: 3px;
-	background-color: #f0f2f5;
-	width: 190px;
-	height: 95px;
-	margin: 4.5px 9px;
-	font-size: 1.6rem;
-}
-
-.boards__favorited__cards__add:hover {
-	cursor: pointer;
-	background-color: #e6e8eb;
-}
-
-.boards__personal {
-	margin-top: 20px;
-}
-</style>
+<style lang="scss" scoped></style>
