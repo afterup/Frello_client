@@ -1,6 +1,11 @@
 <template>
 	<div class="modal" @click.self="$emit('close')">
-		<div class="modal__container">
+		<div v-if="type === 'general'" class="modal__general-container">
+			<div>
+				<slot></slot>
+			</div>
+		</div>
+		<div v-else class="modal__container">
 			<div class="modal__close" @click="$emit('close')">
 				<i class="material-icons">close</i>
 			</div>
@@ -17,6 +22,10 @@ export default {
 			type: String,
 			require: false,
 		},
+		type: {
+			type: String,
+			require: false,
+		},
 	},
 };
 </script>
@@ -29,7 +38,7 @@ export default {
 	left: 0;
 	width: 100%;
 	height: 100%;
-	background-color: rgba(0, 0, 0, 0.22);
+	background-color: rgba(0, 0, 0, 0.5);
 
 	&__close {
 		float: right;
