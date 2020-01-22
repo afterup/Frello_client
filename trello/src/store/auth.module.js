@@ -1,3 +1,4 @@
+import Vue from 'vue';
 import { ApiService } from '@/common/api.service.js';
 import JwtService from '@/common/jwt.service.js';
 
@@ -43,6 +44,7 @@ const actions = {
 			console.log(data);
 			commit('SET_USER_DATA', data.user);
 			commit('SET_TOKEN', data.token);
+			return data.user;
 			// dispatch('SET_EXPIRATION', data.expiresIn);
 		} catch (error) {
 			commit('SET_ERROR', error.response.data.error.message);
@@ -50,9 +52,7 @@ const actions = {
 	},
 	async login({ commit }, user) {
 		try {
-			console.log(user);
 			const { data } = await ApiService.post('/user/login', user);
-			console.log(data);
 			commit('SET_USER_DATA', data.user);
 			commit('SET_TOKEN', data.token);
 			// dispatch('SET_EXPIRATION', data.expiresIn);
@@ -73,7 +73,7 @@ const actions = {
 	},
 	LOGOUT({ commit }) {
 		commit('CLEAR_USER_DATA');
-		commit('SET_TOKEN', null);
+		JwtService.destroyToken();
 	},
 };
 
