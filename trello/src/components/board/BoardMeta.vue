@@ -9,7 +9,7 @@
 		<div class="board__title" v-else @click="handleBoardTitleInput">
 			{{ board.title }}
 		</div>
-		<div class="board__favorite" @click="addFavoriteBoard">
+		<div class="board__favorite" @click="toggleFavorite">
 			<i class="material-icons">
 				star
 			</i>
@@ -61,9 +61,13 @@ export default {
 					// this.$store.dispatch('FETCH_BOARD', this.$route.params.id);
 				});
 		},
-		addFavoriteBoard() {
+		toggleFavorite() {
+			let favorite = this.board.favorite;
 			this.$store
-				.dispatch('PUBLISH_FAVORITE_BOARD', this.$route.params.id)
+				.dispatch('PUBLISH_FAVORITE_BOARD', {
+					id: this.$route.params.id,
+					favorite: !favorite,
+				})
 				.then(() => {});
 		},
 		handleDeleteModal() {

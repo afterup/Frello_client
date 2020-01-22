@@ -24,6 +24,7 @@ const actions = {
 	async FETCH_BOARDS({ commit }) {
 		try {
 			const { data } = await ApiService.get(`/board`);
+			console.log(data);
 			commit('SET_BOARDS', data.boards);
 		} catch (err) {
 			console.log(err.response);
@@ -64,14 +65,15 @@ const actions = {
 			console.log(err);
 		}
 	},
-	async FETCH_FAVORITE_BOARDS({ commit }) {
-		const { data } = await ApiService.get(`/favorite`);
-		commit('SET_FAVORITES', data.favorite);
-	},
-	async PUBLISH_FAVORITE_BOARD({ commit }, id) {
-		const { data } = await ApiService.post(`/board/${id}/favorite`);
+	/* FAVORITE */
+	async PUBLISH_FAVORITE_BOARD({ commit }, payload) {
+		const { data } = await ApiService.put(`/board/${payload.id}/favorite`, {
+			favorite: payload.favorite,
+		});
 		console.log(data);
 	},
+
+	/* LIST */
 	async PUBLISH_LIST({ commit }, list) {
 		try {
 			const { data } = await ApiService.post('/list', { list: list });
@@ -84,7 +86,6 @@ const actions = {
 		}
 	},
 	async UPDATE_LIST({ commit }, list) {
-		console.log(list);
 		const { data } = await ApiService.put(`/list/${list.list_id}`, {
 			list: list,
 		});
@@ -112,9 +113,6 @@ const mutations = {
 	},
 	SET_BOARD(state, board) {
 		state.board = board;
-	},
-	SET_FAVORITES(state, favorites) {
-		state.favorites = favorites;
 	},
 	ADD_LIST(state, list) {
 		state.board.Lists.push(list);
