@@ -1,17 +1,14 @@
 import Vue from 'vue';
-import App from './App.vue';
 import router from './router';
+
+import App from './App.vue';
 import store from './store';
+
 import { ApiService } from '@/common/api.service.js';
 
-Vue.config.productionTip = false;
+import '@/components/ui/index.js';
 
-Vue.component('BaseContainer', () => import('@/components/ui/BaseContainer'));
-Vue.component('BaseBtn', () => import('@/components/ui/BaseBtn'));
-Vue.component('BaseIcon', () => import('@/components/ui/BaseIcon'));
-Vue.component('BaseInput', () => import('@/components/ui/BaseInput'));
-Vue.component('BaseTitleInput', () => import('@/components/ui/BaseTitleInput'));
-Vue.component('Modal', () => import('@/components/ui/Modal'));
+Vue.config.productionTip = false;
 
 ApiService.init();
 
