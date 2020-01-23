@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import { ApiService } from '@/common/api.service.js';
+import JwtService from '@/common/jwt.service.js';
 
 const state = {
 	boards: [],
@@ -21,7 +22,10 @@ const actions = {
 	/* BOARD */
 	async FETCH_BOARDS({ commit }) {
 		try {
-			const { data } = await ApiService.get(`/board`);
+			console.log(JwtService.getToken());
+			const { data } = await ApiService.get(
+				`/board?authorization=${JwtService.getToken()}`,
+			);
 			console.log(data);
 			commit('SET_BOARDS', data.boards);
 		} catch (err) {
