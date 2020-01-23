@@ -20,10 +20,12 @@
 			</i>
 		</div>
 		<Modal v-if="deleteModal" @close="handleDeleteModal">
-			<h3 slot="header">알림</h3>
-			<div slot="body">
-				<div>정말로 삭제하시겠습니까?</div>
-				<button @click="deleteBoard">확인</button>
+			<div>
+				<h3>알림</h3>
+				<div>
+					<div>정말로 삭제하시겠습니까?</div>
+					<button @click="deleteBoard">확인</button>
+				</div>
 			</div>
 		</Modal>
 	</div>
