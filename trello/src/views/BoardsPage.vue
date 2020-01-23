@@ -1,6 +1,6 @@
 <template>
 	<BaseContainer>
-		<Panel>
+		<Panel v-if="favorites.length > 0">
 			<h3 slot="title">
 				<i class="material-icons">star_border</i>
 				Starred Boards
