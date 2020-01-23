@@ -32,6 +32,7 @@ export default {
 				email: this.email,
 				password: this.password,
 			});
+			this.$store.commit('CLOSE_MODAL');
 			this.$router.push({
 				name: 'boards',
 				params: { username: user.username },
