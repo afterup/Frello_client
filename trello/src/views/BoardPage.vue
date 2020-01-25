@@ -1,7 +1,13 @@
 <template>
-	<div class="container" :class="board.background">
-		<BoardMeta :board="board" :currentUser="currentUser" />
-		<Columns :lists="board.Lists" />
+	<!-- <div :class="board.background"> -->
+	<div class="board-page">
+		<BaseContainer :type="'board-wrap'">
+			<BoardMeta :board="board" :currentUser="currentUser" />
+			<Columns :lists="board.Lists" />
+			<Modal v-if="showModal" @close="closeModal">
+				<router-view></router-view>
+			</Modal>
+		</BaseContainer>
 	</div>
 </template>
 
@@ -23,21 +29,13 @@ export default {
 		});
 	},
 	computed: {
-		...mapGetters(['board', 'currentUser']),
+		...mapGetters(['board', 'currentUser', 'showModal']),
 	},
-	methods: {},
 };
 </script>
 
 <style lang="scss" scoped>
 @import '@/lib/styles/_boardPalette';
-
-.container {
-	max-width: 120rem;
-	margin: 0 6rem auto;
-
-	min-height: 50rem;
-}
 
 .card {
 	width: 760px;
