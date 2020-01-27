@@ -1,11 +1,6 @@
 <template>
 	<div class="board">
-		<input
-			type="text"
-			v-if="showBoardTitleInput"
-			v-model="title"
-			@keyup.enter="updateBoardTitle"
-		/>
+		<input type="text" v-if="showBoardTitleInput" v-model="title" @keyup.enter="updateBoardTitle" />
 		<div class="board__title" v-else @click="handleBoardTitleInput">
 			{{ board.title }}
 		</div>

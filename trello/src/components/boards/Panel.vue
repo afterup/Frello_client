@@ -5,11 +5,7 @@
 		</h3>
 		<div class="boards__cards">
 			<slot name="card"></slot>
-			<div
-				class="boards__cards__add"
-				v-if="type === 'personal'"
-				@click="openModal"
-			>
+			<div class="boards__cards__add" v-if="type === 'personal'" @click="openModal">
 				Create new board
 			</div>
 		</div>
