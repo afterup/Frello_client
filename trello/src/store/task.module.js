@@ -72,26 +72,35 @@ const actions = {
 		commit('ADD_CARD', data.card);
 	},
 
-	async MOVE_CARD({ commit, state }, evt) {
-		if (evt.moved) {
-			const { element, newIndex } = evt.moved;
+	async MOVE_CARD({ commit, state }, { evt }) {
+		function findBothPosition(listId, index) {
+			const cards = state.lists.find(list => list.list_id === listId).Cards;
 			let bothItem = {};
-			const cards = state.lists.find(list => list.list_id === element.list_id)
-				.Cards;
-
-			if (cards[newIndex - 1]) {
-				bothItem['leftPosition'] = cards[newIndex - 1].position;
+			if (cards[index - 1]) {
+				bothItem['leftPosition'] = cards[index - 1].position;
 			}
-
-			if (cards[newIndex + 1]) {
-				bothItem['rightPosition'] = cards[newIndex + 1].position;
+			if (cards[index + 1]) {
+				bothItem['rightPosition'] = cards[index + 1].position;
 			}
-			console.log(bothItem);
+			return bothItem;
+		}
+
+		try {
+			const { relatedContext, newListId } = evt;
+			const { element, index } = relatedContext;
+
+			const bothItem = findBothPosition(newListId, index);
+
 			const { data } = await ApiService.put(`/card/${element.card_id}`, {
 				card: {
 					bothItem,
+					listId: newListId,
 				},
 			});
+
+			console.log(data);
+		} catch (err) {
+			console.log(err);
 		}
 	},
 };

@@ -23,7 +23,8 @@
 					class="card"
 					ghost-class="ghost"
 					group="card"
-					@change="moveCard"
+					:move="moveCard"
+					@end="endCard"
 				>
 					<div v-for="card in list.Cards" :key="card.card_id">
 						<Task :card="card" />
@@ -57,6 +58,7 @@ export default {
 		return {
 			listTitle: '',
 			cardTitle: '',
+			moveEvent: {},
 		};
 	},
 	components: {
@@ -110,7 +112,18 @@ export default {
 		},
 		moveCard: function(evt) {
 			console.log(evt);
-			this.$store.dispatch('MOVE_CARD', evt);
+			const { relatedContext, draggedContext } = evt;
+
+			this.moveEvent = {
+				relatedContext,
+				newListId: relatedContext.element.list_id,
+			};
+		},
+		endCard: function(evt) {
+			console.log(this.moveEvent);
+			this.$store.dispatch('MOVE_CARD', {
+				evt: this.moveEvent,
+			});
 		},
 	},
 };
