@@ -6,6 +6,8 @@ const state = {
 	boards: [],
 	favorites: [],
 	board: {},
+	lists: [],
+	cards: [],
 	error: null,
 };
 
@@ -35,6 +37,7 @@ const actions = {
 	async FETCH_BOARD({ commit }, id) {
 		try {
 			const { data } = await ApiService.get(`/board/${id}`);
+			console.log(data.board);
 			commit('SET_BOARD', data.board);
 		} catch (err) {
 			console.log(err);
@@ -105,20 +108,19 @@ const actions = {
 	async MOVE_LIST({ commit, state }, { element, oldIndex, newIndex }) {
 		try {
 			console.log(element);
-			let bothList = {};
+			let bothItem = {};
 
 			if (state.board.Lists[newIndex - 1]) {
-				bothList['leftListPosition'] = state.board.Lists[newIndex - 1].position;
+				bothItem['leftPosition'] = state.board.Lists[newIndex - 1].position;
 			}
 
 			if (state.board.Lists[newIndex + 1]) {
-				bothList['rightListPosition'] =
-					state.board.Lists[newIndex + 1].position;
+				bothItem['rightPosition'] = state.board.Lists[newIndex + 1].position;
 			}
 
 			const { data } = await ApiService.put(`/list/${element.list_id}`, {
 				list: {
-					bothList,
+					bothItem,
 				},
 			});
 			commit('MOVE_SAVE_LIST', {
@@ -136,6 +138,31 @@ const actions = {
 		const { data } = await ApiService.post('/card', { card: card });
 		console.log(data);
 		commit('ADD_CARD', data.card);
+	},
+
+	async MOVE_CARD({ commit, state }, evt) {
+		const { element, newIndex } = evt;
+
+		let bothItem = {};
+		const cards = state.board.Lists.find(list => list.list_id === list_id)
+			.Cards;
+
+		console.log('check2');
+		if (cards[newIndex - 1]) {
+			bothItem['leftPosition'] = cards[newIndex - 1].position;
+		}
+
+		if (cards[newIndex + 1]) {
+			bothItem['rightPosition'] = cards[newIndex + 1].position;
+		}
+		console.log(bothItem);
+		const { data } = await ApiService.put(`/card/${card_id}`, {
+			card: {
+				bothItem,
+				newElement: relatedContext.element,
+				newIndex: draggedContext.element,
+			},
+		});
 	},
 };
 
