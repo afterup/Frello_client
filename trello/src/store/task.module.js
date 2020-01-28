@@ -73,28 +73,26 @@ const actions = {
 	},
 
 	async MOVE_CARD({ commit, state }, evt) {
-		const { element, newIndex } = evt;
+		if (evt.moved) {
+			const { element, newIndex } = evt.moved;
+			let bothItem = {};
+			const cards = state.lists.find(list => list.list_id === element.list_id)
+				.Cards;
 
-		let bothItem = {};
-		const cards = state.board.Lists.find(list => list.list_id === list_id)
-			.Cards;
+			if (cards[newIndex - 1]) {
+				bothItem['leftPosition'] = cards[newIndex - 1].position;
+			}
 
-		console.log('check2');
-		if (cards[newIndex - 1]) {
-			bothItem['leftPosition'] = cards[newIndex - 1].position;
+			if (cards[newIndex + 1]) {
+				bothItem['rightPosition'] = cards[newIndex + 1].position;
+			}
+			console.log(bothItem);
+			const { data } = await ApiService.put(`/card/${element.card_id}`, {
+				card: {
+					bothItem,
+				},
+			});
 		}
-
-		if (cards[newIndex + 1]) {
-			bothItem['rightPosition'] = cards[newIndex + 1].position;
-		}
-		console.log(bothItem);
-		const { data } = await ApiService.put(`/card/${card_id}`, {
-			card: {
-				bothItem,
-				newElement: relatedContext.element,
-				newIndex: draggedContext.element,
-			},
-		});
 	},
 };
 

@@ -12,7 +12,7 @@
 					:type="'text'"
 					v-model="list.title"
 					:toggle="true"
-					@enter="updateListTitle(list.list_id, list.title)"
+					@enter="updateList(list.list_id, list.title)"
 				></BaseInput>
 
 				<BaseBtn slot="button" @click="deleteList(list.list_id)">
@@ -26,7 +26,7 @@
 					@change="moveCard"
 				>
 					<div v-for="card in list.Cards" :key="card.card_id">
-						<Task :card="card" :listId="card.list_id" />
+						<Task :card="card" />
 					</div>
 				</draggable>
 				<BaseInput
@@ -38,22 +38,14 @@
 				/>
 			</div>
 		</draggable>
-		<input
-			type="text"
+		<BaseInput
 			class="add-list__input"
-			plceholder="Enter a title for this list..."
+			:create="true"
+			:placeholder="'Add another list'"
 			v-model="listTitle"
-			v-if="showListCreateInput"
-			@keyup.enter="createList"
+			:type="'text'"
+			@enter="createList"
 		/>
-		<div class="add-list" @click="handleListCreateInput" v-else>
-			<i class="material-icons">
-				add
-			</i>
-			<div class="add-list__text">
-				Add another list
-			</div>
-		</div>
 	</div>
 </template>
 
@@ -63,9 +55,6 @@ import draggable from 'vuedraggable';
 export default {
 	data() {
 		return {
-			showListCreateInput: false,
-			isDragging: false,
-			delayedDragging: false,
 			listTitle: '',
 			cardTitle: '',
 		};
@@ -80,17 +69,6 @@ export default {
 			required: true,
 		},
 	},
-	watch: {
-		// isDragging(newValue) {
-		// 	if (newValue) {
-		// 		this.delayedDragging = true;
-		// 		return;
-		// 	}
-		// 	this.$nextTick(() => {
-		// 		this.delayedDragging = false;
-		// 	});
-		// },
-	},
 	methods: {
 		createList() {
 			this.$store
@@ -103,20 +81,7 @@ export default {
 					this.listTitle = '';
 				});
 		},
-		createCard(listId) {
-			this.$store
-				.dispatch('PUBLISH_CARD', {
-					list_id: listId,
-					title: this.cardTitle,
-				})
-				.then(() => {
-					this.cardTitle = '';
-				});
-		},
-		handleListCreateInput() {
-			this.showListCreateInput = !this.showListCreateInput;
-		},
-		updateListTitle(id, title) {
+		updateList(id, title) {
 			this.$store
 				.dispatch('UPDATE_LIST', {
 					list_id: id,
@@ -132,6 +97,16 @@ export default {
 		moveList: function(evt) {
 			console.log(evt);
 			if (evt.moved) this.$store.dispatch('MOVE_LIST', evt.moved);
+		},
+		createCard(listId) {
+			this.$store
+				.dispatch('PUBLISH_CARD', {
+					list_id: listId,
+					title: this.cardTitle,
+				})
+				.then(() => {
+					this.cardTitle = '';
+				});
 		},
 		moveCard: function(evt) {
 			console.log(evt);
