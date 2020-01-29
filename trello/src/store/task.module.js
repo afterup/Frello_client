@@ -86,17 +86,22 @@ const actions = {
 		}
 
 		try {
-			const { relatedContext, newListId } = evt;
-			const { element, index } = relatedContext;
+			const { relatedContext, draggedContext } = evt;
 
-			const bothItem = findBothPosition(newListId, index);
+			const bothItem = findBothPosition(
+				draggedContext.element.list_id,
+				relatedContext.index,
+			);
 
-			const { data } = await ApiService.put(`/card/${element.card_id}`, {
-				card: {
-					bothItem,
-					listId: newListId,
+			const { data } = await ApiService.put(
+				`/card/${draggedContext.element.card_id}`,
+				{
+					card: {
+						bothItem,
+						listId: draggedContext.element.list_id,
+					},
 				},
-			});
+			);
 
 			console.log(data);
 		} catch (err) {

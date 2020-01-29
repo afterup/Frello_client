@@ -110,13 +110,13 @@ export default {
 					this.cardTitle = '';
 				});
 		},
-		moveCard: function(evt) {
+		moveCard: function(evt, originalEvent) {
 			console.log(evt);
 			const { relatedContext, draggedContext } = evt;
 
 			this.moveEvent = {
 				relatedContext,
-				newListId: relatedContext.element.list_id,
+				draggedContext,
 			};
 		},
 		endCard: function(evt) {
