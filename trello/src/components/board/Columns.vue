@@ -8,39 +8,45 @@
 			@change="moveList"
 		>
 			<div class="list__item" v-for="list in lists" :key="list.list_id">
-				<div class="list__item__title">
-					<h3>{{ list.title }}</h3>
-				</div>
+				<BaseInput
+					:type="'text'"
+					v-model="list.title"
+					:toggle="true"
+					@enter="updateList(list.list_id, list.title)"
+				></BaseInput>
 
-				<!-- <BaseTitleInput
-						:title="list.title"
-						:newTitle.sync="newTitle"
-						:type="'update'"
-						@action="updateListTitle(list.list_id)"
-					>
-						<button slot="button" @click="deleteList(list.list_id)">
-							Delete
-						</button>
-					</BaseTitleInput> -->
-				<TaskList :cards="list.Cards" :listId="list.list_id" />
-			</div>
-			<input
-				type="text"
-				class="add-list__input"
-				plceholder="Enter a title for this list..."
-				v-model="listTitle"
-				v-if="showListCreateInput"
-				@keyup.enter="createList"
-			/>
-			<div class="add-list" @click="handleListCreateInput" v-else>
-				<i class="material-icons">
-					add
-				</i>
-				<div class="add-list__text">
-					Add another list
-				</div>
+				<BaseBtn slot="button" @click="deleteList(list.list_id)">
+					<i class="material-icons delete-icon">delete</i>
+				</BaseBtn>
+				<draggable
+					:list="list.Cards"
+					class="card"
+					ghost-class="ghost"
+					group="card"
+					:move="moveCard"
+					@end="endCard"
+				>
+					<div v-for="card in list.Cards" :key="card.card_id">
+						<Task :card="card" />
+					</div>
+				</draggable>
+				<BaseInput
+					:create="true"
+					:placeholder="'Add another card'"
+					v-model="cardTitle"
+					:type="'text'"
+					@enter="createCard(list.list_id)"
+				/>
 			</div>
 		</draggable>
+		<BaseInput
+			class="add-list__input"
+			:create="true"
+			:placeholder="'Add another list'"
+			v-model="listTitle"
+			:type="'text'"
+			@enter="createList"
+		/>
 	</div>
 </template>
 
@@ -50,32 +56,19 @@ import draggable from 'vuedraggable';
 export default {
 	data() {
 		return {
-			showListCreateInput: false,
-			isDragging: false,
-			delayedDragging: false,
-			newTitle: '',
 			listTitle: '',
+			cardTitle: '',
+			moveEvent: {},
 		};
 	},
 	components: {
-		TaskList: () => import('@/components/board/TaskList.vue'),
+		Task: () => import('@/components/board/Task.vue'),
 		draggable,
 	},
 	props: {
 		lists: {
 			type: Array,
 			required: true,
-		},
-	},
-	watch: {
-		isDragging(newValue) {
-			if (newValue) {
-				this.delayedDragging = true;
-				return;
-			}
-			this.$nextTick(() => {
-				this.delayedDragging = false;
-			});
 		},
 	},
 	methods: {
@@ -90,17 +83,14 @@ export default {
 					this.listTitle = '';
 				});
 		},
-		handleListCreateInput() {
-			this.showListCreateInput = !this.showListCreateInput;
-		},
-		updateListTitle(id) {
+		updateList(id, title) {
 			this.$store
 				.dispatch('UPDATE_LIST', {
 					list_id: id,
-					title: this.newTitle,
+					title: title,
 				})
 				.then(() => {
-					this.newTitle = '';
+					// this.newTitle = '';
 				});
 		},
 		deleteList(id) {
@@ -109,6 +99,31 @@ export default {
 		moveList: function(evt) {
 			console.log(evt);
 			if (evt.moved) this.$store.dispatch('MOVE_LIST', evt.moved);
+		},
+		createCard(listId) {
+			this.$store
+				.dispatch('PUBLISH_CARD', {
+					list_id: listId,
+					title: this.cardTitle,
+				})
+				.then(() => {
+					this.cardTitle = '';
+				});
+		},
+		moveCard: function(evt, originalEvent) {
+			console.log(evt);
+			const { relatedContext, draggedContext } = evt;
+
+			this.moveEvent = {
+				relatedContext,
+				draggedContext,
+			};
+		},
+		endCard: function(evt) {
+			console.log(this.moveEvent);
+			this.$store.dispatch('MOVE_CARD', {
+				evt: this.moveEvent,
+			});
 		},
 	},
 };
@@ -125,6 +140,10 @@ export default {
 		margin: 0.3rem;
 		background-color: #ebecf0;
 		border-radius: 2px;
+	}
+
+	.delete-icon {
+		font-size: 1.5rem;
 	}
 }
 // ::-webkit-scrollbar-track {
