@@ -19,16 +19,36 @@ export default {
 
 <style lang="scss" scoped>
 .base-wrap {
-	height: 100vh;
-	// background-color: blue;
+	height: 95vh;
+	// z-index: 0;
 }
 
 .base-container {
 	max-width: 120rem;
 	margin: auto;
-	background-color: #ffffff;
 }
-.board {
-	height: 89vh;
+.board-wrap {
+	max-width: 180rem;
+	margin: 1rem 2rem;
+}
+
+.scroll {
+	background-color: rgb(151, 172, 201);
+	overflow-x: scroll;
+
+	&::-webkit-scrollbar {
+		width: 3px;
+		height: 10px;
+	}
+
+	&::-webkit-scrollbar-track {
+		border-radius: 10px;
+		background-color: rgba(131, 131, 131, 0.37);
+	}
+
+	&::-webkit-scrollbar-thumb {
+		border-radius: 9px;
+		background-color: rgb(231, 231, 231);
+	}
 }
 </style>

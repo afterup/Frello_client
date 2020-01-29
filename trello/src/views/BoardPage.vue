@@ -1,7 +1,7 @@
 <template>
 	<!-- <div :class="board.background"> -->
 	<div class="board-page">
-		<BaseContainer :type="'board-wrap'">
+		<BaseContainer :type="'board-wrap'" :class="'scroll'">
 			<BoardMeta :board="board" :currentUser="currentUser" />
 			<Columns :lists="lists" />
 			<Modal v-if="showModal" @close="closeModal">
@@ -37,11 +37,15 @@ export default {
 <style lang="scss" scoped>
 @import '@/lib/styles/_boardPalette';
 
+// scroll {
+// 	overflow-x: scroll;
+// }
+
 .card {
-  width: 760px;
-  height: 600px;
-  background-color: #ebecf0;
-  border-radius: 2px;
+	width: 760px;
+	height: 600px;
+	background-color: #ebecf0;
+	border-radius: 2px;
 }
 
 // .card__header {

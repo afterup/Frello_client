@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="list-wrap">
 		<draggable
 			:list="lists"
 			class="list"
@@ -7,46 +7,44 @@
 			group="list"
 			@change="moveList"
 		>
-			<div class="list__item" v-for="list in lists" :key="list.list_id">
-				<BaseInput
-					:type="'text'"
-					v-model="list.title"
-					:toggle="true"
-					@enter="updateList(list.list_id, list.title)"
-				></BaseInput>
-
-				<BaseBtn slot="button" @click="deleteList(list.list_id)">
-					<i class="material-icons delete-icon">delete</i>
-				</BaseBtn>
-				<draggable
-					:list="list.Cards"
-					class="card"
-					ghost-class="ghost"
-					group="card"
-					:move="moveCard"
-					@end="endCard"
-				>
-					<div v-for="card in list.Cards" :key="card.card_id">
-						<Task :card="card" />
+			<div v-for="list in lists" :key="list.list_id">
+				<div class="list__item">
+					<div class="list__item__header">
+						<BaseInput
+							:type="'text'"
+							v-model="list.title"
+							:toggle="true"
+							@enter="updateList(list.list_id, list.title)"
+						></BaseInput>
+						<BaseBtn slot="button" @click="deleteList(list.list_id)">
+							<i class="material-icons delete-icon">delete</i>
+						</BaseBtn>
 					</div>
-				</draggable>
-				<BaseInput
-					:create="true"
-					:placeholder="'Add another card'"
-					v-model="cardTitle"
-					:type="'text'"
-					@enter="createCard(list.list_id)"
-				/>
+					<div class="list__item__body">
+						<TaskList :list="list" />
+					</div>
+					<div class="list__item__footer">
+						<BaseInput
+							:create="true"
+							:placeholder="'Add another card'"
+							v-model="cardTitle"
+							:type="'text'"
+							@enter="createCard(list.list_id)"
+						/>
+					</div>
+				</div>
 			</div>
 		</draggable>
-		<BaseInput
-			class="add-list__input"
-			:create="true"
-			:placeholder="'Add another list'"
-			v-model="listTitle"
-			:type="'text'"
-			@enter="createList"
-		/>
+		<div class="list__add">
+			<BaseInput
+				class="add-list__input"
+				:create="true"
+				:placeholder="'Add another list'"
+				v-model="listTitle"
+				:type="'text'"
+				@enter="createList"
+			/>
+		</div>
 	</div>
 </template>
 
@@ -56,13 +54,12 @@ import draggable from 'vuedraggable';
 export default {
 	data() {
 		return {
-			listTitle: '',
 			cardTitle: '',
-			moveEvent: {},
+			listTitle: '',
 		};
 	},
 	components: {
-		Task: () => import('@/components/board/Task.vue'),
+		TaskList: () => import('@/components/board/TaskList.vue'),
 		draggable,
 	},
 	props: {
@@ -110,43 +107,78 @@ export default {
 					this.cardTitle = '';
 				});
 		},
-		moveCard: function(evt, originalEvent) {
-			console.log(evt);
-			const { relatedContext, draggedContext } = evt;
-
-			this.moveEvent = {
-				relatedContext,
-				draggedContext,
-			};
-		},
-		endCard: function(evt) {
-			console.log(this.moveEvent);
-			this.$store.dispatch('MOVE_CARD', {
-				evt: this.moveEvent,
-			});
-		},
 	},
 };
 </script>
 
 <style lang="scss" scoped>
-.list {
+.list-wrap {
 	display: flex;
 	flex-wrap: nowrap;
-	overflow-x: auto;
+}
+
+.list {
+	display: flex;
+
+	> * {
+		flex: 0 0 auto;
+	}
+
+	&::after {
+		content: '';
+		flex: 0 0 auto;
+	}
 
 	&__item {
-		flex: 0 0 auto;
+		display: flex;
+		flex-direction: column;
+		width: 25rem;
+		max-height: 80vh;
 		margin: 0.3rem;
+		padding: 0.6rem;
+
 		background-color: #ebecf0;
-		border-radius: 2px;
+		border-radius: 2.5px;
+
+		&:hover {
+			cursor: pointer;
+		}
+
+		&__header {
+			display: flex;
+			justify-content: space-between;
+			padding: 1rem;
+			background-color: #ebecf0;
+		}
+
+		&__body {
+			overflow-y: scroll;
+			max-height: 70vh;
+
+			&::-webkit-scrollbar {
+				width: 6px;
+				height: 10px;
+			}
+			&::-webkit-scrollbar-track {
+				border-radius: 10px;
+				background-color: rgb(231, 231, 231);
+			}
+
+			&::-webkit-scrollbar-thumb {
+				border-radius: 9px;
+				background-color: rgb(201, 201, 201);
+			}
+		}
 	}
 
 	.delete-icon {
 		font-size: 1.5rem;
 	}
 }
-// ::-webkit-scrollbar-track {
-// 	background-color: #5680ff79;
-// }
+
+.add-list__input {
+	width: 24rem;
+	background-color: #ebecf05b;
+	border-radius: 2px;
+}
 </style>

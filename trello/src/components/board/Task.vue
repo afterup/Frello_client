@@ -24,14 +24,17 @@ export default {
 
 <style lang="scss" scoped>
 .task {
+	display: flex;
+	justify-content: center;
+
 	&__item {
-		display: flex;
-		align-items: center;
-		background-color: white;
-		width: 250px;
-		height: 30px;
-		margin-bottom: 8px;
 		border-radius: 2px;
+		width: 24rem;
+		height: auto;
+		padding: 0.5rem 0;
+		margin-bottom: 8px;
+
+		background-color: white;
 		box-shadow: 0px 1.3px rgb(182, 182, 182);
 
 		&:hover {
@@ -40,7 +43,7 @@ export default {
 		}
 		&__title {
 			margin-left: 8px;
-			font-size: 1.4rem;
+			font-size: 1.3rem;
 		}
 	}
 
