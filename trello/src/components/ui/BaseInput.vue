@@ -5,28 +5,16 @@
 				v-if="toggleText"
 				class="control__input"
 				:type="type"
-				:placeholder="value ? placeholder : value"
-				:value="value"
-				@input="updateValue($event.target.value)"
-				@keyup.enter="enterToggle"
-			/>
-			<h3 v-else @click="handletoggleText" class="control__text">
-				{{ value }}
-			</h3>
-		</div>
-		<div class="control" v-else-if="create">
-			<input
-				v-if="toggleText"
-				class="control__input"
-				:type="type"
 				:placeholder="placeholder"
 				:value="value"
 				@input="updateValue($event.target.value)"
 				@keyup.enter="enterToggle"
 			/>
 			<h3 v-else @click="handletoggleText" class="control__text">
-				<i class="material-icons">add</i>
-				{{ placeholder }}
+				<div class="control__text__slot">
+					<slot name="badge"></slot>
+					<slot></slot>
+				</div>
 			</h3>
 		</div>
 		<div class="control" v-else>
@@ -68,17 +56,13 @@ export default {
 			type: Boolean,
 			required: false,
 		},
-		create: {
-			type: Boolean,
-			required: false,
-		},
 	},
 	methods: {
 		updateValue(value) {
 			this.$emit('input', value);
 		},
 		enterToggle(value) {
-			this.toggleText = false;
+			this.handletoggleText();
 			this.$emit('enter');
 		},
 		handletoggleText() {
@@ -105,10 +89,17 @@ export default {
 		}
 	}
 
+	input[type='textarea'] {
+		height: 5rem;
+	}
+
 	&__text {
-		display: flex;
-		align-items: center;
 		font-size: 1.3rem;
+
+		&__slot {
+			display: flex;
+			align-items: center;
+		}
 	}
 }
 </style>

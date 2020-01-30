@@ -15,7 +15,9 @@
 							v-model="list.title"
 							:toggle="true"
 							@enter="updateList(list.list_id, list.title)"
-						></BaseInput>
+						>
+							{{ list.title }}
+						</BaseInput>
 						<BaseBtn slot="button" @click="deleteList(list.list_id)">
 							<i class="material-icons delete-icon">delete</i>
 						</BaseBtn>
@@ -25,12 +27,15 @@
 					</div>
 					<div class="list__item__footer">
 						<BaseInput
-							:create="true"
-							:placeholder="'Add another card'"
+							:toggle="true"
+							:placeholder="'Enter a title for this card...'"
 							v-model="cardTitle"
-							:type="'text'"
+							:type="'textarea'"
 							@enter="createCard(list.list_id)"
-						/>
+						>
+							<i slot="badge" class="material-icons">add</i>
+							Add another card
+						</BaseInput>
 					</div>
 				</div>
 			</div>
@@ -38,12 +43,15 @@
 		<div class="list__add">
 			<BaseInput
 				class="add-list__input"
-				:create="true"
-				:placeholder="'Add another list'"
+				:toggle="true"
+				:placeholder="'Enter a title for this list...'"
 				v-model="listTitle"
 				:type="'text'"
 				@enter="createList"
-			/>
+			>
+				<i class="material-icons" slot="badge">add</i>
+				Add another list
+			</BaseInput>
 		</div>
 	</div>
 </template>
@@ -168,6 +176,10 @@ export default {
 				border-radius: 9px;
 				background-color: rgb(201, 201, 201);
 			}
+		}
+
+		&__footer {
+			margin-top: 0.5rem;
 		}
 	}
 

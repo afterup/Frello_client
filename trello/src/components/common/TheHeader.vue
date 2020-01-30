@@ -61,7 +61,7 @@ export default {
 	justify-items: center;
 	align-items: center;
 	background-color: #0269a7;
-	height: 4rem;
+	height: $header-height;
 	padding: 0 1.5rem;
 
 	&__home {

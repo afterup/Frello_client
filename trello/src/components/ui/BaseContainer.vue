@@ -1,6 +1,16 @@
 <template>
-	<div class="base-wrap">
-		<div class="base-container" :class="type">
+	<div v-if="board">
+		<div class="base-wrap" :class="background">
+			<div class="meta">
+				<slot name="meta"></slot>
+			</div>
+			<div class="board-container scroll">
+				<slot></slot>
+			</div>
+		</div>
+	</div>
+	<div v-else>
+		<div class="base-container">
 			<slot></slot>
 		</div>
 	</div>
@@ -9,7 +19,11 @@
 <script>
 export default {
 	props: {
-		type: {
+		board: {
+			type: Boolean,
+			required: false,
+		},
+		background: {
 			type: String,
 			required: false,
 		},
@@ -18,22 +32,29 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '@/lib/styles/_boardPalette';
+
 .base-wrap {
-	height: 95vh;
-	// z-index: 0;
+	height: calc(100vh - #{$header-height});
 }
 
 .base-container {
 	max-width: 120rem;
 	margin: auto;
 }
-.board-wrap {
+
+.meta {
+	margin: 0 2rem;
+}
+
+.board-container {
 	max-width: 180rem;
+	height: calc(100vh - #{$header-height} - #{$meta-height} - 2rem);
 	margin: 1rem 2rem;
 }
 
 .scroll {
-	background-color: rgb(151, 172, 201);
+	overflow-y: hidden;
 	overflow-x: scroll;
 
 	&::-webkit-scrollbar {
