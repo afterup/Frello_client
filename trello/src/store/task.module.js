@@ -16,14 +16,13 @@ const actions = {
 		try {
 			const { data } = await ApiService.post('/list', { list: list });
 			commit('ADD_LIST', data.list);
-			return data;
 		} catch (err) {
 			console.log(err);
 		}
 	},
 	async UPDATE_LIST({ commit }, list) {
 		const { data } = await ApiService.put(`/list/${list.list_id}`, {
-			list: list,
+			list: { title: list.title },
 		});
 		commit('CHANGE_LIST', list);
 	},

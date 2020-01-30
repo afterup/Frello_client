@@ -68,7 +68,6 @@ const actions = {
 	},
 	async DELETE_BOARD({ commit }, id) {
 		try {
-			console.log(id);
 			const { data } = await ApiService.delete(`/board/${id}`);
 			console.log(data);
 		} catch (err) {

@@ -84,19 +84,14 @@ export default {
 					title: this.listTitle,
 				})
 				.then(() => {
-					this.handleListCreateInput();
 					this.listTitle = '';
 				});
 		},
 		updateList(id, title) {
-			this.$store
-				.dispatch('UPDATE_LIST', {
-					list_id: id,
-					title: title,
-				})
-				.then(() => {
-					// this.newTitle = '';
-				});
+			this.$store.dispatch('UPDATE_LIST', {
+				list_id: id,
+				title: title,
+			});
 		},
 		deleteList(id) {
 			this.$store.dispatch('DELETE_LIST', id).then(() => {});

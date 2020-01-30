@@ -73,9 +73,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.field {
+	width: 100%;
+}
+
 .control {
 	input {
-		width: 100%;
 		border: 2px solid $color-grey-light-4;
 		border-radius: 4px;
 		margin: 8px 0;
