@@ -123,6 +123,7 @@ export default {
 .list-wrap {
 	display: flex;
 	flex-wrap: nowrap;
+	margin: 0 2rem;
 }
 
 .list {

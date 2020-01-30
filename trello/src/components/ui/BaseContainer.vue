@@ -50,7 +50,7 @@ export default {
 .board-container {
 	max-width: 180rem;
 	height: calc(100vh - #{$header-height} - #{$meta-height} - 2rem);
-	margin: 1rem 2rem;
+	margin: 1rem 0;
 }
 
 .scroll {

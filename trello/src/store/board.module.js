@@ -22,11 +22,7 @@ const actions = {
 	/* BOARD */
 	async FETCH_BOARDS({ commit }) {
 		try {
-			console.log(JwtService.getToken());
-			const { data } = await ApiService.get(
-				`/board?authorization=${JwtService.getToken()}`,
-			);
-			console.log(data);
+			const { data } = await ApiService.get(`/board`);
 			commit('SET_BOARDS', data.boards);
 		} catch (err) {
 			console.log(err.response);
@@ -35,7 +31,6 @@ const actions = {
 	async FETCH_BOARD({ commit, rootState }, id) {
 		try {
 			const { data } = await ApiService.get(`/board/${id}`);
-			console.log(data.board);
 
 			const { board_id, title, background, favorite, user_id } = data.board;
 			commit('SET_BOARD', {
@@ -46,6 +41,7 @@ const actions = {
 				user_id,
 			});
 
+			//SET lists at task.module
 			rootState.task.lists = data.board.Lists;
 		} catch (err) {
 			console.log(err);
@@ -72,6 +68,7 @@ const actions = {
 	},
 	async DELETE_BOARD({ commit }, id) {
 		try {
+			console.log(id);
 			const { data } = await ApiService.delete(`/board/${id}`);
 			console.log(data);
 		} catch (err) {

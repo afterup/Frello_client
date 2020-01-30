@@ -12,21 +12,9 @@
 			<BaseBtn class="meta__favorite" @click="toggleFavorite">
 				<i class="material-icons">star</i>
 			</BaseBtn>
-			<BaseBtn class="meta__delete" @click="handleDeleteModal">
-				<i class="material-icons">delete</i>
-			</BaseBtn>
-			<Modal v-if="deleteModal" @close="handleDeleteModal">
-				<div>
-					<h3>알림</h3>
-					<div>
-						<div>정말로 삭제하시겠습니까?</div>
-						<button @click="deleteBoard">확인</button>
-					</div>
-				</div>
-			</Modal>
 		</div>
 		<div class="sidebar">
-			<Sidebar />
+			<Sidebar :currentUser="currentUser" />
 		</div>
 	</div>
 </template>
@@ -46,7 +34,6 @@ export default {
 	data() {
 		return {
 			showBoardTitleInput: false,
-			deleteModal: false,
 			title: this.board.title,
 		};
 	},
@@ -74,17 +61,6 @@ export default {
 					favorite: !favorite,
 				})
 				.then(() => {});
-		},
-		handleDeleteModal() {
-			this.deleteModal = !this.deleteModal;
-		},
-		deleteBoard() {
-			this.$store.dispatch('DELETE_BOARD', this.$route.params.id).then(() => {
-				this.$router.push({
-					name: 'boards',
-					params: { username: this.currentUser.username },
-				});
-			});
 		},
 		handleBoardTitleInput() {
 			this.showBoardTitleInput = !this.showBoardTitleInput;
