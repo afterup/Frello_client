@@ -44,8 +44,8 @@ export default {
 					password: this.password,
 				})
 				.then(result => {
-					console.log(result);
 					alert('가입되었습니다.');
+					this.$store.commit('CLOSE_MODAL');
 					this.$router.push({ name: 'home' });
 				})
 				.catch(error => {

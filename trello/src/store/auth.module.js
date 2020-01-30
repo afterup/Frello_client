@@ -27,11 +27,9 @@ const getters = {
 
 const actions = {
 	async AUTO_LOGIN({ commit }) {
-		console.log(JwtService.getToken());
 		try {
 			if (JwtService.getToken()) {
 				const { data } = await ApiService.get('/user');
-				console.log(data);
 				commit('SET_USER_DATA', data.user);
 			}
 		} catch (err) {
@@ -42,10 +40,7 @@ const actions = {
 		try {
 			const { data } = await ApiService.post('/user', { user: authData });
 			console.log(data);
-			commit('SET_USER_DATA', data.user);
-			commit('SET_TOKEN', data.token);
-			return data.user;
-			// dispatch('SET_EXPIRATION', data.expiresIn);
+			return data;
 		} catch (error) {
 			commit('SET_ERROR', error.response.data.error.message);
 		}
@@ -53,11 +48,11 @@ const actions = {
 	async login({ commit }, user) {
 		try {
 			const { data } = await ApiService.post('/user/login', user);
-			commit('SET_USER_DATA', data.user);
-			commit('SET_TOKEN', data.token);
+			commit('SET_USER_DATA', data.user.user);
+			commit('SET_TOKEN', data.user.token);
 			// dispatch('SET_EXPIRATION', data.expiresIn);
 
-			return data.user;
+			return data.user.user;
 		} catch (err) {
 			console.log(err.response);
 		}
@@ -81,11 +76,11 @@ const mutations = {
 	SET_USER_DATA(state, user) {
 		state.user = user;
 		state.error = null;
-		state.isAuthenticated = !state.isAuthenticated;
+		state.isAuthenticated = true;
 	},
 	SET_TOKEN(state, token) {
-		ApiService.setHeader(token);
 		JwtService.saveToken(token);
+		ApiService.setHeader(token);
 	},
 	SET_ERROR(state, error) {
 		state.error = error;
