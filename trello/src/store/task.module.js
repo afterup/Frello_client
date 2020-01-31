@@ -2,11 +2,15 @@ import { ApiService } from '@/common/api.service.js';
 
 const state = {
 	lists: [],
+	card: {},
 };
 
 const getters = {
 	lists(state) {
 		return state.lists;
+	},
+	card(state) {
+		return state.card;
 	},
 };
 
@@ -65,10 +69,32 @@ const actions = {
 	},
 
 	/* CARD */
+	async FETCH_CARD({ commit }, id) {
+		const { data } = await ApiService.get(`/card/${id}`);
+		console.log(data);
+		commit('SET_CARD', data.card);
+	},
 	async PUBLISH_CARD({ commit }, card) {
 		const { data } = await ApiService.post('/card', { card: card });
 		console.log(data);
 		commit('ADD_CARD', data.card);
+	},
+	async UPDATE_CARD({ commit }, card) {
+		const { listId, cardId, description, title } = card;
+		let value = {};
+		if (description) {
+			value.description = description;
+		} else if (title) {
+			value.title = title;
+		}
+		const { data } = await ApiService.put(`/card/${cardId}`, { card: value });
+		console.log(data);
+		commit('CHANGE_CARD', card);
+	},
+	async DELETE_CARD({ commit }, id) {
+		const { data } = await ApiService.delete(`/card/${id}`);
+		console.log(data);
+		commit('REMOVE_CARD', id);
 	},
 
 	async MOVE_CARD({ commit, state }, { evt }) {
@@ -135,6 +161,34 @@ const mutations = {
 	ADD_CARD(state, card) {
 		const list = state.lists.find(list => list.list_id === card.list_id);
 		if (list) list.Cards.push(card);
+	},
+	SET_CARD(state, card) {
+		state.card = card;
+	},
+	DESTROY_CARD(state) {
+		state.card = {};
+	},
+	CHANGE_CARD(state, card) {
+		const { cardId, title, description } = card;
+		if (title) {
+			state.card['title'] = title;
+			state.lists.forEach(list => {
+				list.Cards.find(listCard => {
+					if (listCard.card_id === cardId) listCard['title'] = title;
+				});
+			});
+		} else {
+			state.card['description'] = description;
+		}
+	},
+	REMOVE_CARD(state, id) {
+		console.log(id);
+		state.lists.forEach(list => {
+			const cardIndex = list.Cards.findIndex(card => card.card_id === id);
+
+			if (cardIndex != -1) list.Cards.splice(cardIndex, 1);
+		});
+		state.card = '';
 	},
 };
 

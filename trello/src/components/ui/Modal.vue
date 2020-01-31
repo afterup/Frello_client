@@ -5,7 +5,7 @@
 				<slot></slot>
 			</div>
 		</div>
-		<div v-else class="modal__container">
+		<div v-else class="modal__container" :class="`${type}`">
 			<div class="modal__close" @click="$emit('close')">
 				<i class="material-icons">close</i>
 			</div>
@@ -18,10 +18,6 @@
 <script>
 export default {
 	props: {
-		title: {
-			type: String,
-			require: false,
-		},
 		type: {
 			type: String,
 			require: false,
@@ -30,7 +26,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .modal {
 	position: fixed;
 	z-index: 9998;
@@ -63,5 +59,11 @@ export default {
 		margin-top: 4rem;
 		color: $color-grey-dark-1;
 	}
+}
+
+.card {
+	width: 60rem;
+	height: 70vh;
+	background-color: #ebecf0;
 }
 </style>

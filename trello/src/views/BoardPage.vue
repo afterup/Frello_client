@@ -4,10 +4,10 @@
 		<BaseContainer :board="true" :background="board.background">
 			<BoardMeta slot="meta" :board="board" :currentUser="currentUser" />
 			<Columns :lists="lists" />
-			<Modal v-if="showModal" @close="closeModal">
-				<router-view></router-view>
-			</Modal>
 		</BaseContainer>
+		<Modal v-if="showModal" @close="closeCard" :type="'card'">
+			<router-view></router-view>
+		</Modal>
 	</div>
 </template>
 
@@ -30,6 +30,15 @@ export default {
 	},
 	computed: {
 		...mapGetters(['board', 'lists', 'currentUser', 'showModal']),
+	},
+	methods: {
+		closeCard() {
+			this.$store.commit('CLOSE_MODAL');
+			this.$router.push({
+				name: 'board',
+				params: { id: this.$route.params.id },
+			});
+		},
 	},
 };
 </script>

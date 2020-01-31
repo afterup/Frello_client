@@ -42,7 +42,7 @@ export default {
 	props: {
 		value: {
 			type: String,
-			required: true,
+			required: false,
 		},
 		placeholder: {
 			type: String,

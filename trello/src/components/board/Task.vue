@@ -1,11 +1,15 @@
 <template>
-	<div class="task">
-		<div class="task__item">
-			<div class="task__item__title" @click="openCard">
+	<router-link
+		:to="`/board/${this.$route.params.id}/card/${card.card_id}`"
+		class="task"
+		tag="div"
+	>
+		<div class="task__item" @click="openCard">
+			<div class="task__item__title">
 				{{ card.title }}
 			</div>
 		</div>
-	</div>
+	</router-link>
 </template>
 
 <script>
@@ -17,7 +21,9 @@ export default {
 		},
 	},
 	methods: {
-		openCard() {},
+		openCard() {
+			this.$store.commit('OPEN_MODAL');
+		},
 	},
 };
 </script>
