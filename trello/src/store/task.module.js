@@ -143,15 +143,9 @@ const mutations = {
 	CHANGE_LIST(state, list) {
 		if (list.title) {
 			state.lists.find((oldList, idx) => {
-				if (oldList.list_id === list.list_id) {
-					oldList['title'] = list.title;
-				}
+				if (oldList.list_id === list.list_id) oldList['title'] = list.title;
 			});
 		}
-	},
-	MOVE_SAVE_LIST(state, { list, oldIndex, newIndex }) {
-		// console.log(state.board.Lists[newIndex]);
-		state.lists[newIndex].position = list.position;
 	},
 	DELETE_COLUMN_LIST(state, id) {
 		const index = state.lists.findIndex((list, idx) => list.list_id === id);
@@ -164,9 +158,6 @@ const mutations = {
 	},
 	SET_CARD(state, card) {
 		state.card = card;
-	},
-	DESTROY_CARD(state) {
-		state.card = {};
 	},
 	CHANGE_CARD(state, card) {
 		const { cardId, title, description } = card;
@@ -182,13 +173,24 @@ const mutations = {
 		}
 	},
 	REMOVE_CARD(state, id) {
-		console.log(id);
 		state.lists.forEach(list => {
 			const cardIndex = list.Cards.findIndex(card => card.card_id === id);
-
 			if (cardIndex != -1) list.Cards.splice(cardIndex, 1);
 		});
 		state.card = '';
+	},
+	DESTROY_CARD(state) {
+		state.card = {};
+	},
+	/* MOVE */
+	MOVE_TASK_CARD(state, { fromCards, fromCardIndex, toCards, toCardIndex }) {
+		const cardToMove = fromCards.splice(fromCardIndex, 1)[0];
+		toCards.splice(toCardIndex, 0, cardToMove);
+	},
+	MOVE_COLUMN_LIST(state, { fromListIndex, toListIndex }) {
+		const list = state.lists;
+		const listToMove = list.splice(fromListIndex, 1)[0];
+		list.splice(toListIndex, 0, listToMove);
 	},
 };
 
