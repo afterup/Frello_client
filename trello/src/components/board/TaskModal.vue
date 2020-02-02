@@ -4,8 +4,8 @@
 			<i class="material-icons">class</i>
 			<BaseInput
 				class="card__header__title"
-				:toggle="true"
 				:type="'text'"
+				:kind="'toggle'"
 				v-model="card.title"
 				@enter="updateTitle"
 			>
@@ -21,9 +21,9 @@
 				Description
 				<div class="card__description__body__box">
 					<BaseInput
-						:toggle="true"
 						:placeholder="checkDescription()"
 						:type="'textarea'"
+						:kind="'toggle'"
 						v-model="card.description"
 						@enter="updateDescription"
 					>
@@ -101,26 +101,13 @@ export default {
 
 	&__description {
 		display: flex;
-		flex-direction: row;
+		width: 100%;
 		margin-top: 20px;
 
 		&__body {
-			display: flex;
-			flex-direction: column;
+			width: 50rem;
 			font-size: 1.8rem;
 			font-weight: bold;
-
-			&__box {
-				border: none;
-				border-radius: 2px;
-				background-color: #e1e4e9;
-				width: 40rem;
-				resize: none;
-
-				&:hover {
-					background-color: rgb(218, 218, 218);
-				}
-			}
 		}
 	}
 }

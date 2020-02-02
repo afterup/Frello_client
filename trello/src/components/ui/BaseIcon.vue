@@ -38,9 +38,5 @@ export default {
 	color: black;
 	font-size: 1.6rem;
 	font-weight: bolder;
-
-	&:hover {
-		cursor: pointer;
-	}
 }
 </style>

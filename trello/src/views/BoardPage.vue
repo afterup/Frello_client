@@ -1,14 +1,30 @@
 <template>
-	<!-- <div :class="board.background"> -->
-	<div class="board-page">
-		<BaseContainer :board="true" :background="board.background">
-			<BoardMeta slot="meta" :board="board" :currentUser="currentUser" />
-			<Columns :lists="lists" />
-		</BaseContainer>
+	<BaseContainer :board="true" :background="board.background">
+		<BoardMeta slot="meta" :board="board" :currentUser="currentUser" />
+		<div class="list-wrap">
+			<BoardList
+				v-for="(list, $listIndex) of lists"
+				:key="list.list_id"
+				:list="list"
+				:listIndex="$listIndex"
+			/>
+			<div class="list-input">
+				<BaseInput
+					v-model="listTitle"
+					:type="'text'"
+					:kind="'toggle'"
+					:placeholder="'Enter a title for this list...'"
+					@enter="createList"
+				>
+					<i class="material-icons" slot="badge">add</i>
+					Add another list
+				</BaseInput>
+			</div>
+		</div>
 		<Modal v-if="showModal" @close="closeCard" :type="'card'">
 			<router-view></router-view>
 		</Modal>
-	</div>
+	</BaseContainer>
 </template>
 
 <script>
@@ -17,11 +33,13 @@ import store from '@/store';
 
 export default {
 	data() {
-		return {};
+		return {
+			listTitle: '',
+		};
 	},
 	components: {
 		BoardMeta: () => import('@/components/board/BoardMeta.vue'),
-		Columns: () => import('@/components/board/Columns.vue'),
+		BoardList: () => import('@/components/board/BoardList.vue'),
 	},
 	beforeRouteEnter(to, from, next) {
 		store.dispatch('FETCH_BOARD', to.params.id).then(() => {
@@ -39,10 +57,29 @@ export default {
 				params: { id: this.$route.params.id },
 			});
 		},
+		createList() {
+			this.$store
+				.dispatch('PUBLISH_LIST', {
+					board_id: this.$route.params.id,
+					title: this.listTitle,
+				})
+				.then(() => {
+					this.listTitle = '';
+				});
+		},
 	},
 };
 </script>
 
 <style lang="scss" scoped>
 @import '@/lib/styles/_boardPalette';
+.list-wrap {
+	display: flex;
+	flex-wrap: nowrap;
+	margin: 0 2rem;
+}
+
+.list-input {
+	min-width: 24rem;
+}
 </style>

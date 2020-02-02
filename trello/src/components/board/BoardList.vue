@@ -12,7 +12,7 @@
 					<BaseInput
 						v-model="list.title"
 						:type="'text'"
-						:toggle="true"
+						:kind="'toggle'"
 						@enter="updateList(list.list_id, list.title)"
 					>
 						{{ list.title }}
@@ -41,7 +41,7 @@
 						v-model="cardTitle"
 						:placeholder="'Enter a title for this card...'"
 						:type="'textarea'"
-						:toggle="true"
+						:kind="'toggle'"
 						@enter="createCard(list.list_id)"
 					>
 						<i slot="badge" class="material-icons">add</i>
