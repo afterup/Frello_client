@@ -76,9 +76,6 @@ export default {
 		border-radius: 2px;
 		background-color: aliceblue;
 
-		&__button {
-		}
-
 		&__close {
 			margin-left: 3rem;
 
@@ -101,9 +98,24 @@ export default {
 			margin-right: 5px;
 			margin-bottom: 1rem;
 			border-radius: 3px;
+			position: relative;
+
+			&:after {
+				content: '\A';
+				position: absolute;
+				width: 100%;
+				height: 100%;
+				top: 0;
+				left: 0;
+				background: rgba(0, 0, 0, 0.137);
+				opacity: 0;
+			}
 
 			&:hover {
 				cursor: pointer;
+			}
+			&:hover:after {
+				opacity: 1;
 			}
 		}
 	}
