@@ -39,34 +39,6 @@ const actions = {
 			console.log(err);
 		}
 	},
-	async MOVE_LIST({ commit, state }, { element, oldIndex, newIndex }) {
-		try {
-			console.log(element);
-			let bothItem = {};
-
-			if (state.lists[newIndex - 1]) {
-				bothItem['leftPosition'] = state.lists[newIndex - 1].position;
-			}
-
-			if (state.lists[newIndex + 1]) {
-				bothItem['rightPosition'] = state.lists[newIndex + 1].position;
-			}
-
-			const { data } = await ApiService.put(`/list/${element.list_id}`, {
-				list: {
-					bothItem,
-				},
-			});
-			commit('MOVE_SAVE_LIST', {
-				list: data.list,
-				oldIndex,
-				newIndex,
-			});
-			console.log(data);
-		} catch (error) {
-			console.log(error);
-		}
-	},
 
 	/* CARD */
 	async FETCH_CARD({ commit }, id) {
@@ -147,6 +119,34 @@ const actions = {
 			console.log(err);
 		}
 	},
+	async MOVE_LIST({ commit, state }, { fromListIndex, toListIndex }) {
+		function findBothPosition() {
+			let bothPosition = {};
+			if (state.lists[toListIndex - 1]) {
+				bothPosition['leftPosition'] = state.lists[toListIndex - 1].position;
+			}
+			if (state.lists[toListIndex + 1]) {
+				bothPosition['rightPosition'] = state.lists[toListIndex + 1].position;
+			}
+			return bothPosition;
+		}
+		try {
+			const listId = state.lists[fromListIndex].list_id;
+			commit('MOVE_COLUMN_LIST', {
+				fromListIndex,
+				toListIndex,
+			});
+			const bothPosition = findBothPosition();
+
+			const { data } = await ApiService.put(`/list/${listId}`, {
+				list: { bothPosition },
+			});
+			console.log(data);
+			commit('SET_LIST_POSITION', data.list);
+		} catch (error) {
+			console.log(error);
+		}
+	},
 };
 
 const mutations = {
@@ -212,6 +212,12 @@ const mutations = {
 			card => card.card_id === newCard.card_id,
 		);
 		list.Cards[cardIndex] = newCard;
+	},
+	SET_LIST_POSITION(state, newList) {
+		const listIndex = state.lists.findIndex(
+			list => list.list_id === newList.list_id,
+		);
+		state.lists[listIndex].position = newList.position;
 	},
 };
 
