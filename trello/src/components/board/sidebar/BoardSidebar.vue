@@ -1,55 +1,43 @@
 <template>
-	<div class="sidebarWrap">
-		<BaseBtn class="sidebar__button" @click="toggleSidebar">
-			<div slot="badge">
-				<i class="material-icons">delete</i>
+	<div class="sidebar-wrap" @click.self="$emit('close')">
+		<div class="sidebar">
+			<div class="sidebar__header">
+				<i
+					v-if="content !== 'Menu'"
+					@click="content = 'Menu'"
+					class="material-icons sidebar__header__back"
+					>keyboard_arrow_left</i
+				>
+				<div v-else class="hidden"></div>
+				<div class="sidebar__header__text">{{ content }}</div>
+				<i @click="$emit('close')" class="material-icons sidebar__header__close"
+					>close</i
+				>
 			</div>
-			<div class="sidebar__text">
-				Show Menu
+			<hr />
+			<ul v-if="content === 'Menu'">
+				<li @click="handleList('About This Board')">
+					<i class="material-icons">developer_board</i>About This Board
+				</li>
+				<li @click="handleList('Change Background')">
+					<i class="material-icons">brush</i>Change Background
+				</li>
+				<li @click="handleDeleteModal">
+					<i class="material-icons">delete_sweep</i>Delete Board
+				</li>
+			</ul>
+			<div v-else-if="content === 'About This Board'">
+				<AboutBoard :board="board" />
 			</div>
-		</BaseBtn>
-		<div v-if="isSidebarOpen">
-			<div class="sidebar">
-				<div class="sidebar__header">
-					<i
-						v-if="content !== 'Menu'"
-						@click="content = 'Menu'"
-						class="material-icons sidebar__header__back"
-						>keyboard_arrow_left</i
-					>
-					<div v-else class="hidden"></div>
-					<div class="sidebar__header__text">{{ content }}</div>
-					<i
-						@click="toggleSidebar"
-						class="material-icons sidebar__header__close"
-						>close</i
-					>
-				</div>
-				<hr />
-				<ul v-if="content === 'Menu'">
-					<li @click="handleList('About This Board')">
-						<i class="material-icons">developer_board</i>About This Board
-					</li>
-					<li @click="handleList('Change Background')">
-						<i class="material-icons">brush</i>Change Background
-					</li>
-					<li @click="handleDeleteModal">
-						<i class="material-icons">delete_sweep</i>Delete Board
-					</li>
-				</ul>
-				<div v-else-if="content === 'About This Board'">
-					About This Board
-				</div>
-				<div v-else-if="content === 'Change Background'">
-					<div class="colors">
-						<div
-							class="colors__item"
-							:class="color"
-							v-for="(color, i) in colors"
-							:key="i"
-							@click="chooseBackground(color)"
-						></div>
-					</div>
+			<div v-else-if="content === 'Change Background'">
+				<div class="colors">
+					<div
+						class="colors__item"
+						:class="color"
+						v-for="(color, i) in colors"
+						:key="i"
+						@click="chooseBackground(color)"
+					></div>
 				</div>
 			</div>
 		</div>
@@ -57,7 +45,7 @@
 			<div>
 				<h3>알림</h3>
 				<div>
-					<div>정말로 삭제하시겠습니까?</div>
+					<div>보드 {{ board.title }}를 삭제하시겠습니까?</div>
 					<button @click="deleteBoard">확인</button>
 				</div>
 			</div>
@@ -69,22 +57,25 @@
 export default {
 	data() {
 		return {
-			isSidebarOpen: false,
 			deleteModal: false,
 			content: 'Menu',
 			colors: ['blue', 'red', 'orange', 'yellow', 'green', 'purple'],
 		};
+	},
+	components: {
+		AboutBoard: () => import('@/components/board/sidebar/AboutBoard'),
 	},
 	props: {
 		currentUser: {
 			type: Object,
 			required: false,
 		},
+		board: {
+			type: Object,
+			required: true,
+		},
 	},
 	methods: {
-		toggleSidebar() {
-			this.isSidebarOpen = !this.isSidebarOpen;
-		},
 		handleList(type) {
 			if (type === 'About This Board') {
 				this.content = 'About This Board';
@@ -115,6 +106,15 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/lib/styles/_boardPalette';
+
+.sidebar-wrap {
+	position: fixed;
+	z-index: 9998;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
 
 .sidebar {
 	position: absolute;

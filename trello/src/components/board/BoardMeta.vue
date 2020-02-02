@@ -2,20 +2,28 @@
 	<div class="metaWrap">
 		<div class="meta">
 			<BaseInput
-				:type="'text'"
 				v-model="board.title"
-				:toggle="true"
+				:type="'text'"
+				:kind="'toggle'"
 				@enter="updateBoardTitle"
 			>
 				{{ board.title }}
 			</BaseInput>
 			<BaseBtn class="meta__favorite" @click="toggleFavorite">
-				<i class="material-icons">star</i>
+				<i class="material-icons" :class="board.favorite ? 'yellow' : ''"
+					>star</i
+				>
 			</BaseBtn>
 		</div>
-		<div class="sidebar">
-			<Sidebar :currentUser="currentUser" />
-		</div>
+		<BaseBtn class="sidebar__button" @click="toggleSidebar">
+			Show Menu
+		</BaseBtn>
+		<Sidebar
+			v-if="isSidebarOpen"
+			:currentUser="currentUser"
+			:board="board"
+			@close="toggleSidebar"
+		/>
 	</div>
 </template>
 
@@ -33,12 +41,13 @@ export default {
 	},
 	data() {
 		return {
+			isSidebarOpen: false,
 			showBoardTitleInput: false,
 			title: this.board.title,
 		};
 	},
 	components: {
-		Sidebar: () => import('@/components/board/BoardSidebar'),
+		Sidebar: () => import('@/components/board/sidebar/BoardSidebar'),
 	},
 	methods: {
 		addList() {
@@ -61,6 +70,9 @@ export default {
 					favorite: !favorite,
 				})
 				.then(() => {});
+		},
+		toggleSidebar() {
+			this.isSidebarOpen = !this.isSidebarOpen;
 		},
 		handleBoardTitleInput() {
 			this.showBoardTitleInput = !this.showBoardTitleInput;
@@ -100,5 +112,9 @@ export default {
 
 .material-icons {
 	font-size: 1.7rem;
+}
+
+.yellow {
+	color: rgb(255, 217, 0);
 }
 </style>
