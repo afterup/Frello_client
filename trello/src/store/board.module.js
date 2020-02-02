@@ -29,16 +29,38 @@ const actions = {
 		}
 	},
 	async FETCH_BOARD({ commit, rootState }, id) {
+		function dateFormat(date) {
+			const array = date.split('-');
+			const year = array[0];
+			const month = array[1];
+			const day = array[2].split('T')[0];
+			const time = array[2].split('T')[1].split('.')[0];
+
+			return `${year}-${month}-${day} ${time}`;
+		}
+
 		try {
 			const { data } = await ApiService.get(`/board/${id}`);
+			console.log(data);
+			const {
+				board_id,
+				title,
+				background,
+				favorite,
+				createdAt,
+				user_id,
+			} = data.board;
 
-			const { board_id, title, background, favorite, user_id } = data.board;
+			const createdAtFormat = dateFormat(createdAt);
+
 			commit('SET_BOARD', {
 				board_id,
 				title,
 				background,
 				favorite,
 				user_id,
+				createdAt: createdAtFormat,
+				username: data.board.User.username,
 			});
 
 			//SET lists at task.module
@@ -79,6 +101,7 @@ const actions = {
 		const { data } = await ApiService.put(`/board/${payload.id}/favorite`, {
 			favorite: payload.favorite,
 		});
+		commit('SET_FAVORITE');
 		console.log(data);
 	},
 };
@@ -90,6 +113,9 @@ const mutations = {
 	},
 	SET_BOARD(state, board) {
 		state.board = board;
+	},
+	SET_FAVORITE(state, id) {
+		state.board.favorite = !state.board.favorite;
 	},
 	CHANGE_BOARD(state, board) {
 		if (board.title) {
