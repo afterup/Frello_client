@@ -7,37 +7,18 @@
 			<BaseBtn class="navigation__signup" @click="openModal">Sign Up</BaseBtn>
 		</router-link>
 	</div>
-	<div class="user" v-else>
+	<div v-else>
 		<BaseIcon
-			:username="currentUser.username"
+			class="user__icon"
 			@click="handleUserContent"
+			:username="currentUser.username"
 			:size="30"
 		/>
-		<div class="user__content" v-if="userContent">
-			<ul>
-				<li>
-					<span>
-						{{ currentUser.username }}
-					</span>
-					<span @click="handleUserContent">
-						<i class="material-icons close">close</i>
-					</span>
-				</li>
-				<hr />
-				<li
-					@click="
-						$router.push({
-							name: 'mypage',
-							params: { username: currentUser.username },
-						})
-					"
-				>
-					My Page
-				</li>
-				<li>Setting</li>
-				<li @click="logout">Log Out</li>
-			</ul>
-		</div>
+		<NavUser
+			v-if="isShowUserContent"
+			:currentUser="currentUser"
+			@close="handleUserContent"
+		/>
 	</div>
 </template>
 
@@ -47,7 +28,7 @@ import { mapGetters } from 'vuex';
 export default {
 	data() {
 		return {
-			userContent: false,
+			isShowUserContent: false,
 		};
 	},
 	props: {
@@ -60,21 +41,18 @@ export default {
 			required: false,
 		},
 	},
+	components: {
+		NavUser: () => import('@/components/common/NavUser'),
+	},
 	computed: {
 		...mapGetters(['showModal']),
 	},
 	methods: {
-		logout() {
-			this.$store.dispatch('LOGOUT').then(() => {
-				this.$router.push({ name: 'home' });
-				this.handleUserContent();
-			});
-		},
-		handleUserContent() {
-			this.userContent = !this.userContent;
-		},
 		openModal() {
 			this.$store.commit('OPEN_MODAL');
+		},
+		handleUserContent() {
+			this.isShowUserContent = !this.isShowUserContent;
 		},
 	},
 };
@@ -107,51 +85,7 @@ export default {
 	}
 }
 
-.user {
-	&__content {
-		position: absolute;
-		top: 45px;
-		right: 10px;
-		width: 180px;
-		height: 120px;
-		z-index: 2;
-		background-color: #fff;
-
-		ul {
-			list-style: none;
-			padding: 0.4rem;
-			li {
-				display: flex;
-				align-items: center;
-				font-size: 1.3rem;
-				padding: 0.2rem;
-
-				&:hover {
-					background-color: rgb(235, 235, 235);
-					cursor: pointer;
-				}
-
-				&:first-child {
-					span:first-child {
-						margin-right: 4rem;
-						margin-left: 6.5rem;
-					}
-
-					&:hover {
-						background-color: #fff;
-						cursor: default;
-					}
-				}
-			}
-		}
-		.close {
-			font-size: 20px;
-			color: grey;
-
-			&:hover {
-				cursor: pointer;
-			}
-		}
-	}
+.user__icon:hover {
+	cursor: pointer;
 }
 </style>
