@@ -31,8 +31,8 @@ export default {
 	},
 	mixins: [movingMixin],
 	components: {
-		AppDrop: () => import('@/test/AppDrop'),
-		AppDrag: () => import('@/test/AppDrag'),
+		AppDrop: () => import('@/components/drag/AppDrop'),
+		AppDrag: () => import('@/components/drag/AppDrag'),
 	},
 	computed: {
 		...mapGetters(['lists']),

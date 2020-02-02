@@ -26,8 +26,8 @@ import movingMixin from '@/mixins/movingMixin';
 export default {
 	components: {
 		ListCard: () => import('@/test/ListCard'),
-		AppDrop: () => import('@/test/AppDrop'),
-		AppDrag: () => import('@/test/AppDrag'),
+		AppDrop: () => import('@/components/drag/AppDrop'),
+		AppDrag: () => import('@/components/drag/AppDrag'),
 	},
 	mixins: [movingMixin],
 };

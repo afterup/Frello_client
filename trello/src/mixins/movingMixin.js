@@ -14,24 +14,25 @@ export default {
 			console.log(transferData);
 			if (transferData.type === 'card') {
 				this.moveCard(transferData);
-			} else {
+			} else if (transferData.type === 'list') {
 				this.moveList(transferData);
+			} else {
+				return;
 			}
 		},
 		moveCard({ fromListIndex, fromCardIndex }) {
-			const fromCards = this.lists[fromListIndex].Cards;
 			const toListIndex = this.listIndex;
-			const toCards = this.lists[toListIndex].Cards;
+			const toCardIndex = this.cardIndex;
 
-			this.$store.commit('MOVE_TASK_CARD', {
-				fromCards,
+			this.$store.dispatch('MOVE_CARD', {
+				fromListIndex,
 				fromCardIndex,
-				toCards,
-				toCardIndex: this.cardIndex,
+				toListIndex,
+				toCardIndex,
 			});
 		},
 		moveList({ fromListIndex }) {
-			this.$store.commit('MOVE_COLUMN_LIST', {
+			this.$store.dispatch('MOVE_LIST', {
 				fromListIndex,
 				toListIndex: this.listIndex,
 			});

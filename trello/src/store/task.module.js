@@ -96,39 +96,53 @@ const actions = {
 		console.log(data);
 		commit('REMOVE_CARD', id);
 	},
-
-	async MOVE_CARD({ commit, state }, { evt }) {
-		function findBothPosition(listId, index) {
-			const cards = state.lists.find(list => list.list_id === listId).Cards;
-			let bothItem = {};
-			if (cards[index - 1]) {
-				bothItem['leftPosition'] = cards[index - 1].position;
+	/* MOVE */
+	async MOVE_CARD(
+		{ commit, state },
+		{ fromListIndex, fromCardIndex, toListIndex, toCardIndex },
+	) {
+		function findBothPosition(toCards) {
+			let bothPosition = {};
+			if (toCards[toCardIndex - 1]) {
+				bothPosition['leftPosition'] = toCards[toCardIndex - 1].position;
 			}
-			if (cards[index + 1]) {
-				bothItem['rightPosition'] = cards[index + 1].position;
+			if (toCards[toCardIndex + 1]) {
+				bothPosition['rightPosition'] = toCards[toCardIndex + 1].position;
 			}
-			return bothItem;
+			return bothPosition;
 		}
 
 		try {
-			const { relatedContext, draggedContext } = evt;
+			const fromCards = state.lists[fromListIndex].Cards;
+			const toCards = state.lists[toListIndex].Cards;
+			const listId = state.lists[toListIndex].list_id;
 
-			const bothItem = findBothPosition(
-				draggedContext.element.list_id,
-				relatedContext.index,
-			);
+			commit('MOVE_TASK_CARD', {
+				fromCards,
+				fromCardIndex,
+				toCards,
+				toCardIndex,
+			});
+			console.log(toCardIndex);
 
-			const { data } = await ApiService.put(
-				`/card/${draggedContext.element.card_id}`,
-				{
-					card: {
-						bothItem,
-						listId: draggedContext.element.list_id,
-					},
+			let cardId;
+			let bothPosition;
+			if (toCardIndex !== undefined) {
+				cardId = toCards[toCardIndex].card_id;
+				bothPosition = findBothPosition(toCards);
+			} else {
+				cardId = toCards[0].card_id;
+			}
+			console.log(bothPosition);
+
+			const { data } = await ApiService.put(`/card/${cardId}`, {
+				card: {
+					bothPosition,
+					listId: listId,
 				},
-			);
-
+			});
 			console.log(data);
+			commit('SET_CARD_POSITION', data.card);
 		} catch (err) {
 			console.log(err);
 		}
@@ -191,6 +205,13 @@ const mutations = {
 		const list = state.lists;
 		const listToMove = list.splice(fromListIndex, 1)[0];
 		list.splice(toListIndex, 0, listToMove);
+	},
+	SET_CARD_POSITION(state, newCard) {
+		const list = state.lists.find(list => list.list_id === newCard.list_id);
+		const cardIndex = list.Cards.findIndex(
+			card => card.card_id === newCard.card_id,
+		);
+		list.Cards[cardIndex] = newCard;
 	},
 };
 
