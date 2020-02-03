@@ -42,13 +42,11 @@
 			</div>
 		</div>
 		<Modal v-if="deleteModal" @close="handleDeleteModal">
-			<div>
-				<h3>알림</h3>
-				<div>
-					<div>보드 {{ board.title }}를 삭제하시겠습니까?</div>
-					<button @click="deleteBoard">확인</button>
-				</div>
-			</div>
+			<DeleteModal
+				:title="board.title"
+				@click="deleteBoard"
+				@close="handleDeleteModal"
+			/>
 		</Modal>
 	</div>
 </template>
@@ -64,6 +62,7 @@ export default {
 	},
 	components: {
 		AboutBoard: () => import('@/components/board/sidebar/AboutBoard'),
+		DeleteModal: () => import('@/components/board/sidebar/DeleteModal'),
 	},
 	props: {
 		currentUser: {
