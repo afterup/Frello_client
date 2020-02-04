@@ -15,15 +15,21 @@
 				>
 			</BaseBtn>
 		</div>
-		<BaseBtn class="sidebar__button" @click="toggleSidebar">
+		<BaseBtn
+			class="sidebar__button"
+			:class="{ button_active: isSidebarOpen }"
+			@click="toggleSidebar"
+		>
 			Show Menu
 		</BaseBtn>
-		<Sidebar
-			v-if="isSidebarOpen"
-			:currentUser="currentUser"
-			:board="board"
-			@close="toggleSidebar"
-		/>
+		<transition name="slide">
+			<BoardSidebar
+				v-if="isSidebarOpen"
+				:currentUser="currentUser"
+				:board="board"
+				@close="toggleSidebar"
+			/>
+		</transition>
 	</div>
 </template>
 
@@ -47,7 +53,7 @@ export default {
 		};
 	},
 	components: {
-		Sidebar: () => import('@/components/board/sidebar/BoardSidebar'),
+		BoardSidebar: () => import('@/components/board/sidebar/BoardSidebar'),
 	},
 	methods: {
 		addList() {
@@ -116,5 +122,21 @@ export default {
 
 .yellow {
 	color: rgb(255, 217, 0);
+}
+
+.button_active {
+	transform: translateX(-260%);
+	transition: transform 0.3s ease;
+}
+
+.slide-enter-active,
+.slide-leave-active {
+	transition: transform 0.3s ease;
+}
+
+.slide-enter,
+.slide-leave-to {
+	transform: translateX(100%);
+	transition: all 0.15s ease;
 }
 </style>
