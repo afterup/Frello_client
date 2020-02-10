@@ -1,6 +1,13 @@
 <template>
 	<div class="home">
-		<div class="home__banner"></div>
+		<div class="home__banner">
+			<div>
+				<h1>Trello Clone Web</h1>
+			</div>
+			<svg width="500px" height="500px" class="home__banner__image">
+				<image href="@/assets/image/hero-a.svg" width="500" height="500" />
+			</svg>
+		</div>
 		<div class="home__about"></div>
 		<div class="home__content"></div>
 		<footer class="footer">
@@ -32,8 +39,22 @@ export default {
 <style lang="scss" scoped>
 .home {
 	&__banner {
-		background-color: $color-primary-light;
+		display: flex;
+		justify-content: space-around;
+		align-items: center;
+		background: rgb(6, 119, 191);
+		background: linear-gradient(
+			90deg,
+			rgba(6, 119, 191, 1) 0%,
+			rgba(6, 119, 191, 1) 35%,
+			rgba(71, 105, 196, 1) 100%
+		);
 		height: 50rem;
+
+		h1 {
+			font-size: 2.5rem;
+			color: white;
+		}
 	}
 
 	&__about {

@@ -4,6 +4,7 @@ import BaseContainer from '@/components/ui/BaseContainer';
 import BaseIcon from '@/components/ui/BaseIcon';
 import BaseBtn from '@/components/ui/BaseBtn';
 import BaseInput from '@/components/ui/BaseInput';
+import BackDrop from '@/components/ui/BackDrop';
 import Modal from '@/components/ui/Modal';
 
 const components = {
@@ -11,6 +12,7 @@ const components = {
 	BaseIcon,
 	BaseInput,
 	BaseBtn,
+	BackDrop,
 	Modal,
 };
 
