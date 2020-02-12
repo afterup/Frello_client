@@ -17,10 +17,20 @@ export default {
 			required: true,
 		},
 	},
+	computed: {
+		dragged() {
+			return this.$store.getters.dragged;
+		},
+	},
 	methods: {
 		onDrag(e) {
+			const dragged = e.currentTarget;
+			// dragged.classList.add('placeholder');
+			this.$store.commit('SET_DRAGGED', dragged);
+			console.log(this.dragged);
+
 			console.log(this.transferData);
-			e.dataTransfer.effectAllowed = 'move';
+			e.dataTransfer.effectAllowed = 'copyMove';
 			e.dataTransfer.dropEffect = 'move';
 			e.dataTransfer.setData('payload', JSON.stringify(this.transferData));
 		},
@@ -28,4 +38,4 @@ export default {
 };
 </script>
 
-<style></style>
+<style lang="scss" scoped></style>

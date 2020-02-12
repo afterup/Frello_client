@@ -21,16 +21,16 @@
 						<i class="material-icons delete-icon">delete</i>
 					</BaseBtn>
 				</div>
-				<div class="list__item__body">
-					<ListCard
-						v-for="(card, $cardIndex) of list.Cards"
-						:key="card.card_id"
-						:card="card"
-						:cardIndex="$cardIndex"
-						:list="list"
-						:listIndex="listIndex"
-					/>
-				</div>
+				<ul class="list__item__body">
+					<li v-for="(card, $cardIndex) of list.Cards" :key="card.card_id">
+						<ListCard
+							:card="card"
+							:cardIndex="$cardIndex"
+							:list="list"
+							:listIndex="listIndex"
+						/>
+					</li>
+				</ul>
 				<div
 					class="list__item__footer"
 					@drop.stop

@@ -13,11 +13,11 @@
 				:to="`/board/${this.$route.params.id}/card/${card.card_id}`"
 				tag="div"
 			>
-				<div class="task__item">
+				<li class="task__item">
 					<div class="task__item__title">
 						{{ card.title }}
 					</div>
-				</div>
+				</li>
 			</router-link>
 		</AppDrag>
 	</AppDrop>
