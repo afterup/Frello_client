@@ -1,18 +1,26 @@
 <template>
 	<div class="login">
 		<h3 class="login__title">Log in to Trello</h3>
-		<form class="login__field" @submit.prevent>
-			<BaseInput v-model="email" :type="'text'" :placeholder="'Enter email'" />
+		<form class="login__form" @submit.prevent="login">
+			<div class="form-group">
+				<BaseInput
+					v-model.trim="email"
+					:type="'text'"
+					:placeholder="'Enter email'"
+					:maxlength="30"
+					@enter="login"
+				/>
+			</div>
 			<BaseInput
-				v-model="password"
+				v-model.trim="password"
 				:type="'password'"
 				:placeholder="'Enter password'"
+				:maxlength="20"
 				@enter="login"
 			/>
 			<br />
-			<BaseBtn class="login__button" @click="login" :width="'100%'"
-				>Login</BaseBtn
-			>
+			<!-- <div v-if="error" class="error">{{ error }}</div> -->
+			<BaseBtn class="login__button" :width="'100%'">Login</BaseBtn>
 		</form>
 	</div>
 </template>
@@ -32,6 +40,11 @@ export default {
 				email: this.email,
 				password: this.password,
 			});
+
+			if (user.error) {
+				return;
+			}
+
 			this.$store.commit('CLOSE_MODAL');
 			this.$router.push({
 				name: 'boards',
@@ -44,7 +57,7 @@ export default {
 
 <style lang="scss" scoped>
 .login {
-	&__field {
+	&__form {
 		margin: 3rem 0;
 	}
 
@@ -63,5 +76,11 @@ export default {
 			background-color: $color-green-light;
 		}
 	}
+}
+
+.error {
+	color: red;
+	margin-bottom: 0.8rem;
+	transition: all 0.3s;
 }
 </style>

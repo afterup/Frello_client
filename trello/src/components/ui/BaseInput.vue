@@ -8,25 +8,36 @@
 			<slot name="badge"></slot>
 			<slot></slot>
 		</div>
-		<input
-			v-if="toggleText"
-			class="toggle-field__input"
-			autofocus
-			:type="type"
-			:placeholder="placeholder"
-			:value="value"
-			@input="updateValue($event.target.value)"
-			@keyup.enter="enterToggle"
-		/>
+		<div v-if="toggleText">
+			<input
+				class="toggle-field__input"
+				v-if="type === 'text'"
+				autofocus
+				type="text"
+				:placeholder="placeholder"
+				:value="value"
+				@input="updateValue($event.target.value)"
+				@keyup.enter="enterToggle"
+			/>
+			<textarea
+				v-else
+				cols="30"
+				rows="10"
+				:value="value"
+				@input="updateValue($event.target.value)"
+				@keyup.enter="enterToggle"
+			></textarea>
+		</div>
 	</div>
 	<div class="base-field" v-else>
 		<input
 			class="base-field__input"
-			ref="input"
+			:class="{ 'is-invalid': !isValid }"
 			:type="type"
 			:placeholder="placeholder"
 			:value="value"
 			:autocomplete="type === 'password'"
+			:maxlength="maxlength"
 			@input="updateValue($event.target.value)"
 			@keyup.enter="$emit('enter')"
 		/>
@@ -57,9 +68,14 @@ export default {
 			type: String,
 			required: false,
 		},
+		maxlength: {
+			type: Number,
+			required: false,
+		},
 	},
 	methods: {
 		updateValue(value) {
+			this.isValid = true;
 			this.$emit('input', value);
 		},
 		enterToggle(value) {
@@ -101,7 +117,19 @@ export default {
 		outline: none;
 		border: 2px solid $color-grey-light-4;
 		border-radius: 4px;
-		transition: 0.2s;
+
+		// animation-duration: 0.7s;
+		// animation-name: slidein;
+
+		// @keyframes slidein {
+		// 	from {
+		// 		height: 4rem;
+		// 	}
+
+		// 	to {
+		// 		height: 8rem;
+		// 	}
+		// }
 
 		&:focus {
 			border-color: dodgerblue;
@@ -116,6 +144,7 @@ export default {
 .base-field {
 	width: 100%;
 	input {
+		width: 100%;
 		border: 2px solid $color-grey-light-4;
 		border-radius: 4px;
 		margin: 8px 0;
@@ -128,21 +157,9 @@ export default {
 			border-color: dodgerblue;
 		}
 	}
+
+	.is-invalid {
+		border: 2px solid rgb(255, 130, 130);
+	}
 }
-
-// .control {
-
-// 	input[type='textarea'] {
-// 		height: 5rem;
-// 	}
-
-// 	&__text {
-// 		font-size: 1.3rem;
-
-// 		&__slot {
-// 			display: flex;
-// 			align-items: center;
-// 		}
-// 	}
-// }
 </style>

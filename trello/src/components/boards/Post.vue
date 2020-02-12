@@ -7,6 +7,7 @@
 					v-model="title"
 					:type="'text'"
 					:placeholder="'Add board title'"
+					:maxlength="30"
 				/>
 				<BaseBtn @click="onSubmit">Create Board</BaseBtn>
 			</div>

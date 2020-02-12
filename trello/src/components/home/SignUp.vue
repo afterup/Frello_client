@@ -2,28 +2,32 @@
 	<div class="signup">
 		<h3 class="signup__title">Sign up to Trello</h3>
 		<form class="signup__field" @submit.prevent>
-			<BaseInput v-model="email" :type="'text'" :placeholder="'Enter email'" />
+			<BaseInput
+				v-model="email"
+				:type="'text'"
+				:placeholder="'Enter email'"
+				:maxlength="50"
+			/>
 			<BaseInput
 				v-model="username"
 				:type="'text'"
 				:placeholder="'Enter username'"
+				:maxlength="30"
 			/>
 			<BaseInput
 				v-model="password"
 				:type="'password'"
 				:placeholder="'Enter password'"
+				:maxlength="20"
 				@enter="register"
 			/>
 			<br />
-			<div class="error" v-if="this.error">{{ this.error }}</div>
 			<BaseBtn @click="register" class="signup__button">Sign Up</BaseBtn>
 		</form>
 	</div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-
 export default {
 	data() {
 		return {
@@ -31,9 +35,6 @@ export default {
 			username: '',
 			password: '',
 		};
-	},
-	computed: {
-		...mapGetters(['error']),
 	},
 	methods: {
 		register() {
