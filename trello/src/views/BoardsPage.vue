@@ -1,32 +1,7 @@
 <template>
 	<BaseContainer>
-		<Panel v-if="favorites.length > 0">
-			<h3 slot="title">
-				<i class="material-icons">star_border</i>
-				Starred Boards
-			</h3>
-			<Card
-				slot="card"
-				v-for="favorite in favorites"
-				:key="favorite.board_id"
-				:board="favorite"
-				@clickCard="toBoard(favorite.board_id)"
-			></Card>
-		</Panel>
-		<Panel :type="'personal'">
-			<h3 slot="title">
-				<i class="material-icons">person</i>
-				Personal Boards
-			</h3>
-			<Card
-				slot="card"
-				v-for="board in boards"
-				:key="board.board_id"
-				:board="board"
-				@clickCard="toBoard(board.board_id)"
-			></Card>
-		</Panel>
-		<Modal v-if="showModal" :type="'general'" @close="closeModal">
+		<BoardsList :boards="favorites" :badge="'star_border'" />
+		<BoardsList :boards="boards" :badge="'person'" :type="'personal'" />
 		<Modal v-if="showModal" :type="'base'" @close="closeModal">
 			<Post @close="closeModal" />
 		</Modal>
@@ -38,8 +13,7 @@ import { mapGetters } from 'vuex';
 
 export default {
 	components: {
-		Panel: () => import('@/components/boards/Panel.vue'),
-		Card: () => import('@/components/boards/Card.vue'),
+		BoardsList: () => import('@/components/boards/BoardsList.vue'),
 		Modal: () => import('@/components/modal/Modal.vue'),
 		Post: () => import('@/components/boards/Post.vue'),
 	},
@@ -57,8 +31,6 @@ export default {
 		},
 	},
 	methods: {
-			this.$router.push({ name: 'board', params: { id: id } });
-		},
 		closeModal() {
 			this.$store.commit('CLOSE_MODAL');
 		},

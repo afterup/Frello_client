@@ -1,12 +1,13 @@
 <template>
-	<div class="boards">
-		<h3 class="boards__title">
+	<div class="panel">
+		<h3 class="panel__title">
+			<i v-if="badge" class="material-icons badge">{{ badge }}</i>
 			<slot name="title"></slot>
 		</h3>
-		<div class="boards__cards">
+		<div class="panel__cards">
 			<slot name="card"></slot>
 			<div
-				class="boards__cards__add"
+				class="panel__cards__add"
 				v-if="type === 'personal'"
 				@click="openModal"
 			>
@@ -23,6 +24,10 @@ export default {
 			type: String,
 			required: false,
 		},
+		badge: {
+			type: String,
+			required: false,
+		},
 	},
 	methods: {
 		openModal() {
@@ -33,15 +38,21 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.boards {
+.panel {
 	width: 80%;
 	height: 80%;
 	margin: 3rem 20rem auto;
 
 	&__title {
+		display: flex;
+		align-items: center;
 		font-size: 1.6rem;
 		font-weight: bold;
 		margin-bottom: 10px;
+
+		.badge {
+			margin-right: 0.5rem;
+		}
 	}
 
 	&__cards {
