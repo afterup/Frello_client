@@ -27,6 +27,7 @@
 			></Card>
 		</Panel>
 		<Modal v-if="showModal" :type="'general'" @close="closeModal">
+		<Modal v-if="showModal" :type="'base'" @close="closeModal">
 			<Post @close="closeModal" />
 		</Modal>
 	</BaseContainer>
@@ -39,6 +40,7 @@ export default {
 	components: {
 		Panel: () => import('@/components/boards/Panel.vue'),
 		Card: () => import('@/components/boards/Card.vue'),
+		Modal: () => import('@/components/modal/Modal.vue'),
 		Post: () => import('@/components/boards/Post.vue'),
 	},
 	created() {
@@ -55,7 +57,6 @@ export default {
 		},
 	},
 	methods: {
-		toBoard(id) {
 			this.$router.push({ name: 'board', params: { id: id } });
 		},
 		closeModal() {

@@ -1,37 +1,32 @@
 <template>
 	<div class="home">
-		<div class="home__banner">
+		<section class="home__banner">
 			<div>
 				<h1>Trello Clone Web</h1>
 			</div>
 			<svg width="500px" height="500px" class="home__banner__image">
 				<image href="@/assets/image/hero-a.svg" width="500" height="500" />
 			</svg>
-		</div>
-		<div class="home__about"></div>
-		<div class="home__content"></div>
+		</section>
+		<section class="home__about"></section>
+		<section class="home__content"></section>
 		<footer class="footer">
 			<div class="footer__text">©Reference to trello</div>
 		</footer>
-		<Modal v-if="showModal" @close="closeModal">
+		<Modal v-if="showModal" @close="closeModal('home')">
 			<router-view></router-view>
 		</Modal>
 	</div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import modalMixin from '@/mixins/modalMixin.js';
 
 export default {
 	name: 'home',
-	computed: {
-		...mapGetters(['showModal']),
-	},
-	methods: {
-		closeModal() {
-			this.$store.commit('CLOSE_MODAL');
-			this.$router.push({ name: 'home' });
-		},
+	mixins: [modalMixin],
+	components: {
+		Modal: () => import('@/components/modal/Modal'),
 	},
 };
 </script>

@@ -1,14 +1,13 @@
-import store from '@/store/modal.module.js';
+import { mapGetters } from 'vuex';
 
-export default ModalMixin = {
+export default {
 	computed: {
-		showModal() {
-			return store.getters('showModal');
-		},
+		...mapGetters(['showModal']),
 	},
 	methods: {
-		closeModal(type) {
-			store.commit('CLOSE_MODAL');
+		closeModal(route) {
+			this.$store.commit('CLOSE_MODAL');
+			this.$router.push({ name: route });
 		},
 	},
 };
