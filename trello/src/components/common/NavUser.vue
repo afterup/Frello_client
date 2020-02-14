@@ -4,7 +4,6 @@
 			<ul>
 				<li>
 					<span>
-						{{ currentUser.username }}
 					</span>
 					<span @click="$emit('close')">
 						<i class="material-icons close">close</i>

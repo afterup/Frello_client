@@ -1,32 +1,29 @@
 <template>
 	<header class="header">
-		<div class="header__home">
-			<BaseBtn class="header__home__button" @click="toHome">
+		<div class="header__left">
+			<BaseBtn @click="toHome">
 				<i class="material-icons">home</i>
 			</BaseBtn>
-			<BaseBtn
-				class="header__home__button"
-				v-if="isAuthenticated"
-				@click="toBoards"
-				:badge="true"
-			>
+			<BaseBtn v-if="isAuthenticated" @click="toBoards" :badge="true">
 				<i class="material-icons" slot="badge">developer_board</i>
 				Boards
 			</BaseBtn>
 		</div>
-		<svg width="90" height="40">
-			<image
-				href="@/assets/image/trello-logo-white.svg"
-				width="90"
-				height="40"
-				class="logo"
-				@click="toHome"
+		<div class="header__center">
+			<svg width="90" height="40">
+				<image
+					href="@/assets/image/trello-logo-white.svg"
+					class="logo"
+					@click="toHome"
+				/>
+			</svg>
+		</div>
+		<div class="hedaer__right">
+			<NavigationItems
+				:isAuthenticated="isAuthenticated"
+				:currentUser="currentUser"
 			/>
-		</svg>
-		<NavigationItems
-			:isAuthenticated="isAuthenticated"
-			:currentUser="currentUser"
-		/>
+		</div>
 	</header>
 </template>
 
@@ -64,13 +61,18 @@ export default {
 	height: $header-height;
 	padding: 0 1.5rem;
 
-	&__home {
+	&__left {
 		display: flex;
 		align-items: center;
 	}
 }
 
-.logo:hover {
-	cursor: pointer;
+.logo {
+	width: 90px;
+	height: 40px;
+
+	&:hover {
+		cursor: pointer;
+	}
 }
 </style>

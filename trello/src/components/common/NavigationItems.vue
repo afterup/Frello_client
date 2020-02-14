@@ -1,13 +1,13 @@
 <template>
 	<div class="navigation" v-if="!isAuthenticated">
-		<router-link :to="'login'" tag="div">
-			<BaseBtn class="navigation__login" @click="openModal">Login</BaseBtn>
+		<router-link :to="'login'" tag="div" @click="openModal">
+			<BaseBtn class="navigation__login">Login</BaseBtn>
 		</router-link>
-		<router-link :to="'signup'" tag="div">
-			<BaseBtn class="navigation__signup" @click="openModal">Sign Up</BaseBtn>
+		<router-link :to="'signup'" tag="div" @click="openModal">
+			<BaseBtn class="navigation__signup">Sign Up</BaseBtn>
 		</router-link>
 	</div>
-	<div v-else>
+	<div class="navigation" v-else>
 		<BaseIcon
 			class="user__icon"
 			@click="handleUserContent"
