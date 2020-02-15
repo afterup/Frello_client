@@ -1,14 +1,14 @@
 <template>
-	<div class="sidebar-wrap" @click.self="$emit('close')">
+	<BackDrop @close="$emit('close')">
 		<div class="sidebar">
 			<div class="sidebar__header">
+				<div v-if="content === 'Menu'" class="hidden"></div>
 				<i
-					v-if="content !== 'Menu'"
+					v-else
 					@click="content = 'Menu'"
 					class="material-icons sidebar__header__back"
 					>keyboard_arrow_left</i
 				>
-				<div v-else class="hidden"></div>
 				<div class="sidebar__header__text">{{ content }}</div>
 				<i @click="$emit('close')" class="material-icons sidebar__header__close"
 					>close</i
@@ -16,10 +16,10 @@
 			</div>
 			<hr />
 			<ul v-if="content === 'Menu'">
-				<li @click="handleList('About This Board')">
+				<li @click="handleContent('About This Board')">
 					<i class="material-icons">developer_board</i>About This Board
 				</li>
-				<li @click="handleList('Change Background')">
+				<li @click="handleContent('Change Background')">
 					<i class="material-icons">brush</i>Change Background
 				</li>
 				<li @click="handleDeleteModal">
@@ -30,25 +30,17 @@
 				<AboutBoard :board="board" />
 			</div>
 			<div v-else-if="content === 'Change Background'">
-				<div class="colors">
-					<div
-						class="colors__item"
-						:class="color"
-						v-for="(color, i) in colors"
-						:key="i"
-						@click="chooseBackground(color)"
-					></div>
-				</div>
+				<BackgroundColor />
 			</div>
 		</div>
-		<Modal v-if="deleteModal" @close="handleDeleteModal">
-			<DeleteModal
+		<Modal v-if="deleteModal" :close="false" @close="handleDeleteModal">
+			<DeleteBoard
 				:title="board.title"
 				@click="deleteBoard"
 				@close="handleDeleteModal"
 			/>
 		</Modal>
-	</div>
+	</BackDrop>
 </template>
 
 <script>
@@ -57,12 +49,14 @@ export default {
 		return {
 			deleteModal: false,
 			content: 'Menu',
-			colors: ['blue', 'red', 'orange', 'yellow', 'green', 'purple'],
 		};
 	},
 	components: {
-		AboutBoard: () => import('@/components/board/sidebar/AboutBoard'),
-		DeleteModal: () => import('@/components/board/sidebar/DeleteModal'),
+		Modal: () => import('@/components/modal/Modal'),
+		BackDrop: () => import('@/components/ui/BackDrop'),
+		AboutBoard: () => import('@/components/sidebar/AboutBoard'),
+		DeleteBoard: () => import('@/components/sidebar/DeleteBoard'),
+		BackgroundColor: () => import('@/components/sidebar/BackgroundColor'),
 	},
 	props: {
 		currentUser: {
@@ -75,7 +69,7 @@ export default {
 		},
 	},
 	methods: {
-		handleList(type) {
+		handleContent(type) {
 			if (type === 'About This Board') {
 				this.content = 'About This Board';
 			} else if (type === 'Change Background') {
@@ -93,28 +87,11 @@ export default {
 				});
 			});
 		},
-		chooseBackground(color) {
-			this.$store.dispatch('UPDATE_BOARD', {
-				board_id: this.$route.params.id,
-				background: color,
-			});
-		},
 	},
 };
 </script>
 
 <style lang="scss" scoped>
-@import '@/lib/styles/_boardPalette';
-
-.sidebar-wrap {
-	position: fixed;
-	z-index: 9998;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-}
-
 .sidebar {
 	position: absolute;
 	top: $header-height;
@@ -127,10 +104,10 @@ export default {
 		display: flex;
 		justify-content: space-between;
 		padding: 1rem;
-		font-size: 1.5rem;
 		font-weight: bold;
 
 		&__text {
+			font-size: 1.5rem;
 		}
 
 		&__close {
@@ -170,26 +147,6 @@ export default {
 
 			i {
 				margin-right: 0.8rem;
-			}
-		}
-	}
-
-	.colors {
-		display: flex;
-		flex-wrap: wrap;
-		flex-direction: row;
-		justify-content: center;
-		padding: 1rem;
-
-		&__item {
-			width: 75px;
-			height: 75px;
-			margin-right: 5px;
-			margin-bottom: 1rem;
-			border-radius: 3px;
-
-			&:hover {
-				cursor: pointer;
 			}
 		}
 	}

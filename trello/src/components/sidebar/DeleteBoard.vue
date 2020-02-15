@@ -1,13 +1,13 @@
 <template>
-	<div class="delete-modal ">
-		<h3 class="delete-modal__header">✋</h3>
-		<div class="delete-modal__body">
+	<div class="delete-board ">
+		<h3 class="delete-board__header">✋</h3>
+		<div class="delete-board__body">
 			<div>
 				보드 <span>{{ title }}</span
 				>를 삭제하시겠습니까?
 			</div>
 		</div>
-		<div class="delete-modal__footer">
+		<div class="delete-board__footer">
 			<BaseBtn @click="$emit('click')" class="ok">확인</BaseBtn>
 			<BaseBtn @click="$emit('close')" class="cancel">취소</BaseBtn>
 		</div>
@@ -26,20 +26,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.delete-modal {
-	height: 20rem;
-
+.delete-board {
 	&__header {
+		margin-top: 2rem;
 		text-align: center;
 		font-size: 7rem;
-		margin-top: 2rem;
-		margin-left: 3rem;
 	}
 
 	&__body {
+		margin-top: 1.5rem;
 		font-size: 1.4rem;
 		text-align: center;
-		margin-top: 1.5rem;
 
 		span {
 			font-weight: bold;
@@ -47,8 +44,10 @@ export default {
 	}
 
 	&__footer {
-		text-align: center;
 		margin-top: 2rem;
+		margin-bottom: 0.5rem;
+		text-align: center;
+
 		.ok {
 			display: inline-block;
 		}
