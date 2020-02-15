@@ -1,14 +1,14 @@
 <template>
-	<BaseContainer :board="true" :background="board.background">
+	<BoardContainer :background="board.background">
 		<BoardMeta slot="meta" :board="board" :currentUser="currentUser" />
-		<div class="list-wrap">
+		<div class="board-list">
 			<BoardList
 				v-for="(list, $listIndex) of lists"
 				:key="list.list_id"
 				:list="list"
 				:listIndex="$listIndex"
 			/>
-			<div class="list-input">
+			<div class="board-list__input">
 				<BaseInput
 					v-model="listTitle"
 					:type="'text'"
@@ -24,7 +24,7 @@
 		<Modal v-if="showModal" @close="closeCard" :type="'card'">
 			<router-view></router-view>
 		</Modal>
-	</BaseContainer>
+	</BoardContainer>
 </template>
 
 <script>
@@ -38,6 +38,7 @@ export default {
 		};
 	},
 	components: {
+		BoardContainer: () => import('@/components/board/BoardContainer.vue'),
 		BoardMeta: () => import('@/components/board/BoardMeta.vue'),
 		BoardList: () => import('@/components/board/BoardList.vue'),
 	},
@@ -73,21 +74,20 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/lib/styles/_boardPalette';
-.list-wrap {
+.board-list {
 	display: flex;
 	flex-wrap: nowrap;
-	margin: 0 2rem;
+
+	&__input {
+		min-width: 24rem;
+	}
 }
 
-.list-input {
-	min-width: 24rem;
-}
+// .fade-enter .fade-leave-to {
+// 	opacity: 0;
+// }
 
-.fade-enter .fade-leave-to {
-	opacity: 0;
-}
-
-.fade-enter-active .fade-leave-active {
-	transition: opacity 2s ease-in;
-}
+// .fade-enter-active .fade-leave-active {
+// 	transition: opacity 2s ease-in;
+// }
 </style>
