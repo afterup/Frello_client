@@ -5,7 +5,7 @@
 				<slot></slot>
 			</div>
 		</div>
-		<div class="modal" v-else>
+		<div class="modal" :style="typeCardStyle" v-else>
 			<div class="modal__close" v-if="close" @click="$emit('close')">
 				<i class="material-icons">close</i>
 			</div>
@@ -20,6 +20,11 @@
 export default {
 	components: {
 		BackDrop: () => import('@/components/ui/BackDrop'),
+	},
+	computed: {
+		typeCardStyle() {
+			return this.type === 'card' ? { width: '45rem', height: '40rem' } : '';
+		},
 	},
 	props: {
 		type: {
@@ -56,6 +61,11 @@ export default {
 		&:hover {
 			cursor: pointer;
 		}
+	}
+
+	.card {
+		width: 40rem;
+		height: 50rem;
 	}
 }
 </style>
