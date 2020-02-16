@@ -20,10 +20,4 @@ export default {
 };
 </script>
 
-<style lang="scss">
-.placeholder {
-	background: rgb(255, 240, 120);
-	content: 'Drop here';
-	height: 38px;
-}
-</style>
+<style lang="scss"></style>
