@@ -41,6 +41,7 @@ export default {
 		BoardContainer: () => import('@/components/board/BoardContainer.vue'),
 		BoardMeta: () => import('@/components/board/BoardMeta.vue'),
 		BoardList: () => import('@/components/board/BoardList.vue'),
+		Modal: () => import('@/components/modal/Modal.vue'),
 	},
 	beforeRouteEnter(to, from, next) {
 		store.dispatch('FETCH_BOARD', to.params.id).then(() => {
