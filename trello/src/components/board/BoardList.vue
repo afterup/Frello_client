@@ -1,27 +1,30 @@
 <template>
-	<div @drop.stop @dragenter.stop @dragover.stop>
+	<div class="list-wrap" @drop.stop @dragenter.stop @dragover.stop>
 		<AppDrop @drop="moveCardOrList">
 			<AppDrag
-				class="list__item"
+				class="list"
 				:transferData="{
 					type: 'list',
 					fromListIndex: listIndex,
 				}"
 			>
-				<div class="list__item__header">
-					<BaseInput
+				<div class="list__header">
+					<ToggleInput
 						v-model="list.title"
+						class="list__header__title"
 						:type="'text'"
-						:kind="'toggle'"
 						@enter="updateList(list.list_id, list.title)"
 					>
-						{{ list.title }}
-					</BaseInput>
-					<BaseBtn slot="button" @click="deleteList(list.list_id)">
-						<i class="material-icons delete-icon">delete</i>
+					</ToggleInput>
+					<BaseBtn
+						class="list__header__delete"
+						:icon="true"
+						@click="deleteList(list.list_id)"
+					>
+						<i slot="badge" class="material-icons">delete</i>
 					</BaseBtn>
 				</div>
-				<ul class="list__item__body">
+				<ul class="list__body">
 					<li v-for="(card, $cardIndex) of list.Cards" :key="card.card_id">
 						<ListCard
 							:card="card"
@@ -31,22 +34,18 @@
 						/>
 					</li>
 				</ul>
-				<div
-					class="list__item__footer"
-					@drop.stop
-					@dragenter.stop
-					@dragover.stop
-				>
-					<BaseInput
+				<div class="list__footer" @drop.stop @dragenter.stop @dragover.stop>
+					<ToggleInput
 						v-model="cardTitle"
+						class="list__footer__input"
 						:placeholder="'Enter a title for this card...'"
 						:type="'textarea'"
-						:kind="'toggle'"
+						@click="createCard(list.list_id)"
 						@enter="createCard(list.list_id)"
 					>
 						<i slot="badge" class="material-icons">add</i>
 						Add another card
-					</BaseInput>
+					</ToggleInput>
 				</div>
 			</AppDrag>
 		</AppDrop>
@@ -98,73 +97,76 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.list-wrap {
-	display: flex;
-	flex-wrap: nowrap;
-	margin: 0 2rem;
-}
-
 .list {
 	display: flex;
+	flex-direction: column;
+	width: 27rem;
+	max-height: 80vh;
+	margin: 0.3rem;
 
-	> * {
-		flex: 0 0 auto;
+	padding: 0.3rem;
+	border-radius: 2.5px;
+
+	background-color: #ebecf0;
+
+	&:hover {
+		cursor: pointer;
 	}
 
-	&::after {
-		content: '';
-		flex: 0 0 auto;
-	}
-
-	&__item {
+	&__header {
 		display: flex;
-		flex-direction: column;
-		width: 25rem;
-		max-height: 80vh;
-		margin: 0.3rem;
-		padding: 0.6rem;
-
+		justify-content: space-between;
+		margin: 0.5rem;
+		padding: 1rem;
 		background-color: #ebecf0;
-		border-radius: 2.5px;
 
-		&:hover {
-			cursor: pointer;
+		&__title {
+			font-size: 2.5rem;
 		}
 
-		&__header {
-			display: flex;
-			justify-content: space-between;
-			padding: 1rem;
-			background-color: #ebecf0;
-		}
+		&__delete {
+			background-color: $color-grey-dark-3;
 
-		&__body {
-			overflow-y: scroll;
-			min-height: 1rem;
-			max-height: 70vh;
-
-			&::-webkit-scrollbar {
-				width: 6px;
-				height: 10px;
+			i {
+				font-size: 1.7rem;
 			}
-			&::-webkit-scrollbar-track {
-				border-radius: 10px;
-				background-color: rgb(231, 231, 231);
-			}
-
-			&::-webkit-scrollbar-thumb {
-				border-radius: 9px;
-				background-color: rgb(201, 201, 201);
-			}
-		}
-
-		&__footer {
-			margin-top: 0.5rem;
 		}
 	}
 
-	.delete-icon {
-		font-size: 1.5rem;
+	&__body {
+		min-height: 1rem;
+		max-height: 70vh;
+		margin-left: 12px;
+		overflow-y: scroll;
+
+		li {
+			display: inline-block;
+			width: 24rem;
+		}
+
+		&::-webkit-scrollbar {
+			width: 6px;
+			height: 10px;
+		}
+		&::-webkit-scrollbar-track {
+			border-radius: 10px;
+			background-color: rgb(231, 231, 231);
+		}
+
+		&::-webkit-scrollbar-thumb {
+			border-radius: 9px;
+			background-color: rgb(201, 201, 201);
+		}
+	}
+
+	&__footer {
+		margin-top: 0.5rem;
+		margin-left: 12px;
+
+		&__input {
+			font-size: 1.3rem;
+			color: $color-grey-dark-2;
+		}
 	}
 }
 </style>
