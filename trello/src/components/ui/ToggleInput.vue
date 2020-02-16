@@ -1,30 +1,35 @@
 <template>
 	<div class="toggle-field">
-		<div
-			class="toggle-field__text"
-			v-if="!toggleText"
-			@click="handletoggleText"
-		>
-			<slot name="badge"></slot>
-			<slot></slot>
-		</div>
-		<div class="toggle-field__input" v-else>
+		<div v-if="type === 'text'" class="toggle-field__input">
 			<input
-				v-if="type === 'text'"
-				autofocus
 				type="text"
 				:placeholder="placeholder"
 				:value="value"
 				@input="updateValue($event.target.value)"
 				@keyup.enter="enterToggle"
 			/>
-			<textarea
-				v-else
-				:placeholder="placeholder"
-				:value="value"
-				@input="updateValue($event.target.value)"
-				@keyup.enter="enterToggle"
-			></textarea>
+		</div>
+		<div v-if="type === 'textarea'" class="toggle-field__textarea">
+			<div
+				v-if="!isEditing"
+				class="toggle-field__textarea__slot"
+				@click="handleTextareaToggle"
+			>
+				<slot name="badge"></slot>
+				<slot></slot>
+			</div>
+			<div v-else>
+				<textarea
+					:placeholder="placeholder"
+					:value="value"
+					@input="updateValue($event.target.value)"
+					@keyup.enter="enterToggle"
+				></textarea>
+				<div class="toggle-field__textarea__button">
+					<BaseBtn class="submit" @click="clickAddButton">Add</BaseBtn>
+					<BaseBtn class="close" @click="handleTextareaToggle">Close</BaseBtn>
+				</div>
+			</div>
 		</div>
 	</div>
 </template>
@@ -35,28 +40,20 @@ import inputMixin from '@/mixins/inputMixin';
 export default {
 	data() {
 		return {
-			toggleText: false,
+			isEditing: false,
 		};
-	},
-	computed: {
-		// textSize() {
-		// 	const textField = document.getElementsByClassName(
-		// 		'toggle-field__text',
-		// 	)[0];
-		// 	const textFieldWidth = textField.getBoundingClientRect().width;
-		// 	console.log(textFieldWidth);
-		// 	return {
-		// 		'--textSize': textFieldWidth + 1 + 'px',
-		// 	};
-		// },
 	},
 	mixins: [inputMixin],
 	methods: {
-		handletoggleText() {
-			this.toggleText = !this.toggleText;
+		enterToggle(e) {
+			e.target.blur();
+			this.$emit('enter');
 		},
-		enterToggle(value) {
-			this.handletoggleText();
+		handleTextareaToggle() {
+			this.isEditing = !this.isEditing;
+		},
+		clickAddButton() {
+			this.isEditing = false;
 			this.$emit('enter');
 		},
 	},
@@ -65,39 +62,34 @@ export default {
 
 <style lang="scss" scoped>
 .toggle-field {
-	width: 100%;
-	min-width: 3rem;
-
-	&__text {
+	&__input {
 		display: flex;
 		align-items: center;
-		padding-left: 0.4rem;
-		height: 2.8rem;
-
-		border-radius: 2px;
+		min-width: 3rem;
 		font-weight: bolder;
 
-		&:hover {
-			background-color: #c1c4c95b;
-			cursor: pointer;
-		}
-	}
-	&__input {
-		input {
-			width: var(--textSize);
-			height: 2.8rem;
-			padding: 3px;
-
+		input[type='text'] {
+			height: auto;
 			outline: none;
-			border: 2px solid $color-grey-light-4;
+			border: none;
 			border-radius: 4px;
-			// font-size: 2rem;
+			font-size: 17px;
+			background-color: rgba(0, 0, 0, 0);
+			word-wrap: break-word;
+			word-break: keep-all;
 
+			&:hover {
+				background-color: #c1c4c95b;
+				border-radius: 4px;
+				cursor: pointer;
+			}
 			&:focus {
-				border-color: dodgerblue;
+				background-color: white;
 			}
 		}
+	}
 
+	&__textarea {
 		textarea {
 			width: 24rem;
 			height: auto;
@@ -112,18 +104,22 @@ export default {
 			resize: none;
 		}
 
-		// animation-duration: 0.7s;
-		// animation-name: slidein;
+		&__slot {
+			display: flex;
+			align-items: center;
+		}
 
-		// @keyframes slidein {
-		// 	from {
-		// 		height: 4rem;
-		// 	}
+		&__button {
+			display: flex;
 
-		// 	to {
-		// 		height: 8rem;
-		// 	}
-		// }
+			.submit {
+				background-color: $color-green-light;
+			}
+
+			.close {
+				background-color: $color-grey-dark-3;
+			}
+		}
 	}
 }
 </style>
