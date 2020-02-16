@@ -9,15 +9,13 @@
 			}"
 		>
 			<router-link
-				class="task"
+				class="card"
 				:to="`/board/${this.$route.params.id}/card/${card.card_id}`"
 				tag="div"
 			>
-				<li class="task__item">
-					<div class="task__item__title">
-						{{ card.title }}
-					</div>
-				</li>
+				<div class="card__title">
+					{{ card.title }}
+				</div>
 			</router-link>
 		</AppDrag>
 	</AppDrop>
@@ -115,7 +113,12 @@ export default {
 
 	&__text {
 		color: gray;
+	&__title {
+		margin-left: 8px;
 		font-size: 1.3rem;
+
+		word-break: keep-all;
+		word-wrap: break-word;
 	}
 }
 </style>
