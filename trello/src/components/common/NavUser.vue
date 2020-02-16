@@ -3,16 +3,13 @@
 		<div class="user">
 			<ul>
 				<li>
-					<span>
-					</span>
+					<span>{{ currentUser.username }}</span>
 					<span @click="$emit('close')">
 						<i class="material-icons close">close</i>
 					</span>
 				</li>
 				<hr />
-				<li @click="gotoUser">
-					My Page
-				</li>
+				<li @click="gotoUser">My Page</li>
 				<li>Setting</li>
 				<li @click="logout">Log Out</li>
 			</ul>

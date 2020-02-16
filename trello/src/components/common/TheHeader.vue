@@ -1,8 +1,8 @@
 <template>
 	<header class="header">
 		<div class="header__left">
-			<BaseBtn @click="toHome">
-				<i class="material-icons">home</i>
+			<BaseBtn @click="toHome" :icon="true">
+				<i slot="badge" class="material-icons">home</i>
 			</BaseBtn>
 			<BaseBtn v-if="isAuthenticated" @click="toBoards" :badge="true">
 				<i class="material-icons" slot="badge">developer_board</i>

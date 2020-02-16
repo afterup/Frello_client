@@ -1,9 +1,7 @@
 <template>
 	<button class="base-button" :disabled="disabled" @click="$emit('click')">
-		<span v-if="badge" class="base-button__badge">
-			<slot name="badge"></slot>
-		</span>
-		<span class="base-button__content">
+		<slot class="base-button__badge" name="badge"></slot>
+		<span class="base-button__content" v-if="!icon">
 			<slot />
 		</span>
 	</button>
@@ -12,11 +10,11 @@
 <script>
 export default {
 	props: {
-		badge: {
-			type: Boolean,
-			default: null,
-		},
 		disabled: {
+			type: Boolean,
+			default: false,
+		},
+		icon: {
 			type: Boolean,
 			default: false,
 		},
@@ -35,15 +33,14 @@ export default {
 	border: none;
 	background-color: $color-primary-light;
 	color: white;
-	cursor: pointer;
+
+	&:hover {
+		cursor: pointer;
+	}
 
 	&:disabled {
 		background-color: $color-grey-light-4;
 		cursor: not-allowed;
-	}
-
-	&__badge {
-		margin-right: 0.3rem;
 	}
 
 	&__content {
