@@ -1,35 +1,46 @@
 <template>
-	<div class="metaWrap">
-		<div class="meta">
-			<BaseInput
+	<div class="board-meta">
+		<div class="board-meta__left">
+			<ToggleInput
+				class="board-meta__left__title"
 				v-model="board.title"
 				:type="'text'"
-				:kind="'toggle'"
 				@enter="updateBoardTitle"
 			>
 				{{ board.title }}
-			</BaseInput>
-			<BaseBtn class="meta__favorite" @click="toggleFavorite">
-				<i class="material-icons" :class="board.favorite ? 'yellow' : ''"
+			</ToggleInput>
+			<BaseBtn
+				class="board-meta__left__favorite"
+				:icon="true"
+				@click="toggleFavorite"
+			>
+				<i
+					class="material-icons"
+					slot="badge"
+					:class="board.favorite ? 'yellow' : ''"
 					>star</i
 				>
 			</BaseBtn>
 		</div>
-		<BaseBtn
-			class="sidebar__button"
-			:class="{ button_active: isSidebarOpen }"
-			@click="toggleSidebar"
-		>
-			Show Menu
-		</BaseBtn>
-		<transition name="slide">
-			<BoardSidebar
-				v-if="isSidebarOpen"
-				:currentUser="currentUser"
-				:board="board"
-				@close="toggleSidebar"
-			/>
-		</transition>
+		<div class="board-meta__right">
+			<div class="sidebar">
+				<BaseBtn
+					class="sidebar__button"
+					:class="{ button_active: isSidebarOpen }"
+					@click="toggleSidebar"
+				>
+					Show Menu
+				</BaseBtn>
+				<transition name="slide">
+					<BoardSidebar
+						v-if="isSidebarOpen"
+						:currentUser="currentUser"
+						:board="board"
+						@close="toggleSidebar"
+					/>
+				</transition>
+			</div>
+		</div>
 	</div>
 </template>
 
@@ -53,7 +64,7 @@ export default {
 		};
 	},
 	components: {
-		BoardSidebar: () => import('@/components/board/sidebar/BoardSidebar'),
+		BoardSidebar: () => import('@/components/sidebar/BoardSidebar'),
 	},
 	methods: {
 		addList() {
@@ -98,45 +109,52 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.metaWrap {
+.board-meta {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	height: $meta-height;
-}
 
-.meta {
-	display: flex;
-	justify-content: flex-start;
-	align-items: center;
+	&__left {
+		display: flex;
+		align-items: center;
 
-	&__favorite {
-		margin-left: 1rem;
-		margin-right: 1rem;
+		&__title {
+			font-size: 2rem;
+			color: white;
+		}
+
+		&__favorite {
+			margin-left: 0.5rem;
+
+			.material-icons {
+				font-size: 1.75rem;
+			}
+
+			.yellow {
+				color: rgb(255, 217, 0);
+			}
+		}
 	}
-}
 
-.material-icons {
-	font-size: 1.7rem;
-}
+	&__right {
+		&__sidebar {
+			.button_active {
+				transform: translateX(-260%);
+				transition: transform 0.3s ease;
+			}
 
-.yellow {
-	color: rgb(255, 217, 0);
-}
+			.slide-enter-active,
+			.slide-leave-active {
+				transition: transform 0.3s ease;
+			}
 
-.button_active {
-	transform: translateX(-260%);
-	transition: transform 0.3s ease;
-}
-
-.slide-enter-active,
-.slide-leave-active {
-	transition: transform 0.3s ease;
-}
-
-.slide-enter,
-.slide-leave-to {
-	transform: translateX(100%);
-	transition: all 0.15s ease;
+			.slide-enter,
+			.slide-leave-to {
+				transform: translateX(100%);
+				transition: all 0.15s ease;
+			}
+		}
+	}
 }
 </style>
