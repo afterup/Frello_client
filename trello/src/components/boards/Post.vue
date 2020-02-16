@@ -1,6 +1,6 @@
 <template>
 	<div class="post">
-		<div class="post__field">
+		<div class="post__field" :class="background">
 			<div>
 				<BaseInput
 					class="post__field__button"
@@ -11,7 +11,6 @@
 				/>
 				<BaseBtn @click="onSubmit">Create Board</BaseBtn>
 			</div>
-			<div class="error" v-if="this.error">{{ this.error }}</div>
 			<div class="post__field__close" @click="$emit('close')">
 				<i class="material-icons">close</i>
 			</div>
@@ -19,18 +18,18 @@
 		<div class="post__colors">
 			<div
 				class="post__colors__item"
-				:class="color"
+				:class="background === color ? `${color} choice` : `${color}`"
 				v-for="(color, i) in colors"
 				:key="i"
 				@click="chooseBackground(color)"
-			></div>
+			>
+				<i v-if="background === color" class="material-icons">check</i>
+			</div>
 		</div>
 	</div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-
 export default {
 	data() {
 		return {
@@ -38,9 +37,6 @@ export default {
 			background: 'blue',
 			colors: ['blue', 'red', 'orange', 'yellow', 'green', 'purple'],
 		};
-	},
-	computed: {
-		...mapGetters(['error']),
 	},
 	methods: {
 		onSubmit() {
@@ -75,7 +71,6 @@ export default {
 		align-content: space-between;
 		padding: 1.5rem 1.3rem;
 		border-radius: 2px;
-		background-color: aliceblue;
 
 		&__close {
 			margin-left: 3rem;
