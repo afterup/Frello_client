@@ -7,7 +7,8 @@ Vue.use(VueRouter);
 /* NavigationDuplicated 오류 방지*/
 const originalPush = VueRouter.prototype.push;
 VueRouter.prototype.push = function push(location, onResolve, onReject) {
-	if (onResolve || onReject) return originalPush.call(this, location, onResolve, onReject);
+	if (onResolve || onReject)
+		return originalPush.call(this, location, onResolve, onReject);
 	return originalPush.call(this, location).catch(err => err);
 };
 
@@ -43,12 +44,19 @@ const routes = [
 		path: '/board/:id',
 		name: 'board',
 		component: () => import('@/views/BoardPage.vue'),
+		children: [
+			{
+				path: 'card/:cardId',
+				name: 'card',
+				component: () => import('@/components/board/CardContent.vue'),
+				beforeEnter: checkModal(),
+			},
+		],
 	},
-	// {
-	// 	path: '/:username',
-	// 	name: 'mypage',
-	// 	component: () => import('@/views/MyPage.vue'),
-	// },
+	{
+		path: '*',
+		component: () => import('@/views/NotFoundPage.vue'),
+	},
 ];
 
 const router = new VueRouter({
