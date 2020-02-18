@@ -18,6 +18,12 @@
 					>
 						<h3>{{ list.title }}</h3>
 					</ToggleTextarea>
+
+					<Dropdown>
+						<i slot="button" class="material-icons">more_horiz</i>
+						<div slot="name">Action</div>
+						<li @click="deleteList(list.list_id)">Delete This List</li>
+					</Dropdown>
 				</div>
 				<ul class="list__item__body">
 					<li v-for="(card, $cardIndex) of list.Cards" :key="card.card_id">
@@ -63,6 +69,7 @@ export default {
 	data() {
 		return {
 			cardTitle: '',
+			showHeaderDropdown: false,
 		};
 	},
 	mixins: [movingMixin],
@@ -70,6 +77,7 @@ export default {
 		ListCard: () => import('@/components/board/ListCard.vue'),
 		AppDrop: () => import('@/components/drag/AppDrop'),
 		AppDrag: () => import('@/components/drag/AppDrag'),
+		Dropdown: () => import('@/components/ui/Dropdown'),
 	},
 	methods: {
 		updateList(id, title) {
