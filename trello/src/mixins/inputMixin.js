@@ -1,15 +1,15 @@
 export default {
 	props: {
-		type: {
-			type: String,
-			required: true,
-		},
 		value: {
 			type: String,
 			required: true,
 		},
-		placeholder: {
+		type: {
 			type: String,
+			required: false,
+		},
+		placeholder: {
+			type: [String, Object],
 			required: false,
 		},
 		maxlength: {

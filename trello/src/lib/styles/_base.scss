@@ -22,6 +22,10 @@ body {
 	min-height: 100vh;
 }
 
+input textarea {
+  font-family: "Nanum Gothic", sans-serif;
+}
+
 button:focus{
   outline: 0;
 }

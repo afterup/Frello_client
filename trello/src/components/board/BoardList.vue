@@ -9,17 +9,15 @@
 				}"
 			>
 				<div class="list__item__header">
-					<BaseInput
+					<ToggleTextarea
 						v-model="list.title"
-						:type="'text'"
-						:kind="'toggle'"
+						:isTitle="true"
+						:resize="true"
+						:maxlength="500"
 						@enter="updateList(list.list_id, list.title)"
 					>
-						{{ list.title }}
-					</BaseInput>
-					<BaseBtn slot="button" @click="deleteList(list.list_id)">
-						<i class="material-icons delete-icon">delete</i>
-					</BaseBtn>
+						<h3>{{ list.title }}</h3>
+					</ToggleTextarea>
 				</div>
 				<ul class="list__item__body">
 					<li v-for="(card, $cardIndex) of list.Cards" :key="card.card_id">
@@ -37,16 +35,21 @@
 					@dragenter.stop
 					@dragover.stop
 				>
-					<BaseInput
+					<ToggleTextarea
 						v-model="cardTitle"
-						:placeholder="'Enter a title for this card...'"
-						:type="'textarea'"
-						:kind="'toggle'"
+						:placeholder="{
+							focus: 'Enter a title for this card...',
+							blur: '➕ Add another card',
+						}"
 						@enter="createCard(list.list_id)"
 					>
 						<i slot="badge" class="material-icons">add</i>
 						Add another card
-					</BaseInput>
+					</ToggleTextarea>
+					<!-- <div v-if="submitButton" class="textarea-field__textarea__button">
+			<BaseBtn class="submit" @click="clickAddButton">Add</BaseBtn>
+			<BaseBtn class="close" @click="handleTextareaToggle">Close</BaseBtn>
+		</div> -->
 				</div>
 			</AppDrag>
 		</AppDrop>
@@ -119,7 +122,7 @@ export default {
 	&__item {
 		display: flex;
 		flex-direction: column;
-		width: 25rem;
+		width: 26rem;
 		max-height: 80vh;
 		margin: 0.3rem;
 		padding: 0.6rem;

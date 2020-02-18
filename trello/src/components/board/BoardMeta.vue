@@ -1,14 +1,15 @@
 <template>
 	<div class="board-meta">
 		<div class="board-meta__left">
-			<ToggleInput
+			<ToggleText
 				class="board-meta__left__title"
 				v-model="board.title"
-				:type="'text'"
+				:maxlength="30"
+				:resize="true"
 				@enter="updateBoardTitle"
 			>
 				{{ board.title }}
-			</ToggleInput>
+			</ToggleText>
 			<BaseBtn
 				class="board-meta__left__favorite"
 				:icon="true"
