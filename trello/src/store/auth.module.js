@@ -1,16 +1,9 @@
-import Vue from 'vue';
 import { ApiService } from '@/common/api.service.js';
 import JwtService from '@/common/jwt.service.js';
 
 const state = {
-	user: {
-		user_id: '',
-		email: '',
-		username: '',
-		createdAt: '',
-	},
+	user: {},
 	isAuthenticated: false,
-	error: null,
 };
 
 const getters = {
@@ -19,9 +12,6 @@ const getters = {
 	},
 	currentUser(state) {
 		return state.user;
-	},
-	error(state) {
-		return state.error;
 	},
 };
 
@@ -39,10 +29,8 @@ const actions = {
 	async signup({ commit }, authData) {
 		try {
 			const { data } = await ApiService.post('/user', { user: authData });
-			console.log(data);
-			return data;
-		} catch (error) {
-			commit('SET_ERROR', error.response.data.error.message);
+		} catch (err) {
+			console.log(err.response);
 		}
 	},
 	async login({ commit }, user) {
@@ -50,7 +38,8 @@ const actions = {
 			const { data } = await ApiService.post('/user/login', user);
 			commit('SET_USER_DATA', data.user.user);
 			commit('SET_TOKEN', data.user.token);
-			// dispatch('SET_EXPIRATION', data.expiresIn);
+
+			if (data.error) return console.log(data);
 
 			return data.user.user;
 		} catch (err) {
@@ -75,15 +64,11 @@ const actions = {
 const mutations = {
 	SET_USER_DATA(state, user) {
 		state.user = user;
-		state.error = null;
 		state.isAuthenticated = true;
 	},
 	SET_TOKEN(state, token) {
 		JwtService.saveToken(token);
 		ApiService.setHeader(token);
-	},
-	SET_ERROR(state, error) {
-		state.error = error;
 	},
 	CLEAR_USER_DATA(state) {
 		state.user = null;

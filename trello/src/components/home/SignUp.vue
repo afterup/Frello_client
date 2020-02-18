@@ -3,20 +3,23 @@
 		<h3 class="signup__title">Sign up to Trello</h3>
 		<form class="signup__field" @submit.prevent>
 			<BaseInput
-				v-model="email"
+				v-model.trim="email"
 				:type="'text'"
+				:label="'Email'"
 				:placeholder="'Enter email'"
 				:maxlength="50"
 			/>
 			<BaseInput
-				v-model="username"
+				v-model.trim="username"
 				:type="'text'"
+				:label="'Username'"
 				:placeholder="'Enter username'"
 				:maxlength="30"
 			/>
 			<BaseInput
-				v-model="password"
+				v-model.trim="password"
 				:type="'password'"
+				:label="'Password'"
 				:placeholder="'Enter password'"
 				:maxlength="20"
 				@enter="register"
@@ -44,7 +47,7 @@ export default {
 					username: this.username,
 					password: this.password,
 				})
-				.then(result => {
+				.then(() => {
 					alert('가입되었습니다.');
 					this.$store.commit('CLOSE_MODAL');
 					this.$router.push({ name: 'home' });

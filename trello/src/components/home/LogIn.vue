@@ -1,19 +1,19 @@
 <template>
 	<div class="login">
 		<h3 class="login__title">Log in to Trello</h3>
-		<form class="login__form" @submit.prevent="login">
-			<div class="form-group">
-				<BaseInput
-					v-model.trim="email"
-					:type="'text'"
-					:placeholder="'Enter email'"
-					:maxlength="30"
-					@enter="login"
-				/>
-			</div>
+		<form class="login__form" @submit.prevent>
+			<BaseInput
+				v-model.trim="email"
+				:type="'text'"
+				:label="'Email'"
+				:placeholder="'Enter email'"
+				:maxlength="30"
+				@enter="nextInput"
+			/>
 			<BaseInput
 				v-model.trim="password"
 				:type="'password'"
+				:label="'Password'"
 				:placeholder="'Enter password'"
 				:maxlength="20"
 				@enter="login"
@@ -50,6 +50,9 @@ export default {
 				name: 'boards',
 				params: { username: user.username },
 			});
+		},
+		nextInput() {
+			console.log(this);
 		},
 	},
 };
