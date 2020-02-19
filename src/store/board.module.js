@@ -1,6 +1,6 @@
-import Vue from 'vue';
-import { ApiService } from '@/common/api.service.js';
-import JwtService from '@/common/jwt.service.js';
+import { BoardService } from '@/services/api.service.js';
+
+import JwtService from '@/services/jwt.service.js';
 
 const state = {
 	boards: [],
@@ -22,7 +22,7 @@ const actions = {
 	/* BOARD */
 	async FETCH_BOARDS({ commit }) {
 		try {
-			const { data } = await ApiService.get(`/api/board`);
+			const { data } = await BoardService.getBoards();
 			commit('SET_BOARDS', data.boards);
 		} catch (err) {
 			console.log(err.response);
@@ -40,7 +40,7 @@ const actions = {
 		}
 
 		try {
-			const { data } = await ApiService.get(`/api/board/${id}`);
+			const { data } = await BoardService.getBoard(id);
 			console.log(data);
 			const {
 				board_id,
@@ -71,7 +71,8 @@ const actions = {
 	},
 	async PUBLISH_BOARD({ commit }, board) {
 		try {
-			const { data } = await ApiService.post('/api/board', { board: board });
+			console.log(board);
+			const { data } = await BoardService.createBoard({ board: board });
 			return data;
 		} catch (err) {
 			console.log(err.response.data);
@@ -80,8 +81,8 @@ const actions = {
 	async UPDATE_BOARD({ commit }, board) {
 		try {
 			console.log(board);
-			const { data } = await ApiService.put(`/api/board/${board.board_id}`, {
-				board: board,
+			const { data } = await BoardService.updateBoard(board.board_id, {
+				board,
 			});
 			commit('CHANGE_BOARD', board);
 		} catch (err) {
@@ -90,7 +91,7 @@ const actions = {
 	},
 	async DELETE_BOARD({ commit }, id) {
 		try {
-			const { data } = await ApiService.delete(`/api/board/${id}`);
+			const { data } = await BoardService.deleteBoard(id);
 			console.log(data);
 		} catch (err) {
 			console.log(err);
@@ -98,7 +99,7 @@ const actions = {
 	},
 	/* FAVORITE */
 	async PUBLISH_FAVORITE_BOARD({ commit }, payload) {
-		const { data } = await ApiService.put(`/api/board/${payload.id}/favorite`, {
+		const { data } = await BoardService.publishFavoriteBoard(payload.id, {
 			favorite: payload.favorite,
 		});
 		commit('SET_FAVORITE');

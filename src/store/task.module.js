@@ -1,4 +1,4 @@
-import { ApiService } from '@/common/api.service.js';
+import { ListService, CardService } from '@/services/api.service.js';
 
 const state = {
 	lists: [],
@@ -18,21 +18,21 @@ const actions = {
 	/* LIST */
 	async PUBLISH_LIST({ commit }, list) {
 		try {
-			const { data } = await ApiService.post('/api/list', { list: list });
+			const { data } = await ListService.createList({ list: list });
 			commit('ADD_LIST', data.list);
 		} catch (err) {
 			console.log(err);
 		}
 	},
 	async UPDATE_LIST({ commit }, list) {
-		const { data } = await ApiService.put(`/api/list/${list.list_id}`, {
+		const { data } = await ListService.updateList(list.list_id, {
 			list: { title: list.title },
 		});
 		commit('CHANGE_LIST', list);
 	},
 	async DELETE_LIST({ commit }, id) {
 		try {
-			const { data } = await ApiService.delete(`/api/list/${id}`);
+			const { data } = await ListService.deleteList(id);
 			commit('DELETE_COLUMN_LIST', id);
 			console.log(data);
 		} catch (err) {
@@ -42,12 +42,12 @@ const actions = {
 
 	/* CARD */
 	async FETCH_CARD({ commit }, id) {
-		const { data } = await ApiService.get(`/api/card/${id}`);
+		const { data } = await CardService.getCard(id);
 		console.log(data);
 		commit('SET_CARD', data.card);
 	},
 	async PUBLISH_CARD({ commit }, card) {
-		const { data } = await ApiService.post('/api/card', { card: card });
+		const { data } = await CardService.createCard({ card: card });
 		console.log(data);
 		commit('ADD_CARD', data.card);
 	},
@@ -59,14 +59,14 @@ const actions = {
 		} else if (title) {
 			value.title = title;
 		}
-		const { data } = await ApiService.put(`/api/card/${cardId}`, {
+		const { data } = await CardService.updateCard(cardId, {
 			card: value,
 		});
 		console.log(data);
 		commit('CHANGE_CARD', card);
 	},
 	async DELETE_CARD({ commit }, id) {
-		const { data } = await ApiService.delete(`/api/card/${id}`);
+		const { data } = await CardService.deleteCard(id);
 		console.log(data);
 		commit('REMOVE_CARD', id);
 	},
@@ -109,7 +109,7 @@ const actions = {
 			}
 			console.log(bothPosition);
 
-			const { data } = await ApiService.put(`/api/card/${cardId}`, {
+			const { data } = await CardService.updateCard(cardId, {
 				card: {
 					bothPosition,
 					listId: listId,
@@ -140,7 +140,7 @@ const actions = {
 			});
 			const bothPosition = findBothPosition();
 
-			const { data } = await ApiService.put(`/api/list/${listId}`, {
+			const { data } = await ListService.updateList(listId, {
 				list: { bothPosition },
 			});
 			console.log(data);

@@ -4,7 +4,7 @@ import router from './router';
 import App from './App.vue';
 import store from './store';
 
-import { ApiService } from '@/common/api.service.js';
+import { ApiService } from '@/services/api.service.js';
 
 import '@/components/ui/index.js';
 

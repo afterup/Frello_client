@@ -1,5 +1,5 @@
-import { ApiService } from '@/common/api.service.js';
-import JwtService from '@/common/jwt.service.js';
+import { ApiService } from '@/services/api.service.js';
+import JwtService from '@/services/jwt.service.js';
 
 const state = {
 	user: {},
