@@ -13,6 +13,7 @@
 
 <script>
 export default {
+	name: 'boards-list',
 	components: {
 		Panel: () => import('@/components/boards/Panel.vue'),
 		Card: () => import('@/components/boards/Card.vue'),

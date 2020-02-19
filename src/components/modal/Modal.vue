@@ -18,6 +18,7 @@
 
 <script>
 export default {
+	name: 'modal',
 	components: {
 		BackDrop: () => import('@/components/ui/BackDrop'),
 	},

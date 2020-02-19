@@ -8,6 +8,12 @@
 	</div>
 </template>
 
+<script>
+export default {
+	name: 'not-found-page',
+};
+</script>
+
 <style lang="scss" scoped>
 .not-found-page {
 	width: 30rem;

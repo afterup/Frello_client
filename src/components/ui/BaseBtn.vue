@@ -9,6 +9,7 @@
 
 <script>
 export default {
+	name: 'base-btn',
 	props: {
 		disabled: {
 			type: Boolean,

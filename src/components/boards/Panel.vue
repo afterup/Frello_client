@@ -19,6 +19,7 @@
 
 <script>
 export default {
+	name: 'boards-panel',
 	props: {
 		type: {
 			type: String,

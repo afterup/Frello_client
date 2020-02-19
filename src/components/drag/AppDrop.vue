@@ -6,6 +6,7 @@
 
 <script>
 export default {
+	name: 'app-drop',
 	computed: {
 		dragged() {
 			return this.$store.getters.dragged;

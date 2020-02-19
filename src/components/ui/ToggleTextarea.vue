@@ -17,6 +17,7 @@
 import inputMixin from '@/mixins/inputMixin';
 
 export default {
+	name: 'toggle-textarea',
 	data() {
 		return {
 			dataPlaceholder: '',

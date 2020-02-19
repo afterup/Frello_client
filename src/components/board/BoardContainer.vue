@@ -13,6 +13,7 @@
 
 <script>
 export default {
+	name: 'board-container',
 	props: {
 		background: {
 			type: String,

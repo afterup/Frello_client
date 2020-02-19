@@ -40,6 +40,7 @@
 import { mapGetters } from 'vuex';
 
 export default {
+	name: 'card-content',
 	data() {
 		return {
 			cardTitle: '',

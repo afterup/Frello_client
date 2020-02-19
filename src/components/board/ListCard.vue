@@ -25,6 +25,7 @@ import { mapGetters } from 'vuex';
 import movingMixin from '@/mixins/movingMixin';
 
 export default {
+	name: 'list-card',
 	props: {
 		card: {
 			type: Object,

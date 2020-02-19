@@ -31,6 +31,7 @@
 import { mapGetters } from 'vuex';
 
 export default {
+	name: 'the-header',
 	components: {
 		NavigationItems: () => import('@/components/common/NavigationItems.vue'),
 	},

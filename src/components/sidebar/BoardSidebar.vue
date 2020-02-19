@@ -45,6 +45,7 @@
 
 <script>
 export default {
+	name: 'board-sidebar',
 	data() {
 		return {
 			deleteModal: false,

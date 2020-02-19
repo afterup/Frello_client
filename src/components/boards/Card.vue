@@ -6,6 +6,7 @@
 
 <script>
 export default {
+	name: 'boards-card',
 	props: {
 		board: {
 			type: Object,

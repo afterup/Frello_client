@@ -26,6 +26,7 @@
 
 <script>
 export default {
+	name: 'dropdown',
 	data() {
 		return {
 			showDropdown: false,

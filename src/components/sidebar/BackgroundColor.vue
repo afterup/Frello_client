@@ -12,6 +12,7 @@
 
 <script>
 export default {
+	name: 'background-color',
 	data() {
 		return {
 			colors: ['blue', 'red', 'orange', 'yellow', 'green', 'purple'],

@@ -29,6 +29,7 @@
 import { mapGetters } from 'vuex';
 
 export default {
+	name: 'navigation-items',
 	data() {
 		return {
 			isShowUserContent: false,

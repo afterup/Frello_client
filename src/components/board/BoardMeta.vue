@@ -45,6 +45,7 @@
 
 <script>
 export default {
+	name: 'board-meta',
 	props: {
 		board: {
 			type: Object,

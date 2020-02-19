@@ -12,6 +12,7 @@
 import { mapGetters } from 'vuex';
 
 export default {
+	name: 'boards-page',
 	components: {
 		BoardsList: () => import('@/components/boards/BoardsList.vue'),
 		Modal: () => import('@/components/modal/Modal.vue'),

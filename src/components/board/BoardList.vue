@@ -66,6 +66,7 @@
 import movingMixin from '@/mixins/movingMixin';
 
 export default {
+	name: 'board-list',
 	data() {
 		return {
 			cardTitle: '',

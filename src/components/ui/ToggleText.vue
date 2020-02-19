@@ -15,6 +15,7 @@
 import inputMixin from '@/mixins/inputMixin';
 
 export default {
+	name: 'toggle-text',
 	props: {
 		resize: {
 			type: Boolean,

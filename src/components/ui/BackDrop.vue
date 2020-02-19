@@ -3,6 +3,11 @@
 		<slot></slot>
 	</div>
 </template>
+<script>
+export default {
+	name: 'backdrop',
+};
+</script>
 <style>
 .wrapper {
 	position: absolute;

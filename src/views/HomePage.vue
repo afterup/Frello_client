@@ -25,7 +25,7 @@
 import modalMixin from '@/mixins/modalMixin.js';
 
 export default {
-	name: 'home',
+	name: 'home-page',
 	mixins: [modalMixin],
 	components: {
 		Modal: () => import('@/components/modal/Modal'),

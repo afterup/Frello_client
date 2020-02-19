@@ -19,6 +19,7 @@
 
 <script>
 export default {
+	name: 'navigation-user',
 	props: {
 		currentUser: {
 			type: Object,

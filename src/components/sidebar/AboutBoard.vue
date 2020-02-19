@@ -28,6 +28,7 @@
 
 <script>
 export default {
+	name: 'about-board',
 	props: {
 		board: {
 			type: Object,

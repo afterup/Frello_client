@@ -19,6 +19,7 @@
 import inputMixin from '@/mixins/inputMixin';
 
 export default {
+	name: 'base-input',
 	mixins: [inputMixin],
 	props: {
 		label: {
