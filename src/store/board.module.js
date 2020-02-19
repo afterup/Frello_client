@@ -22,7 +22,7 @@ const actions = {
 	/* BOARD */
 	async FETCH_BOARDS({ commit }) {
 		try {
-			const { data } = await ApiService.get(`/board`);
+			const { data } = await ApiService.get(`/api/board`);
 			commit('SET_BOARDS', data.boards);
 		} catch (err) {
 			console.log(err.response);
@@ -40,7 +40,7 @@ const actions = {
 		}
 
 		try {
-			const { data } = await ApiService.get(`/board/${id}`);
+			const { data } = await ApiService.get(`/api/board/${id}`);
 			console.log(data);
 			const {
 				board_id,
@@ -71,7 +71,7 @@ const actions = {
 	},
 	async PUBLISH_BOARD({ commit }, board) {
 		try {
-			const { data } = await ApiService.post('/board', { board: board });
+			const { data } = await ApiService.post('/api/board', { board: board });
 			return data;
 		} catch (err) {
 			console.log(err.response.data);
@@ -80,7 +80,7 @@ const actions = {
 	async UPDATE_BOARD({ commit }, board) {
 		try {
 			console.log(board);
-			const { data } = await ApiService.put(`/board/${board.board_id}`, {
+			const { data } = await ApiService.put(`/api/board/${board.board_id}`, {
 				board: board,
 			});
 			commit('CHANGE_BOARD', board);
@@ -90,7 +90,7 @@ const actions = {
 	},
 	async DELETE_BOARD({ commit }, id) {
 		try {
-			const { data } = await ApiService.delete(`/board/${id}`);
+			const { data } = await ApiService.delete(`/api/board/${id}`);
 			console.log(data);
 		} catch (err) {
 			console.log(err);
@@ -98,7 +98,7 @@ const actions = {
 	},
 	/* FAVORITE */
 	async PUBLISH_FAVORITE_BOARD({ commit }, payload) {
-		const { data } = await ApiService.put(`/board/${payload.id}/favorite`, {
+		const { data } = await ApiService.put(`/api/board/${payload.id}/favorite`, {
 			favorite: payload.favorite,
 		});
 		commit('SET_FAVORITE');

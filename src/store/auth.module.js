@@ -19,7 +19,7 @@ const actions = {
 	async AUTO_LOGIN({ commit }) {
 		try {
 			if (JwtService.getToken()) {
-				const { data } = await ApiService.get('/user');
+				const { data } = await ApiService.get('/api/user');
 				commit('SET_USER_DATA', data.user);
 			}
 		} catch (err) {
@@ -28,14 +28,14 @@ const actions = {
 	},
 	async signup({ commit }, authData) {
 		try {
-			const { data } = await ApiService.post('/user', { user: authData });
+			const { data } = await ApiService.post('/api/user', { user: authData });
 		} catch (err) {
 			console.log(err.response);
 		}
 	},
 	async login({ commit }, user) {
 		try {
-			const { data } = await ApiService.post('/user/login', user);
+			const { data } = await ApiService.post('/api/user/login', user);
 			commit('SET_USER_DATA', data.user.user);
 			commit('SET_TOKEN', data.user.token);
 

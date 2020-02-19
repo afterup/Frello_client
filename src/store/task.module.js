@@ -18,21 +18,21 @@ const actions = {
 	/* LIST */
 	async PUBLISH_LIST({ commit }, list) {
 		try {
-			const { data } = await ApiService.post('/list', { list: list });
+			const { data } = await ApiService.post('/api/list', { list: list });
 			commit('ADD_LIST', data.list);
 		} catch (err) {
 			console.log(err);
 		}
 	},
 	async UPDATE_LIST({ commit }, list) {
-		const { data } = await ApiService.put(`/list/${list.list_id}`, {
+		const { data } = await ApiService.put(`/api/list/${list.list_id}`, {
 			list: { title: list.title },
 		});
 		commit('CHANGE_LIST', list);
 	},
 	async DELETE_LIST({ commit }, id) {
 		try {
-			const { data } = await ApiService.delete(`/list/${id}`);
+			const { data } = await ApiService.delete(`/api/list/${id}`);
 			commit('DELETE_COLUMN_LIST', id);
 			console.log(data);
 		} catch (err) {
@@ -42,12 +42,12 @@ const actions = {
 
 	/* CARD */
 	async FETCH_CARD({ commit }, id) {
-		const { data } = await ApiService.get(`/card/${id}`);
+		const { data } = await ApiService.get(`/api/card/${id}`);
 		console.log(data);
 		commit('SET_CARD', data.card);
 	},
 	async PUBLISH_CARD({ commit }, card) {
-		const { data } = await ApiService.post('/card', { card: card });
+		const { data } = await ApiService.post('/api/card', { card: card });
 		console.log(data);
 		commit('ADD_CARD', data.card);
 	},
@@ -59,12 +59,14 @@ const actions = {
 		} else if (title) {
 			value.title = title;
 		}
-		const { data } = await ApiService.put(`/card/${cardId}`, { card: value });
+		const { data } = await ApiService.put(`/api/card/${cardId}`, {
+			card: value,
+		});
 		console.log(data);
 		commit('CHANGE_CARD', card);
 	},
 	async DELETE_CARD({ commit }, id) {
-		const { data } = await ApiService.delete(`/card/${id}`);
+		const { data } = await ApiService.delete(`/api/card/${id}`);
 		console.log(data);
 		commit('REMOVE_CARD', id);
 	},
@@ -107,7 +109,7 @@ const actions = {
 			}
 			console.log(bothPosition);
 
-			const { data } = await ApiService.put(`/card/${cardId}`, {
+			const { data } = await ApiService.put(`/api/card/${cardId}`, {
 				card: {
 					bothPosition,
 					listId: listId,
@@ -138,7 +140,7 @@ const actions = {
 			});
 			const bothPosition = findBothPosition();
 
-			const { data } = await ApiService.put(`/list/${listId}`, {
+			const { data } = await ApiService.put(`/api/list/${listId}`, {
 				list: { bothPosition },
 			});
 			console.log(data);

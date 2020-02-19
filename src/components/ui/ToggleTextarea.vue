@@ -63,15 +63,21 @@ export default {
 				this.dataPlaceholder = this.placeholder.blur;
 			}
 		},
-		enterToggle(e) {
-			e.preventDefault();
-			e.target.blur();
-			this.$emit('enter');
-		},
-		updateValueAndResize(event, line) {
+		resizeHeight(event) {
 			event.target.style.height = 'auto';
 			event.target.style.height = `${event.target.scrollHeight}px`;
 			console.log(event.target.style.height);
+		},
+		enterToggle(event) {
+			event.preventDefault();
+			event.target.blur();
+			console.log(event.target);
+			// event.target.style.height = 'auto';
+			// event.target.style.height = '50px';
+			this.$emit('enter');
+		},
+		updateValueAndResize(event, line) {
+			this.resizeHeight(event);
 			this.$emit('input', event.target.value);
 		},
 	},
@@ -84,8 +90,7 @@ export default {
 <style lang="scss" scoped>
 textarea {
 	width: 24rem;
-
-	padding: 0.5rem 1rem;
+	padding: 1rem 1rem;
 	margin-bottom: 8px;
 	border-radius: 2px;
 	border: none;

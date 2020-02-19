@@ -13,9 +13,11 @@
 		<footer class="footer">
 			<div class="footer__text">©Reference to trello</div>
 		</footer>
-		<Modal v-if="showModal" @close="closeModal('home')">
-			<router-view></router-view>
-		</Modal>
+		<transition name="fade">
+			<Modal v-if="showModal" @close="closeModal('home')">
+				<router-view></router-view>
+			</Modal>
+		</transition>
 	</div>
 </template>
 
@@ -70,5 +72,17 @@ export default {
 	&__text {
 		font-size: 1.3rem;
 	}
+}
+
+.fade-enter-active {
+	transition: all 0.3s ease;
+}
+.fade-leave-active {
+	transition: all 0.3s cubic-bezier(1, 0.5, 0.8, 1);
+}
+.fade-enter,
+.fade-leave-to {
+	// transform: translateY(15px);
+	opacity: 0;
 }
 </style>

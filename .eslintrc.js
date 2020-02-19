@@ -20,7 +20,7 @@ module.exports = {
         arrowParens: 'avoid',
       },
     ],
-    'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+    'no-console': 'off',
   },
   parserOptions: {
     parser: "babel-eslint"

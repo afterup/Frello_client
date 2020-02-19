@@ -7,6 +7,12 @@ import BaseInput from '@/components/ui/BaseInput';
 import ToggleText from '@/components/ui/ToggleText';
 import ToggleTextarea from '@/components/ui/ToggleTextarea';
 
+import VueInputAutowidth from 'vue-input-autowidth';
+import VueTextareaAutoHeight from 'vue-textarea-autosize';
+
+Vue.use(VueInputAutowidth);
+Vue.use(VueTextareaAutoHeight);
+
 const components = {
 	BaseContainer,
 	BaseIcon,

@@ -24,22 +24,20 @@
 			</BaseBtn>
 		</div>
 		<div class="board-meta__right">
+			<BaseBtn
+				class="sidebar__button"
+				:class="{ button_active: isSidebarOpen }"
+				@click="toggleSidebar"
+			>
+				Show Menu
+			</BaseBtn>
 			<div class="sidebar">
-				<BaseBtn
-					class="sidebar__button"
-					:class="{ button_active: isSidebarOpen }"
-					@click="toggleSidebar"
-				>
-					Show Menu
-				</BaseBtn>
-				<transition name="slide">
-					<BoardSidebar
-						v-if="isSidebarOpen"
-						:currentUser="currentUser"
-						:board="board"
-						@close="toggleSidebar"
-					/>
-				</transition>
+				<BoardSidebar
+					v-if="isSidebarOpen"
+					:currentUser="currentUser"
+					:board="board"
+					@close="toggleSidebar"
+				/>
 			</div>
 		</div>
 	</div>
@@ -140,21 +138,6 @@ export default {
 
 	&__right {
 		&__sidebar {
-			.button_active {
-				transform: translateX(-260%);
-				transition: transform 0.3s ease;
-			}
-
-			.slide-enter-active,
-			.slide-leave-active {
-				transition: transform 0.3s ease;
-			}
-
-			.slide-enter,
-			.slide-leave-to {
-				transform: translateX(100%);
-				transition: all 0.15s ease;
-			}
 		}
 	}
 }

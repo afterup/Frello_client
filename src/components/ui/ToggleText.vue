@@ -4,6 +4,7 @@
 		:placeholder="placeholder"
 		:value="value"
 		:maxlength="maxlength"
+		v-autowidth="{ maxWidth: '700px', minWidth: '20px', comfortZone: 0 }"
 		@mousedown="updateValue($event.target.value)"
 		@input="updateValueAndResize($event, 'width')"
 		@keyup.enter="enterToggle"
@@ -21,27 +22,14 @@ export default {
 		},
 	},
 	mixins: [inputMixin],
-	mounted() {
-		this.$nextTick(() => {
-			if (this.resize === true) {
-				this.$el.setAttribute('style', `width : ${this.$el.scrollWidth}px`);
-			}
-		});
-	},
 	methods: {
 		enterToggle(e) {
 			e.target.blur();
 			this.$emit('enter');
 		},
 		updateValueAndResize(event, line) {
-			event.target.style.width = 'auto';
-			event.target.style.width = `${event.target.scrollWidth}px`;
-
 			this.$emit('input', event.target.value);
 		},
-	},
-	render() {
-		return this.$slots.default[0];
 	},
 };
 </script>
