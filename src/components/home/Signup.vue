@@ -8,6 +8,7 @@
 				:label="'Email'"
 				:placeholder="'Enter email'"
 				:maxlength="50"
+				@keypress.enter.prevent
 			/>
 			<BaseInput
 				v-model.trim="username"
@@ -15,6 +16,7 @@
 				:label="'Username'"
 				:placeholder="'Enter username'"
 				:maxlength="30"
+				@keypress.enter.prevent
 			/>
 			<BaseInput
 				v-model.trim="password"
@@ -22,7 +24,7 @@
 				:label="'Password'"
 				:placeholder="'Enter password'"
 				:maxlength="20"
-				@enter="register"
+				@keypress.enter.prevent
 			/>
 			<br />
 			<BaseBtn @click="register" class="signup__button">Sign Up</BaseBtn>
