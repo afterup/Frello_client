@@ -1,9 +1,10 @@
 const path = require('path');
 
 module.exports = {
-	outputDir: path.resolve(__dirname, '../project_api_trello/src/public'),
+	outputDir: path.resolve(__dirname, '../api/public'),
 	devServer: {
 		clientLogLevel: 'info',
+		port: 3000,
 		proxy: {
 			'/api': {
 				target: 'http://localhost:3000/api',
