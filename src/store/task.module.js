@@ -141,7 +141,7 @@ const actions = {
 			const bothPosition = findBothPosition();
 
 			const { data } = await ListService.updateList(listId, {
-				list: { bothPosition },
+				list: { bothPosition, board_id: state.lists[fromListIndex].board_id },
 			});
 			console.log(data);
 			commit('SET_LIST_POSITION', data.list);

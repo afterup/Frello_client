@@ -8,7 +8,7 @@ import { ApiService } from '@/services/api.service.js';
 
 import '@/components/ui/index.js';
 
-Vue.config.productionTip = false;
+Vue.config.productionTip = process.env.NODE_ENV === 'production';
 
 ApiService.init();
 

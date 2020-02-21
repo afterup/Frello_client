@@ -4,7 +4,7 @@ module.exports = {
 	outputDir: path.resolve(__dirname, '../api/public'),
 	devServer: {
 		clientLogLevel: 'info',
-		port: 3000,
+		port: 8080,
 		proxy: {
 			'/api': {
 				target: 'http://localhost:3000/api',

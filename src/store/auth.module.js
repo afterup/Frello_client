@@ -46,15 +46,6 @@ const actions = {
 			console.log(err.response);
 		}
 	},
-	SET_EXPIRATION({ commit }, expiresIn) {
-		const now = new Date();
-		const expirationDate = new Date(now.getTime() + expiresIn * 1000);
-		localStorage.setItem('expirationDate', expirationDate);
-
-		setTimeout(() => {
-			commit('CLEAR_USER_DATA');
-		}, expirationDate * 1000);
-	},
 	LOGOUT({ commit }) {
 		commit('CLEAR_USER_DATA');
 		JwtService.destroyToken();
