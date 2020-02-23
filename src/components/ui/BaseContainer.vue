@@ -12,7 +12,7 @@ export default {
 
 <style lang="scss" scoped>
 .base-container {
-	max-width: 120rem;
+	width: 120rem;
 	margin: auto;
 }
 </style>

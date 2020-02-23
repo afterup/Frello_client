@@ -2,7 +2,8 @@
 	<div class="home">
 		<section class="home__banner">
 			<div>
-				<h1>Trello Clone Web</h1>
+				<h1>Frello</h1>
+				<h3>Trello Clone Web</h3>
 			</div>
 			<svg width="500px" height="500px" class="home__banner__image">
 				<image href="@/assets/image/hero-a.svg" width="500" height="500" />
@@ -35,10 +36,12 @@ export default {
 
 <style lang="scss" scoped>
 .home {
+	min-width: $bp-min-width;
 	&__banner {
 		display: flex;
-		justify-content: space-around;
+		justify-content: space-evenly;
 		align-items: center;
+		height: 50rem;
 		background: rgb(6, 119, 191);
 		background: linear-gradient(
 			90deg,
@@ -46,11 +49,30 @@ export default {
 			rgba(6, 119, 191, 1) 35%,
 			rgba(71, 105, 196, 1) 100%
 		);
-		height: 50rem;
+
+		@media screen and (max-width: $bp-mobile) {
+			flex-direction: column;
+			height: 70rem;
+		}
 
 		h1 {
-			font-size: 2.5rem;
+			text-align: center;
+			font-size: 4rem;
 			color: white;
+
+			@media screen and (max-width: $bp-mobile) {
+				margin-top: 10rem;
+			}
+		}
+
+		h3 {
+			font-size: 2rem;
+			color: white;
+		}
+
+		svg {
+			@media screen and (max-width: $bp-mobile) {
+			}
 		}
 	}
 

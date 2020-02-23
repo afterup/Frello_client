@@ -40,9 +40,8 @@ export default {
 
 <style lang="scss" scoped>
 .panel {
-	width: 80%;
 	height: 80%;
-	margin: 3rem 20rem auto;
+	margin: auto;
 
 	&__title {
 		display: flex;
@@ -69,8 +68,13 @@ export default {
 		background-color: #f0f2f5;
 		width: 190px;
 		height: 95px;
-		margin: 4.5px 9px;
+		margin: 4.5px 4.5px;
 		font-size: 1.6rem;
+
+		@media screen and (max-width: $bp-mobile) {
+			width: 25rem;
+			height: 13rem;
+		}
 	}
 
 	&__cards__add:hover {

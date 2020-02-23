@@ -26,10 +26,16 @@ export default {
 .card {
 	background-position: center;
 	border-radius: 3px;
-	width: 190px;
-	height: 95px;
-	margin: 4.5px 9px;
+	width: 19rem;
+	height: 9.5rem;
+	margin: 4.5px 4.5px;
 	position: relative;
+
+	@media screen and (max-width: $bp-mobile) {
+		width: 25rem;
+		height: 13rem;
+		margin-right: 2rem;
+	}
 
 	&:after {
 		content: '\A';

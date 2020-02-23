@@ -3,7 +3,7 @@
 		<div class="post__field" :class="background">
 			<div>
 				<BaseInput
-					class="post__field__button"
+					class="post__field__input"
 					v-model="title"
 					:type="'text'"
 					:placeholder="'Add board title'"
@@ -72,6 +72,10 @@ export default {
 		align-content: space-between;
 		padding: 1.5rem 1.3rem;
 		border-radius: 2px;
+
+		&__input {
+			margin-bottom: 1.5rem;
+		}
 
 		&__close {
 			margin-left: 3rem;

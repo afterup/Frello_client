@@ -8,20 +8,17 @@
 		</router-link>
 	</div>
 	<div class="navigation" v-else>
-		<Dropdown>
-			<BaseIcon
-				class="user__icon"
-				slot="button"
-				:username="currentUser.username"
-				:size="30"
-			/>
-			<div slot="name">{{ currentUser.username }}</div>
-			<template>
-				<hr />
-				<li>Setting</li>
-				<li>Logout</li>
-			</template>
-		</Dropdown>
+		<BaseIcon
+			class="user__icon"
+			@click="handleUserContent"
+			:username="currentUser.username"
+			:size="30"
+		/>
+		<NavUser
+			v-if="isShowUserContent"
+			:currentUser="currentUser"
+			@close="handleUserContent"
+		/>
 	</div>
 </template>
 
@@ -46,7 +43,7 @@ export default {
 		},
 	},
 	components: {
-		Dropdown: () => import('@/components/ui/Dropdown'),
+		NavUser: () => import('@/components/common/NavUser'),
 	},
 	computed: {
 		...mapGetters(['showModal']),

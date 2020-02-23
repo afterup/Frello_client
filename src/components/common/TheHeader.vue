@@ -58,9 +58,10 @@ export default {
 	justify-content: space-between;
 	justify-items: center;
 	align-items: center;
-	background-color: #0269a7;
 	height: $header-height;
+	min-width: $bp-min-width;
 	padding: 0 1.5rem;
+	background-color: #0269a7;
 
 	&__left {
 		display: flex;

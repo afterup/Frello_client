@@ -1,11 +1,11 @@
 <template>
-	<BaseContainer>
+	<div class="boards-wrap">
 		<BoardsList :boards="favorites" :badge="'star_border'" />
 		<BoardsList :boards="boards" :badge="'person'" :type="'personal'" />
 		<Modal v-if="showModal" :type="'base'" @close="closeModal">
 			<Post @close="closeModal" />
 		</Modal>
-	</BaseContainer>
+	</div>
 </template>
 
 <script>
@@ -39,4 +39,17 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.boards-wrap {
+	width: 100rem;
+	margin: 5rem auto;
+
+	@media screen and (max-width: $bp-medium) {
+		width: 90rem;
+	}
+
+	@media screen and (max-width: $bp-mobile) {
+		width: 55rem;
+	}
+}
+</style>

@@ -9,8 +9,6 @@
 					</span>
 				</li>
 				<hr />
-				<li @click="gotoUser">My Page</li>
-				<li>Setting</li>
 				<li @click="logout">Log Out</li>
 			</ul>
 		</div>
@@ -33,13 +31,6 @@ export default {
 				this.$router.push({ name: 'home' });
 			});
 		},
-		gotoUser() {
-			this.$emit('close');
-			this.$router.push({
-				name: 'userPage',
-				params: { username: currentUser.username },
-			});
-		},
 	},
 };
 </script>
@@ -56,10 +47,10 @@ export default {
 
 .user {
 	position: absolute;
-	top: 45px;
-	right: 10px;
-	width: 180px;
-	height: 120px;
+	top: 4.5rem;
+	right: 1rem;
+	width: 18rem;
+	height: auto;
 	z-index: 2;
 	background-color: #fff;
 
