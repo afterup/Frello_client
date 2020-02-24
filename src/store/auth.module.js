@@ -1,5 +1,6 @@
 import { ApiService } from '@/services/api.service.js';
 import JwtService from '@/services/jwt.service.js';
+import { errorHandler } from '@/common/errorHandler.js';
 
 const state = {
 	user: {},
@@ -28,22 +29,20 @@ const actions = {
 	},
 	async signup({ commit }, authData) {
 		try {
-			const { data } = await ApiService.post('/api/user', { user: authData });
+			await ApiService.post('/api/user', { user: authData });
 		} catch (err) {
-			console.log(err.response);
+			return errorHandler(err.response.data.error.message);
 		}
 	},
-	async login({ commit }, user) {
+	async LOGIN({ commit }, user) {
 		try {
 			const { data } = await ApiService.post('/api/user/login', user);
 			commit('SET_USER_DATA', data.user.user);
 			commit('SET_TOKEN', data.user.token);
 
-			if (data.error) return console.log(data);
-
 			return data.user.user;
 		} catch (err) {
-			console.log(err.response);
+			return errorHandler(err.response.data.error.message);
 		}
 	},
 	LOGOUT({ commit }) {
@@ -57,7 +56,7 @@ const mutations = {
 		state.user = user;
 		state.isAuthenticated = true;
 	},
-	SET_TOKEN(state, token) {
+	SET_TOKEN(token) {
 		JwtService.saveToken(token);
 		ApiService.setHeader(token);
 	},

@@ -4,6 +4,7 @@
 		<input
 			class="base-field__input"
 			:id="label"
+			:class="{ 'is-invalid': checkSubmitAndError }"
 			:type="type"
 			:placeholder="placeholder"
 			:value="value"
@@ -24,6 +25,10 @@ export default {
 	props: {
 		label: {
 			type: String,
+			required: false,
+		},
+		checkSubmitAndError: {
+			type: Boolean,
 			required: false,
 		},
 	},
