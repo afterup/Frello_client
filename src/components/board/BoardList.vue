@@ -62,6 +62,7 @@
 
 <script>
 import movingMixin from '@/mixins/movingMixin';
+import { UPDATE_LIST, DELETE_LIST, PUBLISH_CARD } from '@/store/actions.type';
 
 export default {
 	name: 'board-list',
@@ -79,23 +80,25 @@ export default {
 	},
 	methods: {
 		updateList(id, title) {
-			this.$store.dispatch('UPDATE_LIST', {
+			const listData = {
 				list_id: id,
 				title: title,
-			});
+			};
+
+			this.$store.dispatch(UPDATE_LIST, listData);
 		},
 		deleteList(id) {
-			this.$store.dispatch('DELETE_LIST', id).then(() => {});
+			this.$store.dispatch(DELETE_LIST, id);
 		},
 		createCard(listId) {
-			this.$store
-				.dispatch('PUBLISH_CARD', {
-					list_id: listId,
-					title: this.cardTitle,
-				})
-				.then(() => {
-					this.cardTitle = '';
-				});
+			const cardData = {
+				list_id: listId,
+				title: this.cardTitle,
+			};
+
+			this.$store.dispatch(PUBLISH_CARD, cardData).then(() => {
+				this.cardTitle = '';
+			});
 		},
 		onDragOver(e) {
 			if (this.list.Cards === []) {

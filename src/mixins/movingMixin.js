@@ -1,3 +1,5 @@
+import { MOVE_LIST, MOVE_CARD } from '@/store/actions.type';
+
 export default {
 	props: {
 		list: {
@@ -24,7 +26,7 @@ export default {
 			const toListIndex = this.listIndex;
 			const toCardIndex = this.cardIndex;
 
-			this.$store.dispatch('MOVE_CARD', {
+			this.$store.dispatch(MOVE_CARD, {
 				fromListIndex,
 				fromCardIndex,
 				toListIndex,
@@ -32,7 +34,7 @@ export default {
 			});
 		},
 		moveList({ fromListIndex }) {
-			this.$store.dispatch('MOVE_LIST', {
+			this.$store.dispatch(MOVE_LIST, {
 				fromListIndex,
 				toListIndex: this.listIndex,
 			});

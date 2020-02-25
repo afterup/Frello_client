@@ -7,3 +7,14 @@ export function dateFormat(date) {
 
 	return `${year}-${month}-${day} ${time}`;
 }
+
+export function findBothPosition({ elements, index }) {
+	let bothPosition = {};
+	if (elements[index - 1]) {
+		bothPosition['leftPosition'] = elements[index - 1].position;
+	}
+	if (elements[index + 1]) {
+		bothPosition['rightPosition'] = elements[index + 1].position;
+	}
+	return bothPosition;
+}

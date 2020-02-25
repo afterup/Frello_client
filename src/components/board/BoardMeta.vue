@@ -5,11 +5,8 @@
 				class="board-meta__left__title"
 				v-model="board.title"
 				:maxlength="30"
-				:resize="true"
 				@enter="updateBoardTitle"
-			>
-				{{ board.title }}
-			</ToggleText>
+			/>
 			<BaseBtn
 				class="board-meta__left__favorite"
 				:icon="true"

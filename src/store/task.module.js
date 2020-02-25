@@ -1,4 +1,29 @@
 import { ListService, CardService } from '@/services/api.service.js';
+import {
+	PUBLISH_LIST,
+	UPDATE_LIST,
+	DELETE_LIST,
+	FETCH_CARD,
+	PUBLISH_CARD,
+	UPDATE_CARD,
+	DELETE_CARD,
+	MOVE_CARD,
+	MOVE_LIST,
+} from '@/store/actions.type';
+import {
+	ADD_LIST,
+	ADD_CARD,
+	CHANGE_LIST,
+	CHANGE_CARD,
+	SET_CARD,
+	REMOVE_CARD,
+	MOVE_TASK_CARD,
+	DELETE_COLUMN_LIST,
+	MOVE_COLUMN_LIST,
+	SET_LIST_POSITION,
+	SET_CARD_POSITION,
+} from '@/store/mutations.type';
+import { dateFormat, findBothPosition } from '@/common/util';
 
 const state = {
 	lists: [],
@@ -15,99 +40,78 @@ const getters = {
 };
 
 const actions = {
-	/* LIST */
-	async PUBLISH_LIST({ commit }, list) {
+	async [PUBLISH_LIST]({ commit }, list) {
 		try {
 			const { data } = await ListService.createList({ list: list });
-			commit('ADD_LIST', data.list);
+			commit(ADD_LIST, data.list);
 		} catch (err) {
 			console.log(err);
 		}
 	},
-	async UPDATE_LIST({ commit }, list) {
-		const { data } = await ListService.updateList(list.list_id, {
+	[UPDATE_LIST]({ commit }, list) {
+		ListService.updateList(list.list_id, {
 			list: { title: list.title },
+		}).then(() => {
+			commit(CHANGE_LIST, list);
 		});
-		commit('CHANGE_LIST', list);
 	},
-	async DELETE_LIST({ commit }, id) {
+	[DELETE_LIST]({ commit }, id) {
 		try {
-			const { data } = await ListService.deleteList(id);
-			commit('DELETE_COLUMN_LIST', id);
-			console.log(data);
+			ListService.deleteList(id).then(() => {
+				commit(DELETE_COLUMN_LIST, id);
+			});
 		} catch (err) {
 			console.log(err);
 		}
 	},
-
-	/* CARD */
-	async FETCH_CARD({ commit }, id) {
+	async [FETCH_CARD]({ commit }, id) {
 		const { data } = await CardService.getCard(id);
-		console.log(data);
-		commit('SET_CARD', data.card);
+		data.card.createdAt = dateFormat(data.card.createdAt);
+
+		commit(SET_CARD, data.card);
 	},
-	async PUBLISH_CARD({ commit }, card) {
-		const { data } = await CardService.createCard({ card: card });
-		console.log(data);
-		commit('ADD_CARD', data.card);
-	},
-	async UPDATE_CARD({ commit }, card) {
-		const { listId, cardId, description, title } = card;
-		let value = {};
-		if (description) {
-			value.description = description;
-		} else if (title) {
-			value.title = title;
-		}
-		const { data } = await CardService.updateCard(cardId, {
-			card: value,
+	[PUBLISH_CARD]({ commit }, card) {
+		CardService.createCard({ card: card }).then(({ data }) => {
+			commit(ADD_CARD, data.card);
 		});
-		console.log(data);
-		commit('CHANGE_CARD', card);
 	},
-	async DELETE_CARD({ commit }, id) {
-		const { data } = await CardService.deleteCard(id);
-		console.log(data);
-		commit('REMOVE_CARD', id);
+	async [UPDATE_CARD]({ commit }, card) {
+		CardService.updateCard(card.cardId, { card: card }).then(() => {
+			commit(CHANGE_CARD, card);
+		});
 	},
-	/* MOVE */
-	async MOVE_CARD(
+	[DELETE_CARD]({ commit }, id) {
+		CardService.deleteCard(id).then(() => {
+			commit(REMOVE_CARD, id);
+		});
+	},
+	async [MOVE_CARD](
 		{ commit, state },
 		{ fromListIndex, fromCardIndex, toListIndex, toCardIndex },
 	) {
-		function findBothPosition(toCards) {
-			let bothPosition = {};
-			if (toCards[toCardIndex - 1]) {
-				bothPosition['leftPosition'] = toCards[toCardIndex - 1].position;
-			}
-			if (toCards[toCardIndex + 1]) {
-				bothPosition['rightPosition'] = toCards[toCardIndex + 1].position;
-			}
-			return bothPosition;
-		}
-
 		try {
-			const fromCards = state.lists[fromListIndex].Cards;
-			const toCards = state.lists[toListIndex].Cards;
-			const listId = state.lists[toListIndex].list_id;
+			const fromCards = state.lists[fromListIndex].Cards; // 카드는 이미 이동되고 없음
+			const toCards = state.lists[toListIndex].Cards; // 이동된 카드. 리스트 아이디는 이동된곳에 위치
+			const listId = state.lists[toListIndex].list_id; //이동된 리스트아이디
 
-			commit('MOVE_TASK_CARD', {
+			commit(MOVE_TASK_CARD, {
 				fromCards,
 				fromCardIndex,
 				toCards,
 				toCardIndex,
 			});
-			console.log(toCardIndex);
 
 			let cardId;
 			let bothPosition;
 			if (toCardIndex !== undefined) {
 				cardId = toCards[toCardIndex].card_id;
-				bothPosition = findBothPosition(toCards);
+				bothPosition = findBothPosition({
+					elements: toCards,
+					index: toCardIndex,
+				});
 			} else {
 				cardId = toCards[0].card_id;
 			}
-			console.log(bothPosition);
 
 			const { data } = await CardService.updateCard(cardId, {
 				card: {
@@ -115,36 +119,27 @@ const actions = {
 					listId: listId,
 				},
 			});
-			console.log(data);
-			commit('SET_CARD_POSITION', data.card);
+			commit(SET_CARD_POSITION, data.card);
 		} catch (err) {
 			console.log(err);
 		}
 	},
-	async MOVE_LIST({ commit, state }, { fromListIndex, toListIndex }) {
-		function findBothPosition() {
-			let bothPosition = {};
-			if (state.lists[toListIndex - 1]) {
-				bothPosition['leftPosition'] = state.lists[toListIndex - 1].position;
-			}
-			if (state.lists[toListIndex + 1]) {
-				bothPosition['rightPosition'] = state.lists[toListIndex + 1].position;
-			}
-			return bothPosition;
-		}
+	async [MOVE_LIST]({ commit, state }, { fromListIndex, toListIndex }) {
 		try {
 			const listId = state.lists[fromListIndex].list_id;
-			commit('MOVE_COLUMN_LIST', {
+			commit(MOVE_COLUMN_LIST, {
 				fromListIndex,
 				toListIndex,
 			});
-			const bothPosition = findBothPosition();
+			const bothPosition = findBothPosition({
+				elements: state.lists,
+				index: toListIndex,
+			});
 
 			const { data } = await ListService.updateList(listId, {
 				list: { bothPosition, board_id: state.lists[fromListIndex].board_id },
 			});
-			console.log(data);
-			commit('SET_LIST_POSITION', data.list);
+			commit(SET_LIST_POSITION, data.list);
 		} catch (error) {
 			console.log(error);
 		}
@@ -152,30 +147,25 @@ const actions = {
 };
 
 const mutations = {
-	/* LIST */
-	ADD_LIST(state, list) {
+	[SET_CARD](state, card) {
+		state.card = card;
+	},
+	[ADD_LIST](state, list) {
 		state.lists.push(list);
 	},
-	CHANGE_LIST(state, list) {
+	[ADD_CARD](state, card) {
+		state.lists.find(list => {
+			if (list.list_id === card.list_id) list.Cards.push(card);
+		});
+	},
+	[CHANGE_LIST](state, list) {
 		if (list.title) {
-			state.lists.find((oldList, idx) => {
+			state.lists.find(oldList => {
 				if (oldList.list_id === list.list_id) oldList['title'] = list.title;
 			});
 		}
 	},
-	DELETE_COLUMN_LIST(state, id) {
-		const index = state.lists.findIndex((list, idx) => list.list_id === id);
-		state.lists.splice(index, 1);
-	},
-	/* CARD */
-	ADD_CARD(state, card) {
-		const list = state.lists.find(list => list.list_id === card.list_id);
-		if (list) list.Cards.push(card);
-	},
-	SET_CARD(state, card) {
-		state.card = card;
-	},
-	CHANGE_CARD(state, card) {
+	[CHANGE_CARD](state, card) {
 		const { cardId, title, description } = card;
 		if (title) {
 			state.card['title'] = title;
@@ -188,34 +178,35 @@ const mutations = {
 			state.card['description'] = description;
 		}
 	},
-	REMOVE_CARD(state, id) {
+	[DELETE_COLUMN_LIST](state, id) {
+		const index = state.lists.findIndex((list, idx) => list.list_id === id);
+		state.lists.splice(index, 1);
+	},
+	[REMOVE_CARD](state, id) {
 		state.lists.forEach(list => {
 			const cardIndex = list.Cards.findIndex(card => card.card_id === id);
 			if (cardIndex != -1) list.Cards.splice(cardIndex, 1);
 		});
 		state.card = '';
 	},
-	DESTROY_CARD(state) {
-		state.card = {};
-	},
 	/* MOVE */
-	MOVE_TASK_CARD(state, { fromCards, fromCardIndex, toCards, toCardIndex }) {
+	[MOVE_TASK_CARD](state, { fromCards, fromCardIndex, toCards, toCardIndex }) {
 		const cardToMove = fromCards.splice(fromCardIndex, 1)[0];
 		toCards.splice(toCardIndex, 0, cardToMove);
 	},
-	MOVE_COLUMN_LIST(state, { fromListIndex, toListIndex }) {
+	[MOVE_COLUMN_LIST](state, { fromListIndex, toListIndex }) {
 		const list = state.lists;
 		const listToMove = list.splice(fromListIndex, 1)[0];
 		list.splice(toListIndex, 0, listToMove);
 	},
-	SET_CARD_POSITION(state, newCard) {
+	[SET_CARD_POSITION](state, newCard) {
 		const list = state.lists.find(list => list.list_id === newCard.list_id);
 		const cardIndex = list.Cards.findIndex(
 			card => card.card_id === newCard.card_id,
 		);
 		list.Cards[cardIndex] = newCard;
 	},
-	SET_LIST_POSITION(state, newList) {
+	[SET_LIST_POSITION](state, newList) {
 		const listIndex = state.lists.findIndex(
 			list => list.list_id === newList.list_id,
 		);

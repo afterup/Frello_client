@@ -2,80 +2,64 @@
 	<div class="card">
 		<div class="card__header">
 			<i class="material-icons">class</i>
-			<ToggleInput
-				v-model="cardTitle"
+			<ToggleText
 				class="card__header__title"
-				:type="'text'"
+				v-model="card.title"
+				:maxlength="500"
 				@enter="updateTitle"
-			>
-				{{ card.title }}
-			</ToggleInput>
+			/>
 		</div>
-		<div class="card__description">
-			<div class="card__description__title">
-				<i class="material-icons">subject</i>
-				<span>Description</span>
-			</div>
-			<div class="card__description__body">
-				<ToggleInput
-					:placeholder="checkDescription()"
-					:type="'textarea'"
-					v-model="cardDescription"
-					@enter="updateDescription"
-				>
-					{{ checkDescription() }}
-				</ToggleInput>
+		<div class="card__body">
+			<CardDescription :card="card" />
+			<div class="vl"></div>
+			<div class="card__body__info">
+				<div class="card__body__info__created">
+					<i class="material-icons clock-icon">access_time</i>
+					Created At
+				</div>
+				<div>{{ card.createdAt }}</div>
+				<BaseBtn @click="deleteCard" class="delete">
+					<i class="material-icons" slot="badge">delete_sweep</i>
+					Delete
+				</BaseBtn>
 			</div>
 		</div>
-		<BaseBtn @click="deleteCard" :icon="true" class="delete">
-			<i class="material-icons" slot="badge">
-				delete_sweep
-			</i>
-			Delete
-		</BaseBtn>
 	</div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
+import store from '@/store';
+import { FETCH_CARD, UPDATE_CARD, DELETE_CARD } from '@/store/actions.type';
 
 export default {
 	name: 'card-content',
-	data() {
-		return {
-			cardTitle: '',
-			cardDescription: '',
-		};
-	},
 	computed: {
 		...mapGetters(['card']),
 	},
-	created() {
-		this.$store.dispatch('FETCH_CARD', this.$route.params.cardId);
+	components: {
+		CardDescription: () => import('@/components/board/CardDescription'),
+	},
+	beforeRouteEnter(to, from, next) {
+		store.dispatch(FETCH_CARD, to.params.cardId).then(() => {
+			next();
+		});
 	},
 	destroyed() {
 		this.$store.commit('DESTROY_CARD');
 	},
 	methods: {
-		updateDescription() {
-			this.$store.dispatch('UPDATE_CARD', {
-				cardId: this.card.card_id,
-				description: this.card.description,
-			});
-		},
 		updateTitle() {
-			this.$store.dispatch('UPDATE_CARD', {
+			const cardData = {
 				cardId: this.card.card_id,
 				title: this.card.title,
-			});
+				type: 'update',
+			};
+			this.$store.dispatch(UPDATE_CARD, cardData);
 		},
-		checkDescription() {
-			return this.card.description
-				? this.card.description
-				: 'Add a more detailed description';
-		},
+
 		deleteCard() {
-			this.$store.dispatch('DELETE_CARD', this.card.card_id).then(() => {
+			this.$store.dispatch(DELETE_CARD, this.card.card_id).then(() => {
 				this.$store.commit('CLOSE_MODAL');
 				this.$router.push({
 					name: 'board',
@@ -89,8 +73,8 @@ export default {
 
 <style lang="scss" scoped>
 .card {
-	width: 50rem;
-	height: 60vh;
+	width: 100%;
+	height: 100%;
 
 	&__header {
 		display: flex;
@@ -100,25 +84,41 @@ export default {
 			font-weight: bold;
 		}
 	}
+	&__body {
+		display: flex;
+		margin-top: 2rem;
 
-	&__description {
-		margin-top: 20px;
-
-		&__title {
-			display: flex;
-			justify-content: flex-start;
-			align-items: center;
-
-			span {
-				font-size: 1.8rem;
-				font-weight: bold;
-			}
+		.vl {
+			border-left: 2px solid grey;
+			margin-right: 1rem;
 		}
 
-		&__body {
-			width: 100%;
-			font-size: 1.3rem;
-			border-radius: 2px;
+		&__info {
+			width: 15rem;
+			&__created {
+				display: flex;
+				align-items: center;
+
+				margin-bottom: 1rem;
+				font-size: 1.3rem;
+				font-weight: bold;
+
+				.clock-icon {
+					font-size: 2rem;
+				}
+			}
+
+			.delete {
+				width: 100%;
+				margin-top: 32rem;
+				color: grey;
+				background-color: white;
+				border: 1px solid grey;
+
+				&:hover {
+					background-color: $color-grey-light-3;
+				}
+			}
 		}
 	}
 }
