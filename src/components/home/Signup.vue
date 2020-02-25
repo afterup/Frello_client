@@ -53,6 +53,7 @@
 </template>
 
 <script>
+import { SIGN_UP } from '@/store/actions.type.js';
 import { required, email, minLength } from 'vuelidate/lib/validators';
 
 export default {
@@ -91,7 +92,7 @@ export default {
 				password: this.password,
 			};
 			this.$store
-				.dispatch('signup', formData)
+				.dispatch(SIGN_UP, formData)
 				.then(() => {
 					alert('가입되었습니다.');
 					this.$store.commit('CLOSE_MODAL');

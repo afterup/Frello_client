@@ -6,12 +6,14 @@
 </template>
 
 <script>
+import { CHECK_AUTH } from '@/store/actions.type.js';
+
 export default {
 	components: {
 		TheHeader: () => import('@/components/common/TheHeader.vue'),
 	},
 	created() {
-		this.$store.dispatch('AUTO_LOGIN');
+		this.$store.dispatch(CHECK_AUTH);
 	},
 };
 </script>

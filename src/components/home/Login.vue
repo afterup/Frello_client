@@ -36,6 +36,7 @@
 </template>
 
 <script>
+import { LOGIN } from '@/store/actions.type.js';
 import { required, email } from 'vuelidate/lib/validators';
 
 export default {
@@ -64,7 +65,7 @@ export default {
 
 			const formData = { email: this.email, password: this.password };
 			this.$store
-				.dispatch('LOGIN', formData)
+				.dispatch(LOGIN, formData)
 				.then(user => {
 					console.log(user);
 					this.$store.commit('CLOSE_MODAL');
