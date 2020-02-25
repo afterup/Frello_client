@@ -50,7 +50,7 @@ export default {
 			rgba(71, 105, 196, 1) 100%
 		);
 
-		@media screen and (max-width: $bp-mobile) {
+		@media screen and (max-width: $bp-small) {
 			flex-direction: column;
 			height: 70rem;
 		}
@@ -60,7 +60,7 @@ export default {
 			font-size: 4rem;
 			color: white;
 
-			@media screen and (max-width: $bp-mobile) {
+			@media screen and (max-width: $bp-small) {
 				margin-top: 5rem;
 			}
 		}
@@ -72,7 +72,7 @@ export default {
 
 		svg {
 			image {
-				@media screen and (max-width: $bp-mobile) {
+				@media screen and (max-width: $bp-small) {
 					padding-bottom: 50%;
 				}
 			}

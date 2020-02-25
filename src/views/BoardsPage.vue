@@ -44,11 +44,11 @@ export default {
 	width: 100rem;
 	margin: 5rem auto;
 
-	@media screen and (max-width: $bp-medium) {
+	@media screen and (max-width: $bp-largest) {
 		width: 90rem;
 	}
 
-	@media screen and (max-width: $bp-mobile) {
+	@media screen and (max-width: $bp-small) {
 		width: 55rem;
 	}
 }

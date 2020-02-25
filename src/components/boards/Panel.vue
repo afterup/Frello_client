@@ -71,7 +71,7 @@ export default {
 		margin: 4.5px 4.5px;
 		font-size: 1.6rem;
 
-		@media screen and (max-width: $bp-mobile) {
+		@media screen and (max-width: $bp-small) {
 			width: 25rem;
 			height: 13rem;
 		}
