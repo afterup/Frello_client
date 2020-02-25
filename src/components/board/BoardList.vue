@@ -19,11 +19,9 @@
 						<h3>{{ list.title }}</h3>
 					</ToggleTextarea>
 
-					<Dropdown>
-						<i slot="button" class="material-icons">more_horiz</i>
-						<div slot="name">Action</div>
-						<li @click="deleteList(list.list_id)">Delete This List</li>
-					</Dropdown>
+					<div @click="deleteList(list.list_id)">
+						<i slot="button" class="material-icons delete-icon">close</i>
+					</div>
 				</div>
 				<ul class="list__item__body">
 					<li v-for="(card, $cardIndex) of list.Cards" :key="card.card_id">
@@ -78,7 +76,6 @@ export default {
 		ListCard: () => import('@/components/board/ListCard.vue'),
 		AppDrop: () => import('@/components/drag/AppDrop'),
 		AppDrag: () => import('@/components/drag/AppDrag'),
-		Dropdown: () => import('@/components/ui/Dropdown'),
 	},
 	methods: {
 		updateList(id, title) {
@@ -174,9 +171,15 @@ export default {
 			margin-top: 0.5rem;
 		}
 	}
+}
 
-	.delete-icon {
-		font-size: 1.5rem;
+.delete-icon {
+	padding: 0.5rem;
+	font-size: 2rem;
+	color: $color-grey-dark-2;
+
+	&:hover {
+		background-color: rgba(155, 155, 155, 0.219);
 	}
 }
 </style>

@@ -36,7 +36,7 @@ export default {
 
 <style lang="scss" scoped>
 .home {
-	min-width: $bp-min-width;
+	width: 100%;
 	&__banner {
 		display: flex;
 		justify-content: space-evenly;
@@ -61,7 +61,7 @@ export default {
 			color: white;
 
 			@media screen and (max-width: $bp-mobile) {
-				margin-top: 10rem;
+				margin-top: 5rem;
 			}
 		}
 
@@ -71,7 +71,10 @@ export default {
 		}
 
 		svg {
-			@media screen and (max-width: $bp-mobile) {
+			image {
+				@media screen and (max-width: $bp-mobile) {
+					padding-bottom: 50%;
+				}
 			}
 		}
 	}

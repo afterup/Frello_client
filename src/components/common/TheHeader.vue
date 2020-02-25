@@ -59,7 +59,7 @@ export default {
 	justify-items: center;
 	align-items: center;
 	height: $header-height;
-	min-width: $bp-min-width;
+	width: 100%;
 	padding: 0 1.5rem;
 	background-color: #0269a7;
 
