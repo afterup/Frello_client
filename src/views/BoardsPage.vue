@@ -14,6 +14,7 @@ import {
 	FETCH_BOARDS,
 	FETCH_FAVORITES,
 	RESET_STATE_BOARD,
+	CLOSE_MODAL,
 } from '@/store/actions.type.js';
 
 export default {
@@ -36,7 +37,7 @@ export default {
 	},
 	methods: {
 		closeModal() {
-			this.$store.commit('CLOSE_MODAL');
+			this.$store.commit(CLOSE_MODAL);
 		},
 	},
 };

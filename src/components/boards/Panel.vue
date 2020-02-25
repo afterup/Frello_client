@@ -18,6 +18,8 @@
 </template>
 
 <script>
+import { OPEN_MODAL } from '@/store/actions.type';
+
 export default {
 	name: 'boards-panel',
 	props: {
@@ -32,7 +34,7 @@ export default {
 	},
 	methods: {
 		openModal() {
-			this.$store.commit('OPEN_MODAL');
+			this.$store.commit(OPEN_MODAL);
 		},
 	},
 };

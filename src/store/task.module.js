@@ -17,6 +17,7 @@ import {
 	CHANGE_CARD,
 	SET_CARD,
 	REMOVE_CARD,
+	DESTROY_CARD,
 	MOVE_TASK_CARD,
 	DELETE_COLUMN_LIST,
 	MOVE_COLUMN_LIST,
@@ -90,9 +91,9 @@ const actions = {
 		{ fromListIndex, fromCardIndex, toListIndex, toCardIndex },
 	) {
 		try {
-			const fromCards = state.lists[fromListIndex].Cards; // 카드는 이미 이동되고 없음
-			const toCards = state.lists[toListIndex].Cards; // 이동된 카드. 리스트 아이디는 이동된곳에 위치
-			const listId = state.lists[toListIndex].list_id; //이동된 리스트아이디
+			const fromCards = state.lists[fromListIndex].Cards;
+			const toCards = state.lists[toListIndex].Cards;
+			const listId = state.lists[toListIndex].list_id;
 
 			commit(MOVE_TASK_CARD, {
 				fromCards,
@@ -188,6 +189,9 @@ const mutations = {
 			if (cardIndex != -1) list.Cards.splice(cardIndex, 1);
 		});
 		state.card = '';
+	},
+	[DESTROY_CARD](state) {
+		state.card = {};
 	},
 	/* MOVE */
 	[MOVE_TASK_CARD](state, { fromCards, fromCardIndex, toCards, toCardIndex }) {

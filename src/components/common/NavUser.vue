@@ -16,6 +16,8 @@
 </template>
 
 <script>
+import { LOGOUT } from '@/store/actions.type.js';
+
 export default {
 	name: 'navigation-user',
 	props: {
@@ -27,7 +29,7 @@ export default {
 	methods: {
 		logout() {
 			this.$emit('close');
-			this.$store.dispatch('LOGOUT').then(() => {
+			this.$store.dispatch(LOGOUT).then(() => {
 				this.$router.push({ name: 'home' });
 			});
 		},

@@ -24,6 +24,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import { OPEN_MODAL } from '@/store/actions.type';
 
 export default {
 	name: 'navigation-items',
@@ -50,7 +51,7 @@ export default {
 	},
 	methods: {
 		openModal() {
-			this.$store.commit('OPEN_MODAL');
+			this.$store.commit(OPEN_MODAL);
 		},
 		handleUserContent() {
 			this.isShowUserContent = !this.isShowUserContent;

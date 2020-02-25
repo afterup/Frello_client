@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import store from '@/store/index.js';
+import { OPEN_MODAL } from '@/store/actions.type';
 
 Vue.use(VueRouter);
 
@@ -13,7 +14,7 @@ VueRouter.prototype.push = function push(location, onResolve, onReject) {
 };
 
 const checkModal = () => (to, from, next) => {
-	store.commit('OPEN_MODAL');
+	store.commit(OPEN_MODAL);
 	next();
 };
 

@@ -58,6 +58,7 @@ export default {
 	justify-content: space-between;
 	justify-items: center;
 	align-items: center;
+	position: fixed;
 	height: $header-height;
 	width: 100%;
 	padding: 0 1.5rem;

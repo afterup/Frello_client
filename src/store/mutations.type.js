@@ -14,6 +14,7 @@ export const RESET_BOARD = 'resetBoard';
 export const CLEAR_USER_DATA = 'logoutUser';
 export const DELETE_COLUMN_LIST = 'deleteList';
 export const REMOVE_CARD = 'deleteCard';
+export const DESTROY_CARD = 'destroyCard';
 export const MOVE_TASK_CARD = 'moveCard';
 export const MOVE_COLUMN_LIST = 'moveList';
 export const SET_CARD_POSITION = 'setCardPosition';

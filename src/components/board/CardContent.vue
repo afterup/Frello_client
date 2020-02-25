@@ -31,6 +31,7 @@
 import { mapGetters } from 'vuex';
 import store from '@/store';
 import { FETCH_CARD, UPDATE_CARD, DELETE_CARD } from '@/store/actions.type';
+import { DESTROY_CARD } from '@/store/mutations.type';
 
 export default {
 	name: 'card-content',
@@ -46,7 +47,7 @@ export default {
 		});
 	},
 	destroyed() {
-		this.$store.commit('DESTROY_CARD');
+		this.$store.commit(DESTROY_CARD);
 	},
 	methods: {
 		updateTitle() {
