@@ -12,6 +12,10 @@ import '@/components/ui/index.js';
 Vue.config.productionTip = process.env.NODE_ENV === 'production';
 Vue.use(Vuelidate);
 
+Vue.component('loading-indicator', () =>
+	import('@/components/ui/LoadingIndicator'),
+);
+
 ApiService.init();
 
 router.beforeEach((to, from, next) => {

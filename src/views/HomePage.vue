@@ -23,12 +23,14 @@
 </template>
 
 <script>
-import modalMixin from '@/mixins/modalMixin.js';
+import { mapGetters } from 'vuex';
 import { CLOSE_MODAL } from '@/store/mutations.type.js';
 
 export default {
 	name: 'home-page',
-	mixins: [modalMixin],
+	computed: {
+		...mapGetters(['showModal']),
+	},
 	components: {
 		Modal: () => import('@/components/modal/Modal'),
 	},
@@ -113,7 +115,6 @@ export default {
 }
 .fade-enter,
 .fade-leave-to {
-	// transform: translateY(15px);
 	opacity: 0;
 }
 </style>
