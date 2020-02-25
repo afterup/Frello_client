@@ -6,7 +6,7 @@
 		:maxlength="maxlength"
 		v-autowidth="{ maxWidth: '700px', minWidth: '20px', comfortZone: 0 }"
 		@mousedown="updateValue($event.target.value)"
-		@input="updateValueAndResize($event, 'width')"
+		@input="updateValue($event.target.value)"
 		@keyup.enter="enterToggle"
 	/>
 </template>
@@ -27,9 +27,6 @@ export default {
 		enterToggle(e) {
 			e.target.blur();
 			this.$emit('enter');
-		},
-		updateValueAndResize(event, line) {
-			this.$emit('input', event.target.value);
 		},
 	},
 };

@@ -4,7 +4,7 @@
 			handlePlaceholder === '' ? placeholder.blur : handlePlaceholder
 		"
 		:class="isTitle ? 'is-title' : 'add'"
-		:value="value"
+		:value="value !== null ? value : ''"
 		:maxlength="maxlength"
 		@focus="handleFocus"
 		@blur="handleBlur"

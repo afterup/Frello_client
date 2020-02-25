@@ -46,7 +46,7 @@ const routes = [
 		component: () => import('@/views/BoardPage.vue'),
 		children: [
 			{
-				path: 'card/:cardId',
+				path: 'card/:cardId/:cardTitle',
 				name: 'card',
 				component: () => import('@/components/board/CardContent.vue'),
 				beforeEnter: checkModal(),

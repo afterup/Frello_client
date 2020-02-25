@@ -24,7 +24,7 @@ export default {
 	},
 	computed: {
 		typeCardStyle() {
-			return this.type === 'card' ? { width: '45rem', height: '40rem' } : '';
+			return this.type === 'card' ? { width: '60rem', height: '50rem' } : '';
 		},
 	},
 	props: {
@@ -54,7 +54,7 @@ export default {
 	box-shadow: 0 20px 35px rgba(0, 0, 0, 0.33);
 
 	&__body {
-		height: auto;
+		height: 100%;
 	}
 
 	&__close {

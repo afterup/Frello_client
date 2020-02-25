@@ -9,7 +9,9 @@
 		>
 			<router-link
 				class="card"
-				:to="`/board/${this.$route.params.id}/card/${card.card_id}`"
+				:to="
+					`/board/${this.$route.params.id}/card/${card.card_id}/${card.title}`
+				"
 				tag="div"
 			>
 				<div class="card__title">
