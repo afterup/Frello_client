@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import { OPEN_MODAL } from '@/store/actions.type';
+import { OPEN_MODAL } from '@/store/mutations.type';
 
 export default {
 	name: 'boards-panel',

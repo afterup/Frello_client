@@ -54,6 +54,7 @@
 
 <script>
 import { SIGN_UP } from '@/store/actions.type.js';
+import { CLOSE_MODAL } from '@/store/mutations.type.js';
 import { required, email, minLength } from 'vuelidate/lib/validators';
 
 export default {
@@ -95,7 +96,7 @@ export default {
 				.dispatch(SIGN_UP, formData)
 				.then(() => {
 					alert('가입되었습니다.');
-					this.$store.commit('CLOSE_MODAL');
+					this.$store.commit(CLOSE_MODAL);
 					this.$router.push({ name: 'home' });
 				})
 				.catch(error => {

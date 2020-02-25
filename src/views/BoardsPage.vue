@@ -14,9 +14,8 @@ import {
 	FETCH_BOARDS,
 	FETCH_FAVORITES,
 	RESET_STATE_BOARD,
-	CLOSE_MODAL,
 } from '@/store/actions.type.js';
-
+import { CLOSE_MODAL } from '@/store/mutations.type.js';
 export default {
 	name: 'boards-page',
 	components: {
@@ -33,7 +32,7 @@ export default {
 		this.$store.dispatch(RESET_STATE_BOARD);
 	},
 	computed: {
-		...mapGetters(['boards', 'showModal', 'favorites']),
+		...mapGetters(['boards', 'showModal', 'favorites', 'isBoardLoading']),
 	},
 	methods: {
 		closeModal() {

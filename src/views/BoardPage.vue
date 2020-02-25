@@ -31,6 +31,7 @@
 import { mapGetters } from 'vuex';
 import store from '@/store';
 import { FETCH_BOARD, PUBLISH_LIST } from '@/store/actions.type';
+import { CLOSE_MODAL } from '@/store/mutations.type';
 
 export default {
 	name: 'board-page',
@@ -55,7 +56,7 @@ export default {
 	},
 	methods: {
 		closeCard() {
-			this.$store.commit('CLOSE_MODAL');
+			this.$store.commit(CLOSE_MODAL);
 			this.$router.push({
 				name: 'board',
 				params: { id: this.$route.params.id },

@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import store from '@/store/index.js';
-import { OPEN_MODAL } from '@/store/actions.type';
+import { OPEN_MODAL } from '@/store/mutations.type';
 
 Vue.use(VueRouter);
 
@@ -49,7 +49,7 @@ const routes = [
 			{
 				path: 'card/:cardId/:cardTitle',
 				name: 'card',
-				component: () => import('@/components/board/CardContent.vue'),
+				component: () => import('@/views/CardPage.vue'),
 				beforeEnter: checkModal(),
 			},
 		],

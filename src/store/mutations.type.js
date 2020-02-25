@@ -19,3 +19,5 @@ export const MOVE_TASK_CARD = 'moveCard';
 export const MOVE_COLUMN_LIST = 'moveList';
 export const SET_CARD_POSITION = 'setCardPosition';
 export const SET_LIST_POSITION = 'setListPosition';
+export const OPEN_MODAL = 'openModal';
+export const CLOSE_MODAL = 'closeModal';

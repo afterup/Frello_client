@@ -1,4 +1,4 @@
-import { OPEN_MODAL, CLOSE_MODAL } from '@/store/actions.type';
+import { OPEN_MODAL, CLOSE_MODAL } from '@/store/mutations.type';
 
 const state = {
 	showModal: false,

@@ -11,6 +11,8 @@
 </template>
 
 <script>
+import { UPDATE_BOARD } from '@/store/actions.type';
+
 export default {
 	name: 'background-color',
 	data() {
@@ -20,7 +22,7 @@ export default {
 	},
 	methods: {
 		chooseBackground(color) {
-			this.$store.dispatch('UPDATE_BOARD', {
+			this.$store.dispatch(UPDATE_BOARD, {
 				board_id: this.$route.params.id,
 				background: color,
 			});

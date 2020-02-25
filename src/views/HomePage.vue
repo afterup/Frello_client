@@ -6,7 +6,7 @@
 				<h3>Trello Clone Web</h3>
 			</div>
 			<svg width="500px" height="500px" class="home__banner__image">
-				<image href="@/assets/image/hero-a.svg" width="500" height="500" />
+				<image href="@/assets/image/hero-a.svg" width="100%" height="100%" />
 			</svg>
 		</section>
 		<section class="home__about"></section>
@@ -15,7 +15,7 @@
 			<div class="footer__text">©Reference to trello</div>
 		</footer>
 		<transition name="fade">
-			<Modal v-if="showModal" @close="closeModal('home')">
+			<Modal v-if="showModal" @close="closeModal">
 				<router-view></router-view>
 			</Modal>
 		</transition>
@@ -24,12 +24,19 @@
 
 <script>
 import modalMixin from '@/mixins/modalMixin.js';
+import { CLOSE_MODAL } from '@/store/mutations.type.js';
 
 export default {
 	name: 'home-page',
 	mixins: [modalMixin],
 	components: {
 		Modal: () => import('@/components/modal/Modal'),
+	},
+	methods: {
+		closeModal() {
+			this.$store.commit(CLOSE_MODAL);
+			this.$router.push({ name: 'home' });
+		},
 	},
 };
 </script>
@@ -61,7 +68,7 @@ export default {
 			color: white;
 
 			@media screen and (max-width: $bp-small) {
-				margin-top: 5rem;
+				margin-top: 8rem;
 			}
 		}
 
@@ -71,10 +78,9 @@ export default {
 		}
 
 		svg {
-			image {
-				@media screen and (max-width: $bp-small) {
-					padding-bottom: 50%;
-				}
+			@media screen and (max-width: $bp-small) {
+				width: 90%;
+				height: 90%;
 			}
 		}
 	}

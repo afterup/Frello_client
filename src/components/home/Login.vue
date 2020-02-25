@@ -37,6 +37,7 @@
 
 <script>
 import { LOGIN } from '@/store/actions.type.js';
+import { CLOSE_MODAL } from '@/store/mutations.type.js';
 import { required, email } from 'vuelidate/lib/validators';
 
 export default {
@@ -67,7 +68,7 @@ export default {
 			this.$store
 				.dispatch(LOGIN, formData)
 				.then(user => {
-					this.$store.commit('CLOSE_MODAL');
+					this.$store.commit(CLOSE_MODAL);
 					this.$router.push({
 						name: 'boards',
 						params: { username: user.username },

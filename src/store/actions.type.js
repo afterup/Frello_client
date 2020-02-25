@@ -21,5 +21,3 @@ export const DELETE_CARD = 'deleteCard';
 export const RESET_STATE_BOARD = 'resetBoard';
 export const MOVE_CARD = 'moveCard';
 export const MOVE_LIST = 'moveList';
-export const OPEN_MODAL = 'openModal';
-export const CLOSE_MODAL = 'closeModal';
