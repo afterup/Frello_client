@@ -10,6 +10,11 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import {
+	FETCH_BOARDS,
+	FETCH_FAVORITES,
+	RESET_STATE_BOARD,
+} from '@/store/actions.type.js';
 
 export default {
 	name: 'boards-page',
@@ -19,17 +24,15 @@ export default {
 		Post: () => import('@/components/boards/Post.vue'),
 	},
 	created() {
-		this.$store.dispatch('FETCH_BOARDS');
+		this.$store.dispatch(FETCH_BOARDS).then(() => {
+			this.$store.dispatch(FETCH_FAVORITES);
+		});
+	},
+	beforeRouterLeaver() {
+		this.$store.dispatch(RESET_STATE_BOARD);
 	},
 	computed: {
-		...mapGetters(['boards', 'showModal']),
-		favorites() {
-			let favorites = [];
-			this.boards.find(board => {
-				if (board.favorite) favorites.push(board);
-			});
-			return favorites;
-		},
+		...mapGetters(['boards', 'showModal', 'favorites']),
 	},
 	methods: {
 		closeModal() {

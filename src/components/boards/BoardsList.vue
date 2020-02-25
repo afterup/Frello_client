@@ -1,6 +1,6 @@
 <template>
 	<Panel :type="type" :badge="badge">
-		<h3 slot="title">Personal Boards</h3>
+		<h3 slot="title">{{ boardListTitle }}</h3>
 		<Card
 			slot="card"
 			v-for="board in boards"
@@ -32,9 +32,14 @@ export default {
 			required: false,
 		},
 	},
+	computed: {
+		boardListTitle() {
+			return this.type === 'personal' ? 'Personal Boards' : 'Starred Boards';
+		},
+	},
 	methods: {
 		toBoard(id) {
-			this.$router.push({ name: 'board', params: { id: id } });
+			this.$router.push({ name: 'board', params: { id } });
 		},
 	},
 };

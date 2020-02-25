@@ -67,7 +67,6 @@ export default {
 			this.$store
 				.dispatch(LOGIN, formData)
 				.then(user => {
-					console.log(user);
 					this.$store.commit('CLOSE_MODAL');
 					this.$router.push({
 						name: 'boards',

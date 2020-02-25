@@ -30,6 +30,7 @@
 <script>
 import { mapGetters } from 'vuex';
 import store from '@/store';
+import { FETCH_BOARD, PUBLISH_LIST } from '@/store/actions.type';
 
 export default {
 	name: 'board-page',
@@ -45,7 +46,7 @@ export default {
 		Modal: () => import('@/components/modal/Modal.vue'),
 	},
 	beforeRouteEnter(to, from, next) {
-		store.dispatch('FETCH_BOARD', to.params.id).then(() => {
+		store.dispatch(FETCH_BOARD, to.params.id).then(() => {
 			next();
 		});
 	},
@@ -61,14 +62,14 @@ export default {
 			});
 		},
 		createList() {
-			this.$store
-				.dispatch('PUBLISH_LIST', {
-					board_id: this.$route.params.id,
-					title: this.listTitle,
-				})
-				.then(() => {
-					this.listTitle = '';
-				});
+			const listData = {
+				title: this.listTitle,
+				board_id: this.$route.params.id,
+			};
+
+			this.$store.dispatch(PUBLISH_LIST, listData).then(() => {
+				this.listTitle = '';
+			});
 		},
 	},
 };

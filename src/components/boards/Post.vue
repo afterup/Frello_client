@@ -30,6 +30,8 @@
 </template>
 
 <script>
+import { PUBLISH_BOARD, FETCH_BOARDS } from '@/store/actions.type';
+
 export default {
 	name: 'boards-post',
 	data() {
@@ -41,15 +43,15 @@ export default {
 	},
 	methods: {
 		onSubmit() {
-			this.$store
-				.dispatch('PUBLISH_BOARD', {
-					title: this.title,
-					background: this.background,
-				})
-				.then(data => {
-					this.$store.dispatch('FETCH_BOARDS', this.$route.params.username);
-					this.$emit('close');
-				});
+			const boardData = {
+				title: this.title,
+				background: this.background,
+			};
+
+			this.$store.dispatch(PUBLISH_BOARD, boardData).then(() => {
+				this.$store.dispatch(FETCH_BOARDS, this.$route.params.username);
+				this.$emit('close');
+			});
 		},
 		chooseBackground(color) {
 			this.background = color;

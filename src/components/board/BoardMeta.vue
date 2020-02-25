@@ -44,6 +44,8 @@
 </template>
 
 <script>
+import { UPDATE_BOARD, PUBLISH_FAVORITE_BOARD } from '@/store/actions.type';
+
 export default {
 	name: 'board-meta',
 	props: {
@@ -59,30 +61,16 @@ export default {
 	data() {
 		return {
 			isSidebarOpen: false,
-			showBoardTitleInput: false,
-			title: this.board.title,
 		};
 	},
 	components: {
 		BoardSidebar: () => import('@/components/sidebar/BoardSidebar'),
 	},
 	methods: {
-		addList() {
-			this.$store
-				.dispatch('PUBLISH_LIST', {
-					title: this.listTitle,
-					board_id: this.$route.params.id,
-					position: 1,
-				})
-				.then(() => {
-					this.showListInput = false;
-					// this.$store.dispatch('FETCH_BOARD', this.$route.params.id);
-				});
-		},
 		toggleFavorite() {
 			let favorite = this.board.favorite;
 			this.$store
-				.dispatch('PUBLISH_FAVORITE_BOARD', {
+				.dispatch(PUBLISH_FAVORITE_BOARD, {
 					id: this.$route.params.id,
 					favorite: !favorite,
 				})
@@ -91,18 +79,11 @@ export default {
 		toggleSidebar() {
 			this.isSidebarOpen = !this.isSidebarOpen;
 		},
-		handleBoardTitleInput() {
-			this.showBoardTitleInput = !this.showBoardTitleInput;
-		},
 		updateBoardTitle() {
-			this.$store
-				.dispatch('UPDATE_BOARD', {
-					board_id: this.$route.params.id,
-					title: this.board.title,
-				})
-				.then(() => {
-					this.handleBoardTitleInput();
-				});
+			this.$store.dispatch(UPDATE_BOARD, {
+				board_id: this.$route.params.id,
+				title: this.board.title,
+			});
 		},
 	},
 };

@@ -1,3 +1,9 @@
 export const SET_USER_DATA = 'setUserData';
 export const SET_TOKEN = 'setToken';
+export const SET_BOARDS = 'setAllBoard';
+export const SET_BOARD = 'setOneBoard';
+export const SET_FAVORITES = 'fetchFavoriteBoards';
+export const SET_FAVORITE = 'setFavoriteBoard';
+export const CHANGE_BOARD = 'updateBoard';
+export const RESET_BOARD = 'resetBoard';
 export const CLEAR_USER_DATA = 'logoutUser';

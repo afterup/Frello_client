@@ -44,6 +44,8 @@
 </template>
 
 <script>
+import { DELETE_BOARD } from '@/store/actions.type';
+
 export default {
 	name: 'board-sidebar',
 	data() {
@@ -81,7 +83,7 @@ export default {
 			this.deleteModal = !this.deleteModal;
 		},
 		deleteBoard() {
-			this.$store.dispatch('DELETE_BOARD', this.$route.params.id).then(() => {
+			this.$store.dispatch(DELETE_BOARD, this.$route.params.id).then(() => {
 				this.$router.push({
 					name: 'boards',
 					params: { username: this.currentUser.username },
