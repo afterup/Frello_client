@@ -1,5 +1,6 @@
 <template>
 	<div class="card">
+		<loading-indicator v-if="isCardLoading" />
 		<div class="card__header">
 			<i class="material-icons">class</i>
 			<ToggleText
@@ -31,12 +32,12 @@
 import { mapGetters } from 'vuex';
 import store from '@/store';
 import { FETCH_CARD, UPDATE_CARD, DELETE_CARD } from '@/store/actions.type';
-import { DESTROY_CARD } from '@/store/mutations.type';
+import { DESTROY_CARD, CLOSE_MODAL } from '@/store/mutations.type';
 
 export default {
 	name: 'card-content',
 	computed: {
-		...mapGetters(['card']),
+		...mapGetters(['card', 'isCardLoading']),
 	},
 	components: {
 		CardDescription: () => import('@/components/board/CardDescription'),
@@ -61,7 +62,7 @@ export default {
 
 		deleteCard() {
 			this.$store.dispatch(DELETE_CARD, this.card.card_id).then(() => {
-				this.$store.commit('CLOSE_MODAL');
+				this.$store.commit(CLOSE_MODAL);
 				this.$router.push({
 					name: 'board',
 					params: { board_id: this.$route.params.id },
