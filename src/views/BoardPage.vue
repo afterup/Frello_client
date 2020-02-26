@@ -9,16 +9,16 @@
 				:listIndex="$listIndex"
 			/>
 			<div class="board-list__input">
-				<BaseInput
+				<ToggleTextarea
 					v-model="listTitle"
-					:type="'text'"
-					:kind="'toggle'"
-					:placeholder="'Enter a title for this list...'"
-					@enter="createList"
-				>
-					<i class="material-icons" slot="badge">add</i>
-					Add another list
-				</BaseInput>
+					:type="'blurColor'"
+					:placeholder="{
+						blur: '➕ Add another list',
+						focus: 'Enter a title for this list...',
+					}"
+					:maxlength="500"
+					@update="createList"
+				/>
 			</div>
 		</div>
 		<Modal v-if="showModal" @close="closeCard" :type="'card'">
@@ -83,6 +83,7 @@ export default {
 	flex-wrap: nowrap;
 
 	&__input {
+		margin-top: 0.3rem;
 		min-width: 24rem;
 	}
 }

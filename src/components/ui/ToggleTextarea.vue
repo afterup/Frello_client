@@ -63,7 +63,7 @@ export default {
 					: !this.isOverflowImportant
 					? 'hidden'
 					: 'hidden !important',
-				'background-color': this.type === 'description' ? '#f0eeee' : '',
+				'background-color': this.type === 'blurColor' ? '#f0eeee' : '',
 			};
 		},
 		isResizeImportant() {
@@ -100,26 +100,30 @@ export default {
 	methods: {
 		onEnter(e) {
 			e.preventDefault();
-			if (this.val.trim() === '') return;
+			if (this.val === '') return;
 			e.target.blur();
 			this.$emit('update', this.val);
 		},
 		onFocus(e) {
-			if (this.val.trim() === '') return;
 			this.handleFocus(e);
 			this.resize(e);
 		},
 		handleFocus(event) {
 			if (this.placeholder) {
-				if (this.placeholder.blur)
+				if (this.placeholder.focus) {
 					this.dataPlaceholder = this.placeholder.focus;
-				else this.dataPlaceholder = this.placeholder;
+				} else {
+					this.dataPlaceholder = this.placeholder;
+				}
 			}
 		},
 		handleBlur(event) {
 			if (this.placeholder) {
-				if (this.placeholder.blur) this.dataPlaceholder = this.placeholder.blur;
-				else this.dataPlaceholder = this.placeholder;
+				if (this.placeholder.blur) {
+					this.dataPlaceholder = this.placeholder.blur;
+				} else {
+					this.dataPlaceholder = this.placeholder;
+				}
 			}
 		},
 		resize() {

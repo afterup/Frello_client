@@ -26,12 +26,12 @@ export default {
 	mixins: [inputMixin],
 	methods: {
 		onSubmit(e) {
-			if (e.target.value.trim() === '') return;
+			if (e.target.value === '') return;
 			e.target.blur();
 			this.$emit('enter');
 		},
 		onBlur(e) {
-			if (e.target.value.trim() === '') {
+			if (e.target.value === '') {
 				return;
 			}
 			this.$emit('enter');

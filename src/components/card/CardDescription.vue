@@ -7,7 +7,7 @@
 		<div class="description__body">
 			<ToggleTextarea
 				v-model="card.description"
-				:type="'description'"
+				:type="'blurColor'"
 				:maxlength="1000"
 				:placeholder="'Add a more detailed description...'"
 				@update="updateDescription"
