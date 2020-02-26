@@ -10,14 +10,10 @@
 			>
 				<div class="list__item__header">
 					<ToggleTextarea
-						v-model="list.title"
-						:isTitle="true"
-						:resize="true"
+						v-model="listTitle"
 						:maxlength="500"
-						@enter="updateList(list.list_id, list.title)"
-					>
-						<h3>{{ list.title }}</h3>
-					</ToggleTextarea>
+						@update="updateList"
+					/>
 
 					<div @click="deleteList(list.list_id)">
 						<i slot="button" class="material-icons delete-icon">close</i>
@@ -45,11 +41,9 @@
 							focus: 'Enter a title for this card...',
 							blur: '➕ Add another card',
 						}"
-						@enter="createCard(list.list_id)"
-					>
-						<i slot="badge" class="material-icons">add</i>
-						Add another card
-					</ToggleTextarea>
+						:maxlength="500"
+						@update="createCard"
+					/>
 					<!-- <div v-if="submitButton" class="textarea-field__textarea__button">
 			<BaseBtn class="submit" @click="clickAddButton">Add</BaseBtn>
 			<BaseBtn class="close" @click="handleTextareaToggle">Close</BaseBtn>
@@ -78,11 +72,21 @@ export default {
 		AppDrop: () => import('@/components/drag/AppDrop'),
 		AppDrag: () => import('@/components/drag/AppDrag'),
 	},
+	computed: {
+		listTitle: {
+			get() {
+				return this.list.title;
+			},
+			set(newTitle) {
+				return newTitle;
+			},
+		},
+	},
 	methods: {
-		updateList(id, title) {
+		updateList(value) {
 			const listData = {
-				list_id: id,
-				title: title,
+				list_id: this.list.list_id,
+				title: value,
 			};
 
 			this.$store.dispatch(UPDATE_LIST, listData);
@@ -90,10 +94,10 @@ export default {
 		deleteList(id) {
 			this.$store.dispatch(DELETE_LIST, id);
 		},
-		createCard(listId) {
+		createCard(value) {
 			const cardData = {
-				list_id: listId,
-				title: this.cardTitle,
+				list_id: this.list.list_id,
+				title: value,
 			};
 
 			this.$store.dispatch(PUBLISH_CARD, cardData).then(() => {
@@ -146,7 +150,6 @@ export default {
 		&__header {
 			display: flex;
 			justify-content: space-between;
-			padding: 1rem;
 			background-color: #ebecf0;
 		}
 

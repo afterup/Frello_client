@@ -1,36 +1,32 @@
 <template>
 	<textarea
-		:placeholder="dataPlaceholder"
 		:style="computedStyles"
 		v-model="val"
-		:maxlength="maxlength"
-		rows="1"
-		@focus="onFocus"
-		@blur="handleBlur"
+		@input="input"
 		@keydown.enter="onEnter"
-	/>
+		@focus="resize"
+	></textarea>
 </template>
 
 <script>
-import inputMixin from '@/mixins/inputMixin';
-
-// resize 기능 Reference: vue-textarea-autosize (https://github.com/devstark-com/vue-textarea-autosize)
+/* 
+  resize 기능 Reference: vue-textarea-autosize 
+             https://github.com/devstark-com/vue-textarea-autosize
+*/
 
 export default {
-	name: 'toggle-textarea',
+	name: 'text-area',
 	data() {
 		return {
-			dataPlaceholder: '',
 			val: null,
 			maxHeightScroll: false,
 			height: 'auto',
 		};
 	},
-	mixins: [inputMixin],
 	props: {
-		submitButton: {
-			type: Boolean,
-			required: false,
+		value: {
+			type: [String, Number],
+			default: '',
 		},
 		autosize: {
 			type: Boolean,
@@ -63,7 +59,6 @@ export default {
 					: !this.isOverflowImportant
 					? 'hidden'
 					: 'hidden !important',
-				'background-color': this.type === 'description' ? '#f0eeee' : '',
 			};
 		},
 		isResizeImportant() {
@@ -100,24 +95,10 @@ export default {
 	methods: {
 		onEnter(e) {
 			e.preventDefault();
-			e.target.blur();
-			this.$emit('update', this.val);
+			this.$emit('update-description', this.val);
 		},
-		onFocus(e) {
-			this.handleFocus(e);
-			this.resize(e);
-		},
-		handleFocus(event) {
-			if (this.placeholder) {
-				if (this.placeholder.blur) this.dataPlaceholder = this.placeholder.blur;
-				else this.dataPlaceholder = this.placeholder;
-			}
-		},
-		handleBlur(event) {
-			if (this.placeholder) {
-				if (this.placeholder.blur) this.dataPlaceholder = this.placeholder.blur;
-				else this.dataPlaceholder = this.placeholder;
-			}
+		input() {
+			console.log(this.val);
 		},
 		resize() {
 			const important = this.isHeightImportant ? 'important' : '';
@@ -143,10 +124,6 @@ export default {
 		},
 	},
 	created() {
-		if (this.placeholder) {
-			if (this.placeholder.blur) this.dataPlaceholder = this.placeholder.blur;
-			else this.dataPlaceholder = this.placeholder;
-		}
 		this.val = this.value;
 	},
 	mounted() {
@@ -155,36 +132,4 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-textarea {
-	width: 100%;
-	padding: 1rem 1rem;
-	margin-bottom: 8px;
-	border-radius: 2px;
-	border: none;
-
-	background-color: rgba(0, 0, 0, 0);
-	resize: none;
-	overflow: hidden;
-
-	font-size: 1.6rem;
-
-	&:hover {
-		background-color: #c1c4c95b;
-		cursor: pointer;
-	}
-	&:focus {
-		background-color: white;
-		box-shadow: 0px 1.3px rgb(182, 182, 182);
-	}
-
-	&__slot {
-		display: flex;
-		align-items: center;
-	}
-
-	&__button {
-		display: flex;
-	}
-}
-</style>
+<style></style>

@@ -7,13 +7,11 @@
 		<div class="description__body">
 			<ToggleTextarea
 				v-model="card.description"
-				:resize="true"
+				:type="'description'"
 				:maxlength="1000"
-				:placeholder="checkDescription()"
-				@enter="updateDescription"
-			>
-				{{ checkDescription() }}
-			</ToggleTextarea>
+				:placeholder="'Add a more detailed description...'"
+				@update="updateDescription"
+			/>
 		</div>
 	</div>
 </template>
@@ -29,18 +27,13 @@ export default {
 		},
 	},
 	methods: {
-		updateDescription() {
+		updateDescription(value) {
 			const cardData = {
 				cardId: this.card.card_id,
-				description: this.card.description,
+				description: value,
 				type: 'update',
 			};
 			this.$store.dispatch(UPDATE_CARD, cardData);
-		},
-		checkDescription() {
-			return this.card.description
-				? this.card.description
-				: 'Add a more detailed description';
 		},
 	},
 };
@@ -63,7 +56,7 @@ export default {
 	}
 
 	&__body {
-		width: 100%;
+		width: 95%;
 		font-size: 1.3rem;
 		border-radius: 2px;
 	}
