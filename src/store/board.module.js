@@ -24,6 +24,7 @@ const state = {
 	favorites: [],
 	board: {},
 	error: null,
+	isBoardLoading: false,
 };
 
 const getters = {
@@ -36,14 +37,19 @@ const getters = {
 	favorites(state) {
 		return state.favorites;
 	},
+	isBoardLoading(state) {
+		return state.isBoardLoading;
+	},
 };
 
 const actions = {
 	/* BOARD */
-	async [FETCH_BOARDS]({ commit }) {
+	async [FETCH_BOARDS]({ commit, state }) {
 		try {
+			state.isBoardLoading = true;
 			const { data } = await BoardService.getBoards();
 			commit(SET_BOARDS, data.boards);
+			state.isBoardLoading = false;
 		} catch (err) {
 			console.log(err.response);
 		}

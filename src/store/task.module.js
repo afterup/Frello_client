@@ -29,6 +29,7 @@ import { dateFormat, findBothPosition } from '@/common/util';
 const state = {
 	lists: [],
 	card: {},
+	isCardLoading: false,
 };
 
 const getters = {
@@ -37,6 +38,9 @@ const getters = {
 	},
 	card(state) {
 		return state.card;
+	},
+	isCardLoading(state) {
+		return state.isCardLoading;
 	},
 };
 
@@ -65,11 +69,13 @@ const actions = {
 			console.log(err);
 		}
 	},
-	async [FETCH_CARD]({ commit }, id) {
+	async [FETCH_CARD]({ commit, state }, id) {
+		state.isCardLoading = true;
 		const { data } = await CardService.getCard(id);
 		data.card.createdAt = dateFormat(data.card.createdAt);
 
 		commit(SET_CARD, data.card);
+		state.isCardLoading = false;
 	},
 	[PUBLISH_CARD]({ commit }, card) {
 		CardService.createCard({ card: card }).then(({ data }) => {

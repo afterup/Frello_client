@@ -7,7 +7,8 @@
 		v-autowidth="{ maxWidth: '700px', minWidth: '20px', comfortZone: 0 }"
 		@mousedown="updateValue($event.target.value)"
 		@input="updateValue($event.target.value)"
-		@keyup.enter="enterToggle"
+		@blur="onBlur"
+		@keyup.enter="onSubmit"
 	/>
 </template>
 
@@ -24,8 +25,15 @@ export default {
 	},
 	mixins: [inputMixin],
 	methods: {
-		enterToggle(e) {
+		onSubmit(e) {
+			if (e.target.value.trim() === '') return;
 			e.target.blur();
+			this.$emit('enter');
+		},
+		onBlur(e) {
+			if (e.target.value.trim() === '') {
+				return;
+			}
 			this.$emit('enter');
 		},
 	},

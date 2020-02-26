@@ -100,16 +100,19 @@ export default {
 	methods: {
 		onEnter(e) {
 			e.preventDefault();
+			if (this.val.trim() === '') return;
 			e.target.blur();
 			this.$emit('update', this.val);
 		},
 		onFocus(e) {
+			if (this.val.trim() === '') return;
 			this.handleFocus(e);
 			this.resize(e);
 		},
 		handleFocus(event) {
 			if (this.placeholder) {
-				if (this.placeholder.blur) this.dataPlaceholder = this.placeholder.blur;
+				if (this.placeholder.blur)
+					this.dataPlaceholder = this.placeholder.focus;
 				else this.dataPlaceholder = this.placeholder;
 			}
 		},
