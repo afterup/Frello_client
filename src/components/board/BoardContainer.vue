@@ -28,6 +28,7 @@ export default {
 
 .wrap {
 	height: calc(100vh - #{$header-height});
+	margin-top: $header-height;
 }
 
 .board-container {

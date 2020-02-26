@@ -10,7 +10,7 @@ export default {
 </script>
 <style>
 .wrapper {
-	position: absolute;
+	position: fixed;
 	z-index: 1;
 	top: 0;
 	left: 0;

@@ -40,7 +40,7 @@ export default {
 		...mapGetters(['card', 'isCardLoading']),
 	},
 	components: {
-		CardDescription: () => import('@/components/board/CardDescription'),
+		CardDescription: () => import('@/components/card/CardDescription'),
 	},
 	beforeRouteEnter(to, from, next) {
 		store.dispatch(FETCH_CARD, to.params.cardId).then(() => {
@@ -97,12 +97,14 @@ export default {
 
 		&__info {
 			width: 15rem;
+			font-size: 1.3rem;
+
 			&__created {
 				display: flex;
 				align-items: center;
 
 				margin-bottom: 1rem;
-				font-size: 1.3rem;
+				font-size: 1.5rem;
 				font-weight: bold;
 
 				.clock-icon {

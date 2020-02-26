@@ -60,6 +60,8 @@ export default {
 	align-items: center;
 	position: fixed;
 	height: $header-height;
+	top: 0;
+	left: 0;
 	width: 100%;
 	padding: 0 1.5rem;
 	background-color: #0269a7;
