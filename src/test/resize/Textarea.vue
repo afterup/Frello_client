@@ -97,9 +97,7 @@ export default {
 			e.preventDefault();
 			this.$emit('update-description', this.val);
 		},
-		input() {
-			console.log(this.val);
-		},
+		input() {},
 		resize() {
 			const important = this.isHeightImportant ? 'important' : '';
 			this.height = `auto${important ? ' !important' : ''}`;

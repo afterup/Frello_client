@@ -74,7 +74,6 @@ export default {
 		password: {
 			required,
 			regex: value => {
-				console.log(/(?=.*\d)(?=.*[a-z]).{6,}/.test(value));
 				return /(?=.*\d)(?=.*[a-z]).{6,}/.test(value);
 			},
 		},

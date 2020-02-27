@@ -104,11 +104,6 @@ export default {
 				this.cardTitle = '';
 			});
 		},
-		onDragOver(e) {
-			if (this.list.Cards === []) {
-				console.log(e);
-			}
-		},
 	},
 };
 </script>

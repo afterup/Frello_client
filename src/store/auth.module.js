@@ -79,9 +79,7 @@ const actions = {
 	},
 	[DELETE_USER]({ commit, state }) {
 		ApiService.delete('/user', state.user.username)
-			.then(({ data }) => {
-				console.log(data);
-			})
+			.then(({ data }) => {})
 			.catch(({ response }) => {
 				console.log(response.data.error);
 			});

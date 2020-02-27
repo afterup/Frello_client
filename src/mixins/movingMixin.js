@@ -13,7 +13,6 @@ export default {
 	},
 	methods: {
 		moveCardOrList(transferData) {
-			console.log(transferData);
 			if (transferData.type === 'card') {
 				this.moveCard(transferData);
 			} else if (transferData.type === 'list') {

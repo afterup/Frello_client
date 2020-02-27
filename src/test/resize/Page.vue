@@ -46,9 +46,7 @@ export default {
 				type: 'update',
 			};
 
-			this.$store.dispatch(UPDATE_CARD, cardData).then(() => {
-				console.log('change');
-			});
+			this.$store.dispatch(UPDATE_CARD, cardData).then(() => {});
 		},
 	},
 };
