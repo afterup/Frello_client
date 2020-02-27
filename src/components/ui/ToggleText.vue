@@ -8,7 +8,7 @@
 		@mousedown="updateValue($event.target.value)"
 		@input="updateValue($event.target.value)"
 		@blur="onBlur"
-		@keyup.enter="onSubmit"
+		@keyup.enter="$event.target.blur()"
 	/>
 </template>
 
@@ -17,19 +17,13 @@ import inputMixin from '@/mixins/inputMixin';
 
 export default {
 	name: 'toggle-text',
-	props: {
-		resize: {
-			type: Boolean,
-			required: false,
-		},
+	data() {
+		return {
+			previousValue: '',
+		};
 	},
 	mixins: [inputMixin],
 	methods: {
-		onSubmit(e) {
-			if (e.target.value === '') return;
-			e.target.blur();
-			this.$emit('enter');
-		},
 		onBlur(e) {
 			if (e.target.value === '') {
 				return;

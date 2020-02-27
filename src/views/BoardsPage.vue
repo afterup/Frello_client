@@ -1,7 +1,11 @@
 <template>
 	<div class="boards-wrap">
 		<loading-indicator v-if="isBoardLoading" />
-		<BoardsList :boards="favorites" :badge="'star_border'" />
+		<BoardsList
+			:boards="favorites"
+			:badge="'star_border'"
+			v-if="favorites.length > 0"
+		/>
 		<BoardsList :boards="boards" :badge="'person'" :type="'personal'" />
 		<Modal v-if="showModal" :type="'base'" @close="closeModal">
 			<Post @close="closeModal" />

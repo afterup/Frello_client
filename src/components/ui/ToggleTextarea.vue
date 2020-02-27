@@ -6,8 +6,8 @@
 		:maxlength="maxlength"
 		rows="1"
 		@focus="onFocus"
-		@blur="handleBlur"
-		@keydown.enter="onEnter"
+		@blur="onBlur"
+		@keydown.enter="$event.target.blur()"
 	/>
 </template>
 
@@ -98,29 +98,31 @@ export default {
 		},
 	},
 	methods: {
-		onEnter(e) {
+		onBlur(e) {
 			e.preventDefault();
-			if (this.val === '') return;
-			e.target.blur();
+			if (this.val === '') {
+				return this.handleBlur();
+			}
 			this.$emit('update', this.val);
+			this.handleBlur();
 		},
 		onFocus(e) {
 			this.handleFocus(e);
 			this.resize(e);
 		},
-		handleFocus(event) {
+		handleBlur() {
 			if (this.placeholder) {
-				if (this.placeholder.focus) {
-					this.dataPlaceholder = this.placeholder.focus;
+				if (this.placeholder.blur) {
+					this.dataPlaceholder = this.placeholder.blur;
 				} else {
 					this.dataPlaceholder = this.placeholder;
 				}
 			}
 		},
-		handleBlur(event) {
+		handleFocus() {
 			if (this.placeholder) {
-				if (this.placeholder.blur) {
-					this.dataPlaceholder = this.placeholder.blur;
+				if (this.placeholder.focus) {
+					this.dataPlaceholder = this.placeholder.focus;
 				} else {
 					this.dataPlaceholder = this.placeholder;
 				}

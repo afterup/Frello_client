@@ -21,6 +21,7 @@
 				/>
 			</div>
 		</div>
+
 		<Modal v-if="showModal" @close="closeCard" :type="'card'">
 			<router-view></router-view>
 		</Modal>
@@ -87,12 +88,4 @@ export default {
 		min-width: 24rem;
 	}
 }
-
-// .fade-enter .fade-leave-to {
-// 	opacity: 0;
-// }
-
-// .fade-enter-active .fade-leave-active {
-// 	transition: opacity 2s ease-in;
-// }
 </style>
