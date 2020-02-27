@@ -53,7 +53,7 @@ export default {
 	right: 1rem;
 	width: 18rem;
 	height: auto;
-	z-index: 2;
+	z-index: 100;
 	background-color: #fff;
 
 	ul {

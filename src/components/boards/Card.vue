@@ -31,10 +31,9 @@ export default {
 	margin: 4.5px 4.5px;
 	position: relative;
 
-	@media screen and (max-width: $bp-small) {
-		width: 25rem;
-		height: 13rem;
-		margin-right: 2rem;
+	@media screen and (max-width: $bp-smallest) {
+		width: 30rem;
+		height: 15rem;
 	}
 
 	&:after {

@@ -60,15 +60,22 @@ export default {
 	align-items: center;
 	position: fixed;
 	height: $header-height;
+	width: 100%;
 	top: 0;
 	left: 0;
-	width: 100%;
 	padding: 0 1.5rem;
+	z-index: 9999;
 	background-color: #0269a7;
 
 	&__left {
 		display: flex;
 		align-items: center;
+
+		&__home {
+			@media screen and (max-width: $bp-smallest) {
+				display: none;
+			}
+		}
 	}
 }
 

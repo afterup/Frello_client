@@ -43,7 +43,16 @@ export default {
 <style lang="scss" scoped>
 .panel {
 	height: 80%;
+	width: 90rem;
 	margin: auto;
+
+	@media screen and (max-width: $bp-medium) {
+		width: 70rem;
+	}
+	@media screen and (max-width: $bp-smallest) {
+		margin: 3.5rem;
+		width: 38rem;
+	}
 
 	&__title {
 		display: flex;
@@ -73,9 +82,9 @@ export default {
 		margin: 4.5px 4.5px;
 		font-size: 1.6rem;
 
-		@media screen and (max-width: $bp-small) {
-			width: 25rem;
-			height: 13rem;
+		@media screen and (max-width: $bp-smallest) {
+			width: 30rem;
+			height: 15rem;
 		}
 	}
 

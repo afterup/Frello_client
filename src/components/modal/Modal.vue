@@ -53,6 +53,10 @@ export default {
 	background-color: #fff;
 	box-shadow: 0 20px 35px rgba(0, 0, 0, 0.33);
 
+	@media screen and (max-width: $bp-smallest) {
+		width: 15rem;
+	}
+
 	&__body {
 		height: 100%;
 	}
