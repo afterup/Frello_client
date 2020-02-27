@@ -146,6 +146,10 @@ export default {
 			display: flex;
 			justify-content: space-between;
 			background-color: #ebecf0;
+
+			textarea {
+				font-weight: bold;
+			}
 		}
 
 		&__body {
@@ -170,6 +174,10 @@ export default {
 
 		&__footer {
 			margin-top: 0.5rem;
+
+			textarea {
+				font-size: 1.4rem;
+			}
 		}
 	}
 }

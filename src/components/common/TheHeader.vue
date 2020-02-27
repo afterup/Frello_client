@@ -12,7 +12,7 @@
 		<div class="header__center">
 			<svg width="90" height="40">
 				<image
-					href="@/assets/image/trello-logo-white.svg"
+					href="@/assets/image/frello-logo-white.png"
 					class="logo"
 					@click="toHome"
 				/>

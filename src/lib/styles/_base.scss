@@ -22,7 +22,10 @@ body {
 	min-height: 90vh;
 }
 
-input textarea {
+input[type=text] {
+  font-family: "Nanum Gothic", sans-serif;
+}
+textarea {
   font-family: "Nanum Gothic", sans-serif;
 }
 
