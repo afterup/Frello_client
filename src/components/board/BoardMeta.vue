@@ -29,12 +29,14 @@
 				Show Menu
 			</BaseBtn>
 			<div class="sidebar">
-				<BoardSidebar
-					v-if="isSidebarOpen"
-					:currentUser="currentUser"
-					:board="board"
-					@close="toggleSidebar"
-				/>
+				<transition name="slide">
+					<BoardSidebar
+						v-if="isSidebarOpen"
+						:currentUser="currentUser"
+						:board="board"
+						@close="toggleSidebar"
+					/>
+				</transition>
 			</div>
 		</div>
 	</div>
@@ -114,10 +116,17 @@ export default {
 			}
 		}
 	}
+}
 
-	&__right {
-		&__sidebar {
-		}
-	}
+.slide-enter-active {
+	transition: all 0.3s ease;
+	transform: translateX(0px);
+}
+.slide-leave-active {
+	transition: all 0.3s ease;
+}
+.slide-enter,
+.slide-leave-to {
+	transform: translateX(100%);
 }
 </style>
