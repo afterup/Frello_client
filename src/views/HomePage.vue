@@ -10,11 +10,8 @@
 			</svg>
 		</section>
 		<section class="home__about">
-			<article class="home__about__content">
-				<img
-					src="@/assets/image/content1.png"
-					class="home__about__content__image"
-				/>
+			<article class="home__about__content-1">
+				<img src="@/assets/image/content1.png" />
 				<span>
 					<h3>한 눈에 볼 수 있는 정보</h3>
 					<p>
@@ -23,7 +20,7 @@
 					</p>
 				</span>
 			</article>
-			<article class="home__about__content">
+			<article class="home__about__content-2">
 				<span>
 					<h3>PC와 모바일 인터페이스</h3>
 					<p>
@@ -101,7 +98,7 @@ export default {
 			rgba(71, 105, 196, 1) 100%
 		);
 
-		@media screen and (max-width: $bp-small) {
+		@media screen and (max-width: $bp-medium) {
 			flex-direction: column;
 			height: 70rem;
 		}
@@ -111,7 +108,7 @@ export default {
 			font-size: 4rem;
 			color: white;
 
-			@media screen and (max-width: $bp-small) {
+			@media screen and (max-width: $bp-medium) {
 				margin-top: 8rem;
 			}
 		}
@@ -122,7 +119,7 @@ export default {
 		}
 
 		svg {
-			@media screen and (max-width: $bp-small) {
+			@media screen and (max-width: $bp-medium) {
 				width: 90%;
 				height: 90%;
 			}
@@ -140,35 +137,69 @@ export default {
 		);
 
 		&__content {
-			display: flex;
-			justify-content: space-evenly;
-			margin-top: 7rem;
-			img {
-				border-radius: 20px;
-			}
-			span {
-				margin-top: 7rem;
-				h3 {
-					font-size: 1.9rem;
+			&-1 {
+				display: flex;
+				justify-content: center;
+				margin-top: 15rem;
+
+				@media screen and (max-width: $bp-medium) {
+					flex-direction: column;
+					align-items: center;
 				}
-				p {
-					margin-top: 2rem;
-					font-size: 1.5rem;
+				img {
+					border-radius: 20px;
+					width: 65rem;
+					height: 40rem;
+					@media screen and (max-width: $bp-medium) {
+						width: 90%;
+						height: auto;
+					}
+				}
+				span {
+					margin: auto 7rem;
+					@media screen and (max-width: $bp-medium) {
+						margin-top: 4rem;
+					}
+					h3 {
+						font-size: 1.9rem;
+					}
+					p {
+						margin-top: 2rem;
+						font-size: 1.5rem;
+					}
 				}
 			}
-			&__image {
-				width: 50%;
-				@media screen and (max-width: $bp-small) {
-					width: 90%;
+			&-2 {
+				display: flex;
+				justify-content: center;
+				margin-top: 15rem;
+
+				@media screen and (max-width: $bp-medium) {
+					flex-direction: column;
+					align-items: center;
 				}
-			}
-			@media screen and (max-width: $bp-small) {
-				flex-direction: column;
-				align-items: center;
+				img {
+					border-radius: 20px;
+					order: 0;
+				}
+				span {
+					margin: auto 7rem;
+					@media screen and (max-width: $bp-medium) {
+						margin-top: 4rem;
+						order: 1;
+					}
+					h3 {
+						font-size: 1.9rem;
+					}
+					p {
+						margin-top: 2rem;
+						font-size: 1.5rem;
+					}
+				}
 			}
 		}
 		&__recommend {
-			margin-top: 4rem;
+			margin-top: 12rem;
 			text-align: center;
 			font-size: 1.1rem;
 			color: $color-primary;
