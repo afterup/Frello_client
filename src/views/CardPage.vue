@@ -90,6 +90,10 @@ export default {
 		display: flex;
 		margin-top: 2rem;
 
+		@media screen and(max-width: $bp-smallest) {
+			flex-direction: column;
+		}
+
 		.vl {
 			border-left: 2px solid grey;
 			margin-right: 1rem;
@@ -121,6 +125,10 @@ export default {
 
 				&:hover {
 					background-color: $color-grey-light-3;
+				}
+
+				@media screen and(max-width: $bp-smallest) {
+					margin: 3rem 15rem;
 				}
 			}
 		}

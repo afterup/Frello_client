@@ -16,7 +16,7 @@
 					class="home__about__content__image"
 				/>
 				<span>
-					<h3>한 눈에 정보를 파악하세요.</h3>
+					<h3>한 눈에 볼 수 있는 정보</h3>
 					<p>
 						Todo, In Progress 등 카드와 리스트에 내용을 추가하여 <br />
 						정보를 등록하고 확인할 수 있습니다.
@@ -25,7 +25,7 @@
 			</article>
 			<article class="home__about__content">
 				<span>
-					<h3>모바일에서도 즐겨보세요.</h3>
+					<h3>PC와 모바일 인터페이스</h3>
 					<p>
 						반응형 인터페이스로 구현되어 모바일 화면으로도 볼 수 있습니다.
 					</p>

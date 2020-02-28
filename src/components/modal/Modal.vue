@@ -5,7 +5,7 @@
 				<slot></slot>
 			</div>
 		</div>
-		<div class="modal" :style="typeCardStyle" v-else>
+		<div class="modal" :class="typeCardStyle" v-else>
 			<div class="modal__close" v-if="close" @click="$emit('close')">
 				<i class="material-icons">close</i>
 			</div>
@@ -24,7 +24,7 @@ export default {
 	},
 	computed: {
 		typeCardStyle() {
-			return this.type === 'card' ? { width: '60rem', height: '50rem' } : '';
+			return this.type === 'card' ? 'card' : '';
 		},
 	},
 	props: {
@@ -63,10 +63,14 @@ export default {
 			cursor: pointer;
 		}
 	}
+}
+.card {
+	width: 60rem;
+	height: 50rem;
 
-	.card {
-		width: 40rem;
-		height: 50rem;
+	@media screen and(max-width: $bp-smallest) {
+		width: 35rem;
+		height: 45rem;
 	}
 }
 </style>

@@ -44,6 +44,11 @@ export default {
 	width: 40rem;
 	height: 40rem;
 
+	@media screen and(max-width: $bp-smallest) {
+		width: 100%;
+		height: 25rem;
+	}
+
 	&__title {
 		display: flex;
 		justify-content: flex-start;
