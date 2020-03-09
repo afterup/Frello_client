@@ -1,17 +1,17 @@
 # Frello Client
-
+http://www.frello.site/  
 Test ID : VIP@gmail.com  
 Test PW : 123vip
 
 # Screenshot
-
+<img src="./1.png" width="80%">  
+<img src="./2.png" width="80%">
+<img src="./3.png" width="80%">
+<img src="./4.png" width="80%">
 
 # Built with
 Vue.js, Vuex, vue-router,  
 axios, Sass, drag & drop api,  
-Node.js, Express.js,   
-MySQL, Sequelize, JWT, Passport.js, bcrypt, REST api, AWS
-
 
 # Keyword
 ## Front
