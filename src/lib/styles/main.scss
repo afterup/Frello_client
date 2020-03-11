@@ -1,3 +1,11 @@
 @import "base";
 @import "device";
 @import "palette";
+
+//github tabsize
+.tab-size {
+  -webkit-tab-size: 4 !important;
+     -moz-tab-size: 4 !important;
+       -o-tab-size: 4 !important;
+          tab-size: 4 !important;
+}
