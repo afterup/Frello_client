@@ -15,7 +15,7 @@ axios, Sass, drag & drop api,
 
 ## Keyword
 **Front**
-- Axios로 백엔드와 RESTful API 통신
+- Axios로 백엔드와 REST API 통신
 - Drag & Drop api를 사용하여 엘리먼트의 움직임에 따른 데이터 전송 및 저장 구현
 - Vuex를 사용하여 상태관리
 
